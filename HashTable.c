@@ -21,7 +21,7 @@ Table create(int tableSize){
 	int i=0;
 	for(i=0;i<tableSize;i++){
 		(t->buckets)[i]=(link)malloc(sizeof(struct record));
-		((t->buckets)[i])->index=-1;	
+		((t->buckets)[i])->index=-1;
 	}
 	return t;
 }
@@ -58,3 +58,13 @@ int check(Table t,char arr[],char *keywords[]){
 	return 0;
 }
 
+link lookup(Table t,char arr[],char *keywords[]){
+	int key=calculateHash(arr,t->a,t->tableSize);
+	link chain=t->buckets[key];
+	while(chain)
+	{
+		if(strcmp(keywords[chain->index],arr)==0)return chain;
+		chain=chain->next;
+	}
+	return NULL;
+}

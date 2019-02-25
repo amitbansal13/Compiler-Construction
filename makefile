@@ -9,3 +9,6 @@ lexer.o:	lexer.c	HashTable.h
 
 HashTable.o:	HashTable.c	HashTable.h
 	gcc -g -c HashTable.c
+
+clean:
+	rm -rf *.o

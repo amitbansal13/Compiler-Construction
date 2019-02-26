@@ -6,7 +6,7 @@
 
 char* twinBuf0;
 char* twinBuf1;
-int start=0, end=0;
+int start=0;
 int globalptr = 0; //the forward pointer to traverse the buffer 
 
 char* allocate(char* twinBuf){
@@ -57,29 +57,39 @@ char* extract_str(FILE *fp,char *buf, int fl,char* temp1)
        else
        return temp1;
 }
-
-TokenInfo getNextToken(FILE* fp){
-	fp = getStream(fp, 0);//get 256 char into first buffer
-	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));
-	char *temp1;
-	temp1 = (char*)malloc(sizeof(char)*20);
-	
-    	temp1 = extract_str(fp,twinbuf0,0,temp1);//extract str till space and send it to DFA
-	tk = checkDFA(temp1, i, j);
-	return tk;
+void write(){
+	//	
 }
-/*
+TokenInfo getNextToken(FILE* fp){
+	
+	//get 256 char into first buffer
+	TokenInfo tk = (TokenInfo)malloc(sizeof(struct tokenInfo));//main list of tokeninfo to be sent as output;100 is just for example
+	char *temp1;
+	temp1 = (char*)malloc(sizeof(char)*20);//20 is random
+	temp1 = extract_str(fp,twinbuf0,0,temp1);//extract str till space and send it to DFA
+	tk = checkDFA(temp1,start);
+	TokenInfo temp = tk;
+	while(start<=strlen(temp1)){
+		tk->next = checkDFA(temp1,start);
+		tk = tk->next;	
+	    }
+	}
+	return temp;
+}
+
 void tokenize(FILE* f){//will create a list of token(tokeninfo) present in the raw input
 	TokenInfo tarr;
-	int i=0;
+	int i=1;
 	tarr = (TokenInfo)malloc(sizeof(struct tokenInfo));
 	while(!feof(f)){
+		fp = getStream(fp, 0);
 		tarr = (TokenInfo)realloc(tarr,sizeof(struct tokenInfo)*i);
-		getNextToken(f); //repeatedly call getnexttoken.and add it to the list
+		tarr[k] = getNextToken(fp); //repeatedly call getnexttoken.and add it to the list
 		i*=2;
+		k++;
 	}
 }
-*/
+
 int main(){
 	twinBuf1 = allocate(twinBuf1);
 	twinBuf2 = allocate(twinBuf2);

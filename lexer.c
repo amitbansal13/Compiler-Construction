@@ -5,7 +5,9 @@ int lineNo = 1;
 int state = 0;
 
 TokenInfo nextToken(char *buf,int *index,int end){
+	// assuming fp = fopen("language.txt") is written in main before calling
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
+	end = fread(twinBuf0,sizeof(char),256,fp);
 	int i = *index;
 	while(1){
 	    
@@ -372,9 +374,18 @@ TokenInfo nextToken(char *buf,int *index,int end){
 
 	return NULL;
 }
-	/*		
-int main(void){//helper main
-	int index =0;
-	nextToken("012",&index,3);
 
-}*/
+void removeComments(char *testcaseFile, char *cleanFile){
+	int i=0;
+	while(testcaseFile[i])
+	{
+		if(testcaseFile[i]=='%')
+		{
+			while(testcaseFile[i]!='\n')i++;
+			i++;
+		}
+		cleanFile[i]=testcaseFile[i];
+		i++;
+	}
+}
+

@@ -7,7 +7,10 @@ struct tokenInfo{
 int lineNo;
 char* lexeme;
 char* Token;
-TokenInfo next;
+typedef union{
+	int intVal;
+	float floatVal;
+}tokenVal;
 };
 
 

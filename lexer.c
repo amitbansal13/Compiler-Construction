@@ -5,6 +5,11 @@ int lineNo = 1;
 int state = 0;
 char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,"parameter", "list", "input", "output", "int", "real", "endwhile", "if", "then", "endif", "read", "write", "return", "call", "record", "endrecord", "else"};
 
+Table keywordsTable=create(53);
+int i=0;
+for(i=0;i<24;i++)//24 is keyword table size
+insert(keywordsTable,keywords,i);
+
 TokenInfo nextToken(){//char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
@@ -24,6 +29,13 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						state = 1;
 						i++;
 						break;
+					case 'a' ... 'z' : 
+						if(buf[i]>='b' && buf[i]<='d'){
+							state = 4; i++; break;	
+						}
+						else{
+							state = 3; i++; break;
+						}
 					case '0' ... '9':				// move to state 7
 						i++;
 						state=7;
@@ -190,7 +202,28 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					state = 0;
 					return token;	//return token TK_COMMENT
             		
-			case 3:				
+			case 3:		while(i<end && (buf[i]<='z' && buf[i]>='a'))
+						i++;
+					i--;
+					char* arr[];                                    // do we need to allocate memory here?
+					strncpy(arr,buf,i-*index+1);
+					link tok = lookup(keywordsTable,arr,char *keywords[]);
+					if(tok==NULL){
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_FIELDID");
+						state = 0; *index=i; 
+						return token;			
+					}
+					else{
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,keywords[tok->index]);
+						state = 0; *index=i; 
+						return token;
+					}
+				
+			case 4:		switch(buf[i]){
+											
+					}			
 
 			case 7:		//switch to state 8 or 9
 					while(i<end && buf[i]<='9' && buf[i]>='0')
@@ -228,7 +261,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					default:	;							//error it is
 				}
 
-			case 11:											//return token TK_RNUM 
+			case 11:								//return token TK_RNUM 
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_RNUM"); 
@@ -260,11 +293,8 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					default:   i++;state = 14;
 					}
 			
-			case 14:	Table keywordsTable=create(53);
-					int i=0;
-					for(i=0;i<24;i++)//24 is keyword table size
-        				insert(keywordsTable,keywords,i);
-					char arr[];                                    // do we need to allocate memory here?
+			case 14:	
+					char* arr[];                                    // do we need to allocate memory here?
 					strncpy(arr,buf,i-*index+1);
 					link tok = lookup(keywordsTable,arr,char *keywords[]);
 					if(tok==NULL){

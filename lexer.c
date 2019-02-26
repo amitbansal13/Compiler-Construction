@@ -1,7 +1,7 @@
 #include "HashTable.h"
 #include "library.h"
 
-int lineNo =1;
+int lineNo = 1;
 int state = 0;
 
 TokenInfo nextToken(char *buf,int *index,int end){
@@ -184,20 +184,21 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_COMMENT"); 
 					*index=i;
-					return token;								//return token TK_COMMENT
-            case 3:
+					return token;	//return token TK_COMMENT
+            		case 3:
 
-			case 7:												//switch to state 8 or 9
+			case 7:		//switch to state 8 or 9
 					while(i<end && buf[i]<='9' && buf[i]>='0')
 						i++;
 					switch(buf[i]){
 						case '.':	i++;state = 9;
 							break;
+						case '\n':  	i++;lineNo++;state=8;//if \n encountered increase lineNo and goto st8
 						default:	i++;state = 8;
 									
 					}
 					break;	
-			case 8:											//return token TK_NUM and retract
+			case 8:									//return token TK_NUM and retract
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_NUM"); 
@@ -209,7 +210,8 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						i++;
 						state = 10;
 						break;
-					default:		;						//error it is
+					//case '\n':  i++;lineNo++;
+					default:   	;						//error it is TK_ERROR
 				}
 			case 10:
 				switch(buf[i]){

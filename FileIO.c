@@ -31,7 +31,7 @@ FILE* getStream(FILE* fp , int flag){
     	fclose(fp);
 	return fp;
 }
-char* extract_str(char *buf, int i)
+char* extract_str(FILE *fp,char *buf, int i, int j)
 {
        char* temp1;
        int j=0,k =i;
@@ -44,13 +44,15 @@ char* extract_str(char *buf, int i)
             j++
        }
        if(k==end)
-       
+       {
+            fp = getStream(fp, 1);
+       }       
 }
 
 TokenInfo getNextToken(FILE* fp){
 	fp = getStream(fp, 0);
 	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));
-    char *temp1  = extract_str(twinbuf1, start, end);
+    char *temp1  = extract_str(fp,twinbuf1, start, end);
 	tk=checkDFA(temp1, i, j);
 	return tk;
 }

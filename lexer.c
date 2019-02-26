@@ -186,6 +186,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_COMMENT"); 
 					*index=i;
+					state = 0;
 					return token;	//return token TK_COMMENT
             		case 3:
 
@@ -195,7 +196,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					switch(buf[i]){
 						case '.':	i++;state = 9;
 							break;
-						case '\n':  	i++;lineNo++;state=8;//if \n encountered increase lineNo and goto st8
+						case '\n':  	i++;lineNo++;state=8; //if \n encountered increase lineNo and goto st8
 						default:	i++;state = 8;
 									
 					}
@@ -205,9 +206,10 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_NUM"); 
 					i--;*index=i;
+					state = 0;
 					return token;	
 			case 9:
-				switch(buf[i]){
+					switch(buf[i]){
 					case '0' ... '9':
 						i++;
 						state = 10;
@@ -228,10 +230,64 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_RNUM"); 
+					state = 0;*index=i;
 					return token;
+			
+			case 12:	switch(buf[i]){
+					case 'a' ... 'z':
+						i++;
+						state = 13;
+						break;
+					case 'A' ... 'Z':
+						i++;
+						state = 13;
+						break;
+					//case '\n':  i++;lineNo++;
+					default:   	;						//error it is TK_ERROR
+					}
+
+			case 13:	while(i<end && ((buf[i]<='z' && buf[i]>='a') || (buf[i]<='Z' && buf[i]>='A')))
+						i++;
 					
-			case 18:									// return one letter tokens '[' ,';'etc
-				return token;
+					switch(buf[i]){
+					case '0' ... '9':
+						i++;
+						state = 15;
+						break;
+					//case '\n':  i++;lineNo++;
+					default:   i++;state = 14;
+					}
+			
+			case 14:	link tok = lookup(Table t,char arr[],char *keywords[]);	
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,keywords[tok->index]);
+					state = 0; *index=i; 
+					i--;
+					
+			case 15: 	while(i<end && buf[i]<='9' && buf[i]>='0')
+						i++;
+					i--;
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_FUNID"); 
+					state = 0;*index=i;
+					return token;
+			case 16: 	switch(buf[i]){
+						case 'a' ... 'z': i++; state=17;
+						//case '\n':  i++;lineNo++;error
+						default: ;//TK_ERROR				
+					}
+			case 17: 	while(i<end && buf[i]<='z' && buf[i]>='a')
+						i++;
+					i--;
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_RECORDID");
+					state = 0; *index=i;
+					return token;
+
+			case 18:	return token;			// return one letter tokens '[' ,';'etc
+					
 			case 19:
 					switch(buf[i]){
 						case '&' :i++;state=20;	
@@ -249,6 +305,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_AND"); 
+						state = 0;
 						return token;
 				
 
@@ -270,6 +327,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_OR"); 
 						*index=i;
+						state = 0;
 						return token;
 			case 25:
 					switch(buf[i]){
@@ -300,6 +358,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_ASSIGNOP"); 
+						state = 0; *index = i;
 						return token;
 
 			case 29:					//return TK_LT
@@ -307,7 +366,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_LT"); 
 					i--;
-					*index=i;
+					*index=i; state = 0;
 					return token;
 
 			case 30:
@@ -316,7 +375,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_LE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 					}
 
@@ -334,14 +393,14 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_GT"); 
 						i--;
-						*index=i;
+						*index=i; state = 0;
 						return token;
 
 			case 33:
 						token->lineNo = lineNo;			//return TK_GE
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_GE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 
 			case 34:
@@ -353,7 +412,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_EQ"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 					
 			case 36:
@@ -366,7 +425,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_NE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 			default:;									//error
 		}

@@ -57,7 +57,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 	                    i++;
 	                    state = 35;
 	                    break;
-                    case '[':
+                    case '[':					//rest all go to state 37 making single tokens
                         token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_SQL"); 
@@ -226,9 +226,118 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strcpy(token->Token,"TK_RNUM"); 
 					return token;
 					
-			default:;
 			case 37:									// return one letter tokens '[' ,';'etc
 				return token;
+			case 19:
+					switch(buf[i]){
+						case '&' :i++;state=20;	
+							break;
+						default:;						//error
+					}
+						
+			case 20:
+					switch(buf[i]){						//return TK_AND
+						case '&' :i++;*index=i;	
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_AND"); 
+						return token;
+						default:		;				//error
+					}
+				
+
+			case 22:
+					switch(buf[i]){
+						case '@' :i++;state=20;	
+							break;
+						default:	;					//error
+					}
+						
+			case 23:
+					switch(buf[i]){								//return TK)_OR
+						case '@' :i++;*index=i;	
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_OR"); 
+						return token;
+						default:	;					//error
+					}
+			case 25:
+					switch(buf[i]){
+						case '=' :i++;			
+							state = 30;
+							break;
+						case '-' : i++;
+							state=26;
+							break;
+		
+					}
+
+			case 26 :	
+					switch(buf[i]){
+						case '-' :i++;			
+							state = 27;
+							break;
+						default:	;			//error
+					}
+			case 27:
+					switch(buf[i]){
+						case '-' :i++;			
+							state = 28;
+							break;
+						default:		;		//error
+					}
+			case 28:
+					switch(buf[i]){
+						case '-' :i++;*index=i;	
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_ASSIGNOP"); 
+						return token;
+
+						default:		;		//error
+					}
+
+			case 30:
+					switch(buf[i]){
+						case '=' :i++;*index=i;			//return TK_LE
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_LE"); 
+						return token;
+					}
+
+			case 31:
+					switch(buf[i]){
+						case '=' :i++;*index=i;			//return TK_GE
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_GE"); 
+						return token;
+
+						default:		;				//return TK_GT and retract
+					}
+			case 34:
+					switch(buf[i]){							//return TK_EQ
+						case '=':i++;*index=i;
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_EQ"); 
+						return token;
+
+						default:		;				//error
+					}
+					
+			case 36:
+					switch(buf[i]){						//return TK_NE
+						case '=':i++;*index=i;
+						token->lineNo = lineNo;
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_NE"); 
+						return token;
+						default:		;				//error
+					}
+			default:;									//error
 		}
 	}
 

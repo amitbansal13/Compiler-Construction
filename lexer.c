@@ -387,9 +387,3 @@ void removeComments(char *testcaseFile, char *cleanFile){
 	}
 }
 
-	/*		
-int main(void){//helper main
-	int index =0;
-	nextToken("012",&index,3);
-
-}*/

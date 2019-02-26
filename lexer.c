@@ -1,8 +1,9 @@
 #include "HashTable.h"
 #include "library.h"
 
-int lineNo =1;
+int lineNo = 1;
 int state = 0;
+char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,"parameter", "list", "input", "output", "int", "real", "endwhile", "if", "then", "endif", "read", "write", "return", "call", "record", "endrecord", "else"};
 
 TokenInfo nextToken(){//char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling
@@ -186,32 +187,37 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_COMMENT"); 
 					*index=i;
-					return token;								//return token TK_COMMENT
-            case 3:
+					state = 0;
+					return token;	//return token TK_COMMENT
+            		
+			case 3:				
 
-			case 7:												//switch to state 8 or 9
+			case 7:		//switch to state 8 or 9
 					while(i<end && buf[i]<='9' && buf[i]>='0')
 						i++;
 					switch(buf[i]){
 						case '.':	i++;state = 9;
 							break;
+						case '\n':  	i++;lineNo++;state=8; //if \n encountered increase lineNo and goto st8
 						default:	i++;state = 8;
 									
 					}
 					break;	
-			case 8:											//return token TK_NUM and retract
+			case 8:									//return token TK_NUM and retract
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_NUM"); 
 					i--;*index=i;
+					state = 0;
 					return token;	
 			case 9:
-				switch(buf[i]){
+					switch(buf[i]){
 					case '0' ... '9':
 						i++;
 						state = 10;
 						break;
-					default:		;						//error it is
+					//case '\n':  i++;lineNo++;
+					default:   	;						//error it is TK_ERROR
 				}
 			case 10:
 				switch(buf[i]){
@@ -226,27 +232,98 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_RNUM"); 
+					state = 0;*index=i;
 					return token;
+			
+			case 12:	switch(buf[i]){
+					case 'a' ... 'z':
+						i++;
+						state = 13;
+						break;
+					case 'A' ... 'Z':
+						i++;
+						state = 13;
+						break;
+					//case '\n':  i++;lineNo++;
+					default:   	;						//error it is TK_ERROR
+					}
+
+			case 13:	while(i<end && ((buf[i]<='z' && buf[i]>='a') || (buf[i]<='Z' && buf[i]>='A')))
+						i++;
 					
-			case 18:									// return one letter tokens '[' ,';'etc
-				return token;
+					switch(buf[i]){
+					case '0' ... '9':
+						i++;
+						state = 15;
+						break;
+					//case '\n':  i++;lineNo++;
+					default:   i++;state = 14;
+					}
+			
+			case 14:	Table keywordsTable=create(53);
+					int i=0;
+					for(i=0;i<24;i++)//24 is keyword table size
+        				insert(keywordsTable,keywords,i);
+					char arr[];                                    // do we need to allocate memory here?
+					strncpy(arr,buf,i-*index+1);
+					link tok = lookup(keywordsTable,arr,char *keywords[]);
+					if(tok==NULL){
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_FUNID");
+						state = 0; *index=i; 
+						i--; return token;			
+					}
+					else{
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,keywords[tok->index]);
+						state = 0; *index=i; 
+						i--; return token;
+					}
+
+			case 15: 	while(i<end && buf[i]<='9' && buf[i]>='0')
+						i++;
+					i--;
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_FUNID"); 
+					state = 0;*index=i;
+					return token;
+
+			case 16: 	switch(buf[i]){
+						case 'a' ... 'z': i++; state=17;break;
+						//case '\n':  i++;lineNo++;error
+						default: ;//TK_ERROR				
+					}
+			case 17: 	while(i<end && buf[i]<='z' && buf[i]>='a')
+						i++;
+					i--;
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_RECORDID");
+					state = 0; *index=i;
+					return token;
+
+			case 18:	return token;			// return one letter tokens '[' ,';'etc
+					
 			case 19:
 					switch(buf[i]){
 						case '&' :i++;state=20;	
 							break;
-						default:;						//error
+						default:   ;						//error
 					}
 						
 			case 20:
 					switch(buf[i]){						//return TK_AND
-						case '&' :i++;	
+						case '&' :i++;	state=21;break;
 						default:		;				//error
 					}
+			
 			case 21:
 						*index=i;
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_AND"); 
+						state = 0;
 						return token;
 				
 
@@ -258,9 +335,9 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					}
 						
 			case 23:
-					switch(buf[i]){								//return TK)_OR
+					switch(buf[i]){								//return TK_OR
 						case '@' :i++;	
-							state=24;
+							state=24;break;
 						default:	;					//error
 					}
 			case 24:
@@ -268,6 +345,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_OR"); 
 						*index=i;
+						state = 0;
 						return token;
 			case 25:
 					switch(buf[i]){
@@ -298,6 +376,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_ASSIGNOP"); 
+						state = 0; *index = i;
 						return token;
 
 			case 29:					//return TK_LT
@@ -305,7 +384,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					strncpy(token->lexeme,buf,i-*index+1);
 					strcpy(token->Token,"TK_LT"); 
 					i--;
-					*index=i;
+					*index=i; state = 0;
 					return token;
 
 			case 30:
@@ -314,7 +393,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_LE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 					}
 
@@ -332,39 +411,39 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_GT"); 
 						i--;
-						*index=i;
+						*index=i; state = 0;
 						return token;
 
 			case 33:
 						token->lineNo = lineNo;			//return TK_GE
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_GE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 
 			case 34:
 					switch(buf[i]){							// move to state 35
-						case '=':state = 35;i++;
+						case '=':state = 35;i++;break;
 						default:		;				//error
 					}
 			case 35:
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_EQ"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 					
 			case 36:
 					switch(buf[i]){						//return TK_NE
 						case '=':i++;
-							state=37;
+							state=37;break;
 						default:		;				//error
 					}
 			case 37:
 						token->lineNo = lineNo;
 						strncpy(token->lexeme,buf,i-*index+1);
 						strcpy(token->Token,"TK_NE"); 
-						*index=i;
+						*index=i; state = 0;
 						return token;
 			default:;									//error
 		}

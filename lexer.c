@@ -8,7 +8,37 @@ char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,
 Table keywordsTable=create(53);
 int i=0;
 for(i=0;i<24;i++)//24 is keyword table size
-insert(keywordsTable,keywords,i);
+	insert(keywordsTable,keywords,i);
+
+float stringToFloat(char *str)
+{
+	float f=0.0,p=10.0;
+	int i=0;
+	while(str[i] && str[i]!='.')
+	{
+	    //printf("%c",str[i]);
+		f=str[i]-'0'+f*10.0;
+		i++;
+	}
+	i++;
+    while(str[i]){
+	    printf("%c",str[i]);
+		f=(str[i]-'0')/p+f;
+		i++;
+		p*=10.0;
+	}
+	return f;
+}
+
+int stringToInteger(char *str)
+{
+	int i=0,ans=0;
+	while(str[i]){
+	    ans=str[i]-'0'+ans*10;
+		i++;
+	}
+	return ans;
+}
 
 TokenInfo nextToken(){//char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling

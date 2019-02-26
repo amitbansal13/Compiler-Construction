@@ -5,10 +5,10 @@ int lineNo = 1;
 int state = 0;
 char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,"parameter", "list", "input", "output", "int", "real", "endwhile", "if", "then", "endif", "read", "write", "return", "call", "record", "endrecord", "else"};
 
-TokenInfo nextToken(char *buf,int *index,int end){
+TokenInfo nextToken(){//char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
-	end = fread(twinBuf0,sizeof(char),256,fp);
+	//end = fread(twinBuf0,sizeof(char),256,fp);//First fread is from here
 	int i = *index;
 	while(1){
 	    

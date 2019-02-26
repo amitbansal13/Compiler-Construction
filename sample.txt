@@ -1,14 +1,102 @@
-_function1
-input parameter list [int c2, int d2cd]
-output parameter list [int b5d, int d3];
-b5d<---c2+234-d2cd;
-d3<---b5d+20;
-return [b5d, d3];
-end
-_main
-type int: b4d333;
-type int : c3ddd34; type int:c2d3; type int c2d4;
-read(b4d333); read(c3ddd34);
-[c2d3, c2d4]<--- call _function1 with parameters [b4d333, c3ddd34];
-write(c2d3); write(c2d4);
-end
+Feedback
+Mandatory field Name
+Mandatory field Email
+What is the sum of 6 and 1?
+Comment
+by tozen
+Louisianna
+
+What I use everyday at work to limit letter count for promotional ads required. Light & Excellent.
+
+2018-05-23
+
+Daisy Fudolin
+
+Thank you for this idea. I really want to send a special message to My One and Only Rock Star "Kim Kyung Ho" Oppa. Hope was really hoping that He could read this. Thank you
+
+2018-05-20
+
+Danae
+
+Love. Iz my always go-to. 'Nuff said. Simple, effective, straight to the point. Like I said, 'Nuff said. ;)
+
+2018-05-14
+
+Eric P
+
+Fantastic - lean, elegant UI with accurate results. I use this counter every day in my work. My thanks to the creator(s)!!
+
+2018-05-12
+
+Austey
+
+I love this tool. I'm a writer and I also and I use it every day for my work.
+Just one thing... when we change the language, it would be great if it also offered spell check, like for English.
+Apart from that, awesome job with the clean UI!
+
+2018-05-10
+
+Don Mega
+
+Wish most apps would be sites like these where you need not download stuff or deal with ads. Keep it up! Thanks for providing something useful without the fluff.
+
+2018-05-06
+
+Aron
+
+Simple and super effective. Thank you for this masterpiece!
+
+Best character calculator so far.
+
+2018-05-01
+
+Aggie
+
+Trying to advertise on Freelancer. Limited to only 1000. I've already cut out a lot and even removing paragraphs - still over the limit. However, I do not want to sound like everybody else that's why I have a quote to start with...Any suggestions? 
+Thank you so much!
+
+2018-04-21
+
+Seni
+
+I use this at least once a day for ads, blogs and other marketing activities that require character counting. Never realised that this will be my most-sed bookmark! Also love the white, simple space without clutter.
+
+2018-04-19
+
+Wade
+
+I use this dozens of times a week for various projects. I love the notation of 'characters' vs 'without white spaces', this has helped me tremendously.
+
+2018-04-12
+
+translating-service.com
+
+Thanks, I do not have MS Word, instead I use Open Office and it calculates only with blank spaces, thus I come here to know what I translated, how many symbols without white space. Thanks
+
+2018-04-04
+
+David T
+
+I have been using this website literally every single work day for years because of my copywriting and editing needs. Whether it's for work or for private study, it's the equivalent of a laser measuring tape for writers.
+
+Minimalist yet fully functional, it's difficult to express just how incredibly useful a website such as charcounter is. Thank you for making the difference.
+
+2018-01-24
+
+D McCann
+
+I was completing a comment box with a character limit (of 1000 chars) on my smartphone. I normally use M***s*oft W*rd to run a Word/Character count when I'm using my desktop, but I've never needed that information to be easily accessible at the touch of a few buttons. I've never had to do it on my smartphone... Until now!
+
+I'm sure (if I looked) there would be an android app that performs this function, but why should I install another application when:
+1) it's a very niche/bespoke function that may never be required again, so why allow it to take up valuable system resources? 
+2) this program is VERY intuitive and easy to use. 
+3) the user experience on this site does NOT attempt to distract you or sucker you in with garish ads. In fact, I saw a grand total of ZERO ads. I'm sure that any (free) android application would either be a 'trial' version which would lock after a certain amount of use, or there would be ads embedded within the app that would activate once the app is opened. All of this is designed to frustrate you to the extent that you will happily part with your cash in order to banish the ads for good!
+
+In closing, the charcounter.com user experience is smooth, sleek and highly intuitive, giving fast and accurate results. Good Job!
+
+2018-01-05
+
+Delphi smiths
+
+I love this site. It has helped me so much!!! Thank you, but could you please try to add a few more "additions" like the 1000 character idea, except, you can divide it into any number you want!
+Again Thanks...

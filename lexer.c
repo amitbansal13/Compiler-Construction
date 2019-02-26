@@ -3,6 +3,7 @@
 
 int lineNo = 1;
 int state = 0;
+char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,"parameter", "list", "input", "output", "int", "real", "endwhile", "if", "then", "endif", "read", "write", "return", "call", "record", "endrecord", "else"};
 
 TokenInfo nextToken(char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling
@@ -188,7 +189,8 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					*index=i;
 					state = 0;
 					return token;	//return token TK_COMMENT
-            		case 3:
+            		
+			case 3:				
 
 			case 7:		//switch to state 8 or 9
 					while(i<end && buf[i]<='9' && buf[i]>='0')
@@ -258,12 +260,26 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					default:   i++;state = 14;
 					}
 			
-			case 14:	link tok = lookup(Table t,char arr[],char *keywords[]);	
-					strncpy(token->lexeme,buf,i-*index+1);
-					strcpy(token->Token,keywords[tok->index]);
-					state = 0; *index=i; 
-					i--;
-					
+			case 14:	Table keywordsTable=create(53);
+					int i=0;
+					for(i=0;i<24;i++)//24 is keyword table size
+        				insert(keywordsTable,keywords,i);
+					char arr[];                                    // do we need to allocate memory here?
+					strncpy(arr,buf,i-*index+1);
+					link tok = lookup(keywordsTable,arr,char *keywords[]);
+					if(tok==NULL){
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,"TK_FUNID");
+						state = 0; *index=i; 
+						i--; return token;			
+					}
+					else{
+						strncpy(token->lexeme,buf,i-*index+1);
+						strcpy(token->Token,keywords[tok->index]);
+						state = 0; *index=i; 
+						i--; return token;
+					}
+
 			case 15: 	while(i<end && buf[i]<='9' && buf[i]>='0')
 						i++;
 					i--;
@@ -272,8 +288,9 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					strcpy(token->Token,"TK_FUNID"); 
 					state = 0;*index=i;
 					return token;
+
 			case 16: 	switch(buf[i]){
-						case 'a' ... 'z': i++; state=17;
+						case 'a' ... 'z': i++; state=17;break;
 						//case '\n':  i++;lineNo++;error
 						default: ;//TK_ERROR				
 					}
@@ -292,14 +309,15 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					switch(buf[i]){
 						case '&' :i++;state=20;	
 							break;
-						default:;						//error
+						default:   ;						//error
 					}
 						
 			case 20:
 					switch(buf[i]){						//return TK_AND
-						case '&' :i++;	
+						case '&' :i++;	state=21;break;
 						default:		;				//error
 					}
+			
 			case 21:
 						*index=i;
 						token->lineNo = lineNo;
@@ -317,9 +335,9 @@ TokenInfo nextToken(char *buf,int *index,int end){
 					}
 						
 			case 23:
-					switch(buf[i]){								//return TK)_OR
+					switch(buf[i]){								//return TK_OR
 						case '@' :i++;	
-							state=24;
+							state=24;break;
 						default:	;					//error
 					}
 			case 24:
@@ -405,7 +423,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 
 			case 34:
 					switch(buf[i]){							// move to state 35
-						case '=':state = 35;i++;
+						case '=':state = 35;i++;break;
 						default:		;				//error
 					}
 			case 35:
@@ -418,7 +436,7 @@ TokenInfo nextToken(char *buf,int *index,int end){
 			case 36:
 					switch(buf[i]){						//return TK_NE
 						case '=':i++;
-							state=37;
+							state=37;break;
 						default:		;				//error
 					}
 			case 37:

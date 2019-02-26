@@ -31,10 +31,10 @@ FILE* getStream(FILE* fp , int flag){
     	fclose(fp);
 	return fp;
 }
-char* extract_str(FILE *fp,char *buf, int i, int j)
+char* extract_str(FILE *fp,char *buf, int st, int en, int fl)
 {
        char* temp1;
-       int j=0,k =i;
+       int j=0,k = st;
        
        temp1 = (char*)malloc(sizeof(char)*20);
        while(buf[k] != " " && k!=end) // extract till empty space
@@ -44,16 +44,22 @@ char* extract_str(FILE *fp,char *buf, int i, int j)
             j++
        }
        // reloads if it is traversed till end
-       if(k==end)
+       if(k==en && fl == 0)
        {
             fp = getStream(fp, 1);
-       }       
+            
+       }
+       else if(k==en && fl == 1)
+       {
+            fp = getStream(fp, 0);
+       }
+       else return temp1;
 }
 
 TokenInfo getNextToken(FILE* fp){
 	fp = getStream(fp, 0);
 	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));
-    char *temp1  = extract_str(fp,twinbuf1, start, end);
+    char *temp1  = extract_str(fp,twinbuf0, start, end,0);
 	tk=checkDFA(temp1, i, j);
 	return tk;
 }

@@ -55,6 +55,11 @@ char getNextChar()
             else
                 return twinBuf1[end1-1];
         }
+        if(end1==0 && end2==0)return '\0';
+        /*
+        One issue it there that it prints an extra character when called more times than the number of characters in file
+        For the sample file the output contains one extra character (garbage) after the end of the file
+        */
         char temp=buf[i];
         i++;
         return temp;
@@ -67,11 +72,12 @@ int main(){
 	end1=fread(twinBuf1,sizeof(char),BUF_SIZE-1,fp);
 	char c;
 	int count=0;
-	while(count<255)
+	while(count<500)//4088 is the number of characters in file
     {
         printf("%c",getNextChar());
         count++;
     }
+    //printf("%c",-1);
     return 0;
 }
 

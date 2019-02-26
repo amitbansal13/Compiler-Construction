@@ -222,8 +222,32 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					}
 				
 			case 4:		switch(buf[i]){
-											
-					}			
+						case 'a' ... 'z': state=3;i++;break;
+						case '2' ... '7': state=5;i++;break;
+						default: ;//error handling				
+					}
+
+			case 5:		/*if(buf[i]>='2' && buf[i]<='7'){
+						state = 6; i++; break;					
+					}	
+					while(i<end && buf[i]<='d' && buf[i]>='b')
+						i++;
+					i--;
+					state = 5;
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_ID"); 
+					*index=i;
+					return token;*/
+					
+			case 6:		while(i<end && buf[i]<='7' && buf[i]>='2')
+						i++;
+					i--;	
+					token->lineNo = lineNo;
+					strncpy(token->lexeme,buf,i-*index+1);
+					strcpy(token->Token,"TK_ID"); 
+					*index=i;state = 0;
+					return token;	
 
 			case 7:		//switch to state 8 or 9
 					while(i<end && buf[i]<='9' && buf[i]>='0')

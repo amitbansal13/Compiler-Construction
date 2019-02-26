@@ -5,7 +5,9 @@ int lineNo =1;
 int state = 0;
 
 TokenInfo nextToken(char *buf,int *index,int end){
+	// assuming fp = fopen("language.txt") is written in main before calling
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
+	end = fread(twinBuf0,sizeof(char),256,fp);
 	int i = *index;
 	while(1){
 	    

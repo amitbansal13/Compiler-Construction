@@ -6,13 +6,65 @@
 
 char* twinBuf0;
 char* twinBuf1;
-int start=0, end=0;
-char* allocate(char* twinBuf){
+int i, end,flag;
+#define thresh = 10;
+FILE *fp;
+//int start=0, end=0;
+char* allocate(char* twinBuf)
+{
 	twinBuf = (char*)malloc(sizeof(char)*256);
 	return twinBuf;
 }
-
-FILE* getStream(FILE* fp , int flag){
+char getNextChar()
+{// assuming memory for this is already allocated
+    char temp1;
+    char *buf 
+    if(i<BUF_SIZE-thresh && flag == 0)
+    {
+        buf = twinBuf0;
+    }
+    else if(i<BUF_SIZE-thresh && flag == 1)
+    {
+        buf = twinBuf1;
+    }
+    else if(i>=thresh)
+    {
+        if(flag == 0)
+            fread(twinBuf1,sizeof(char),256,fp);
+        else if(flag == 1)
+            fread(twinBuf0,sizeof(char),256,fp);
+    }    
+    if(i<end)
+    {
+        temp1 = buf[i];
+        i++;
+        return temp1;
+    }
+    else if(i<0)
+    {
+        // go to previous buffer
+        if(flag == 0)
+        {
+            i = end;
+            buf = twinBuf1;
+            temp1 = buf[i];
+            buf = twinBuf0;
+            i = 0;
+            return temp1
+        }
+        else if(flag == 1)
+        {
+            i = end;
+            buf = twinBuf0;
+            temp1 = buf[i];
+            buf = twinBuf1;
+            i = 0;
+            return temp1
+        }
+    }
+    
+}
+/*FILE* getStream(FILE* fp , int flag){
 	//char* temp;
 	//temp = tbuf;
 	char ch;
@@ -30,8 +82,8 @@ FILE* getStream(FILE* fp , int flag){
 	}
     	fclose(fp);
 	return fp;
-}
-char* extract_str(FILE *fp,char *buf, int st, int en, int fl)
+}*/
+/*char* extract_str(FILE *fp,char *buf, int st, int en, int fl)
 {
        char* temp1;
        int j=0,k = st;
@@ -49,13 +101,13 @@ char* extract_str(FILE *fp,char *buf, int st, int en, int fl)
             fp = getStream(fp, 1);
             
        }
-       else if(k==en && fl == 1)
+       else if(k==end && fl == 1)
        {
             fp = getStream(fp, 0);
        }
        else return temp1;
 }
-
+*/
 TokenInfo getNextToken(FILE* fp){
 	fp = getStream(fp, 0);
 	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));

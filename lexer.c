@@ -19,7 +19,38 @@ TokenInfo nextToken(char *buf,int *index,int end){
 						i++;
 						state=7;
 						break;
-					
+					case '-':
+					    i++;
+					    state = 12;
+					    break;
+					case '#':
+					    i++;
+					    state = 16;
+					    break
+				    case '&':
+				        i++;
+				        state = 18 
+			            break;                 //'[', ']', '|'...etc. will handle this case later     
+					case '@':
+					    i++;
+					    state = 21
+					    break;  
+				    case  '<':
+				        i++;
+				        state = 24;
+				        break;
+			        case '>':
+			            i++;
+			            state = 30;
+			            break;
+		            case '=':
+		                i++;
+		                state = 33;
+		                break;
+	                case '!':
+	                    i++;
+	                    state = 35;
+	                    break;
 					default:;							//need to update
 				}
 			case 1:

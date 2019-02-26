@@ -370,6 +370,21 @@ TokenInfo nextToken(char *buf,int *index,int end){
 
 	return NULL;
 }
+
+void removeComments(char *testcaseFile, char *cleanFile){
+	int i=0;
+	while(testcaseFile[i])
+	{
+		if(testcaseFile[i]=='%')
+		{
+			while(testcaseFile[i]!='\n')i++;
+			i++;
+		}
+		cleanFile[i]=testcaseFile[i];
+		i++;
+	}
+}
+
 	/*		
 int main(void){//helper main
 	int index =0;

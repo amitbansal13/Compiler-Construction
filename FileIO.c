@@ -34,16 +34,23 @@ FILE* getStream(FILE* fp , int flag){
 char* extract_str(char *buf, int i)
 {
        char* temp1;
-       int k=0;
+       int j=0,k =i;
+       
        temp1 = (char*)malloc(sizeof(char)*20);
-       while(buf[k] !=)
+       while(buf[k] != " " && k!=end)
+       {
+            temp1[j] = buf[k];
+            k++;
+            j++
+       }
+       if(k==end)
        
 }
 
 TokenInfo getNextToken(FILE* fp){
 	fp = getStream(fp, 0);
 	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));
-    char *temp1  = extract_str(twinbuf1, i);
+    char *temp1  = extract_str(twinbuf1, start, end);
 	tk=checkDFA(temp1, i, j);
 	return tk;
 }

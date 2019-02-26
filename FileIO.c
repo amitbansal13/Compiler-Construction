@@ -6,10 +6,8 @@
 
 char* twinBuf1;
 char* twinBuf2;
-int i, end,flag=0,end1,end2;
+int i, end,flag=0,end1,end2,ans=1;
 FILE *fp;
-int temp=0;
-
 char* allocate(char* twinBuf)
 {
     twinBuf = (char*)malloc(sizeof(char)*BUF_SIZE);
@@ -17,7 +15,6 @@ char* allocate(char* twinBuf)
 }
 char getNextChar()
 {
-    temp++;
 // assuming memory for this is already allocated
         char temp1;
         char *buf;
@@ -26,30 +23,18 @@ char getNextChar()
         	buf = twinBuf1;
         	end=end1;
         }
-        else{
+        else
+        {
 	        buf = twinBuf2;
 	        end=end2;
 	    }
         if(i>=end)
         {
-            printf("%d\n",temp);
             if(flag == 0)
                 end2=fread(twinBuf2,sizeof(char),BUF_SIZE-1,fp);
             else
                 end1=fread(twinBuf1,sizeof(char),BUF_SIZE-1,fp);
-        }
-        if(i<0)
-        {
-            // go to previous buffer
             i=0;
-            if(flag == 0)
-                return twinBuf2[end2-1];
-            else
-                return twinBuf1[end1-1];
-        }
-        if(i>=end)
-        {
-        	i=0;
         	if(flag==0){
         		buf = twinBuf2;
 	        	end=end2;
@@ -61,7 +46,15 @@ char getNextChar()
 	        	flag=0;
         	}
         }
-        if(end1==0 && end2==0)return '\0';
+        if(i<0)
+        {
+            // go to previous buffer
+            i=0;
+            if(flag == 0)
+                return twinBuf2[end2-1];
+            else
+                return twinBuf1[end1-1];
+        }
         char temp=buf[i];
         i++;
         return temp;
@@ -70,15 +63,15 @@ char getNextChar()
 int main(){
 	twinBuf1 = allocate(twinBuf1);
 	twinBuf2 = allocate(twinBuf2);
-	FILE *fp = fopen("sample.txt", "r");
+    fp = fopen("sample.txt", "r");
 	end1=fread(twinBuf1,sizeof(char),BUF_SIZE-1,fp);
 	char c;
 	int count=0;
-	while(count<300)
-	{
-		c=getNextChar();
-		printf("%c",c);
-		count++;
-	}
+	while(count<255)
+    {
+        printf("%c",getNextChar());
+        count++;
+    }
+    return 0;
 }
 

@@ -7,6 +7,7 @@ struct tokenInfo{
 int lineNo;
 char* lexeme;
 char* Token;
+TokenInfo next;
 };
 
 

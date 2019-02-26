@@ -4,19 +4,7 @@ char *keywords[] = {"with","parameters","end","while","type","_main", "global" ,
 char *keywords_tokens[]= {"TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL", "TK_ENDWHILE", "TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE"};
 
 
-void removeComments(char *testcaseFile, char *cleanFile){
-	int i=0;
-	while(testcaseFile[i])
-	{
-		if(testcaseFile[i]=='%')
-		{
-			while(testcaseFile[i]!='\n')i++;
-			i++;
-		}
-		cleanFile[i]=testcaseFile[i];
-		i++;
-	}
-}
+
 int main()
 {
     //Testing the hashTable

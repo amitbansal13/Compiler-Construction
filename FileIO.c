@@ -6,7 +6,7 @@
 
 char* twinBuf0;
 char* twinBuf1;
-
+int i=0, j=0;
 char* allocate(char* twinBuf){
 	twinBuf = (char*)malloc(sizeof(char)*256);
 	return twinBuf;
@@ -31,11 +31,16 @@ FILE* getStream(FILE* fp , int flag){
     	fclose(fp);
 	return fp;
 }
+char* extract_str(char *buf)
+{
+    
+}
 
 TokenInfo getNextToken(FILE* fp){
 	fp = getStream(fp, 0);
-	TokenInfo tk = (TokenInfo)malloc(sizeof(struct tokenInfo));
-	checkDFA(twinBuf1);
+	TokenInfo tk;//(TokenInfo)malloc(sizeof(struct tokenInfo));
+    char *temp1  = extract_str(twinbuf1);
+	tk=checkDFA(temp1, i, j);
 	return tk;
 }
 

@@ -37,12 +37,13 @@ char* extract_str(FILE *fp,char *buf, int i, int j)
        int j=0,k =i;
        
        temp1 = (char*)malloc(sizeof(char)*20);
-       while(buf[k] != " " && k!=end)
+       while(buf[k] != " " && k!=end) // extract till empty space
        {
             temp1[j] = buf[k];
             k++;
             j++
        }
+       // reloads if it is traversed till end
        if(k==end)
        {
             fp = getStream(fp, 1);

@@ -1,25 +1,21 @@
-#include "HashTable.h"
 #include "library.h"
 #define BUF_SIZE 256
 
 int lineNo = 1,state = 0,j=0,tInd = 0;
+char* twinBuf1,*twinBuf2;
 Table keywordsTable;
-void initializeHash()
+char temp[100];
+int i=0, end,flag=0,end1,end2,ans=1;
+
+void initialize()
 {
 	int tableSize=53;
+	twinBuf1 = (char*)malloc(sizeof(char)*BUF_SIZE);
+    twinBuf2 = (char*)malloc(sizeof(char)*BUF_SIZE);
+
 	keywordsTable=create(tableSize);
 	for(j=0;j<24;j++)//24 is keyword table size
 		insert(keywordsTable,keywords,j);
-}
-char temp[100];
-char* twinBuf1;
-char* twinBuf2;
-int i=0, end,flag=0,end1,end2,ans=1;
-FILE *fp;
-char* allocate(char* twinBuf)
-{
-    twinBuf = (char*)malloc(sizeof(char)*BUF_SIZE);
-    return twinBuf;
 }
 char getNextChar()
 {
@@ -100,6 +96,7 @@ int stringToInteger(char *str)
 TokenInfo nextToken(){//char *buf,int *index,int end){
 	// assuming fp = fopen("language.txt") is written in main before calling
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
+	link tok;
 	//end = fread(twinBuf0,sizeof(char),256,fp);//First fread is from here
 	while(1){
 	    char c=getNextChar();
@@ -298,7 +295,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					// char* arr;                                    // do we need to allocate memory here?
 					// strcpy(arr,temp);
 					temp[tInd]='\0';
-					link tok = lookup(keywordsTable,temp,keywords);
+					tok = lookup(keywordsTable,temp,keywords);
 					if(tok==NULL){
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
@@ -363,7 +360,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 
 				 	c = getNextChar();
 				 	if(c=='\0')return NULL;
-					switch(ck){
+					switch(c){
 						case '.':	state = 9;
 							break;
 						case '\n':  	lineNo++;state=8; //if \n encountered increase lineNo and goto st8
@@ -442,7 +439,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 
 			case 14:
 					temp[tInd]='\0';
-					link tok = lookup(keywordsTable,temp,keywords);
+					tok = lookup(keywordsTable,temp,keywords);
 					if(tok==NULL){
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);

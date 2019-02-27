@@ -72,7 +72,7 @@ int main(){
 	end1=fread(twinBuf1,sizeof(char),BUF_SIZE-1,fp);
 	char c;
 	int count=0;
-	while(count<500)//4088 is the number of characters in file
+	while(count<50000)//4088 is the number of characters in file
     {
         printf("%c",getNextChar());
         count++;

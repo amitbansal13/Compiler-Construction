@@ -109,7 +109,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 	    }
 	    if(c=='\0')return NULL;
 		switch(state){
-		    
+
 			case 0:
 				temp[tInd] = c;
 			    tInd++;
@@ -117,9 +117,9 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					case '%' : 						//move to state 1
 						state = 1;
 						break;
-					case 'a' ... 'z' : 
+					case 'a' ... 'z' :
 						if(c>='b' && c<='d'){
-							state = 4; break;	
+							state = 4; break;
 						}
 						else{
 							state = 3;  break;
@@ -135,10 +135,10 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					    break;
 				    case '&':
 				        state = 18 ;
-			            break;                 //'[', ']', '|'...etc. are handled below      
+			            break;                 //'[', ']', '|'...etc. are handled below
 					case '@':
 					    state = 21;
-					    break;  
+					    break;
 				    case  '<':
 				        state = 24;
 				        break;
@@ -156,7 +156,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_SQL"); 
+						strcpy(token->Token,"TK_SQL");
 						state = 18;
 						break;
                     case ']':
@@ -164,7 +164,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_SQR"); 
+						strcpy(token->Token,"TK_SQR");
 						state = 18;
 						break;
                     case ',':
@@ -174,7 +174,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						tInd = 0;
 						strcpy(token->Token,"TK_COMMA");
 						state = 18;
-						break;						
+						break;
                     case ';':
                         token->lineNo = lineNo;
                         temp[tInd] = '\0';
@@ -198,22 +198,22 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						tInd = 0;
 						strcpy(token->Token,"TK_DOT");
 						state = 18;
-						break;						
+						break;
 
                     case '(':
                         token->lineNo = lineNo;
                         temp[tInd] = '\0';
 						strcpy(token->lexeme, temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_OP"); 
+						strcpy(token->Token,"TK_OP");
 						state = 18;
-						break;		
+						break;
                     case ')':
                         token->lineNo = lineNo;
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_CP"); 
+						strcpy(token->Token,"TK_CP");
 						state = 18;
 						break;
                     case '+':
@@ -221,7 +221,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_PLUS"); 
+						strcpy(token->Token,"TK_PLUS");
 						state = 18;
 						break;
 				    case '-':
@@ -237,7 +237,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_MUL"); 
+						strcpy(token->Token,"TK_MUL");
 						state = 18;
 						break;
 					case '/':
@@ -245,7 +245,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_DIV"); 
+						strcpy(token->Token,"TK_DIV");
 						state = 18;
 						break;
 					case '~':
@@ -253,11 +253,11 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_NOT"); 
+						strcpy(token->Token,"TK_NOT");
 						state = 18;
-						break;                      //'[', ']', '|'...etc. are handled below 
-							
-						default:;	
+						break;                      //'[', ']', '|'...etc. are handled below
+
+						default:;
 											//need to update
 				}
 			case 1:
@@ -266,11 +266,11 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						lineNo++;
 						state = 2;
 						break;
-	
+
 					default:
 						while(i<end && c!='\n')	//stay in state 1 while iterating the inputs
 							c = getNextChar();
-							if(c=='\0')return NULL;	
+							if(c=='\0')return NULL;
 							temp[tInd] = c;
 							tInd++;
 						if(c=='\0')return NULL;
@@ -284,9 +284,9 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					strcpy(token->Token,"TK_COMMENT");
 					state = 0;
 					return token;	//return token TK_COMMENT
-            		
-			case 3:	
-				//yahan doubt hai 
+
+			case 3:
+				//yahan doubt hai
 				while(i<end && (c<='z' && c>='a'))
 				{
 						c = getNextChar();
@@ -304,8 +304,8 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						strcpy(token->lexeme,temp);
 						tInd = 0;
 						strcpy(token->Token,"TK_FIELDID");
-						state = 0;  
-						return token;			
+						state = 0;
+						return token;
 					}
 					else{
 						temp[tInd] = '\0';
@@ -315,43 +315,43 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						state = 0;
 						return token;
 					}
-				
-			case 4:	
+
+			case 4:
 					temp[tInd] = c;
-					tInd++;	
+					tInd++;
 					switch(c){
 						case 'a' ... 'z': state=3;break;
 						case '2' ... '7': state=5;break;
-						default: ;//error handling				
+						default: ;//error handling
 					}
 
 			case 5:		/*if(c>='2' && c<='7'){
-						state = 6; i++; break;					
-					}	
+						state = 6; i++; break;
+					}
 					while(i<end && c<='d' && c>='b')
 						i++;
 					i--;
 					state = 5;
 					token->lineNo = lineNo;
 					strncpy(token->lexeme,buf,i-*index+1);
-					strcpy(token->Token,"TK_ID"); 
+					strcpy(token->Token,"TK_ID");
 					*index=i;
 					return token;*/
-					
+
 			case 6:		while(i<end && c<='7' && c>='2'){
 						c = getNextChar();
 						if(c=='\0')return NULL;
 						temp[tInd] = c;
 						tInd++;
 					}
-					i-=2;	
+					i-=2;
 					token->lineNo = lineNo;
 					temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					tInd=0;
-					strcpy(token->Token,"TK_ID"); 
+					strcpy(token->Token,"TK_ID");
                     state = 0;
-					return token;	
+					return token;
 
 			case 7:		//switch to state 8 or 9
 					while(i<end && c<='9' && c>='0'){
@@ -360,7 +360,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						temp[tInd] = c;
 						tInd++;
 					}
-					
+
 				 	c = getNextChar();
 				 	if(c=='\0')return NULL;
 					switch(ck){
@@ -368,19 +368,19 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 							break;
 						case '\n':  	lineNo++;state=8; //if \n encountered increase lineNo and goto st8
 						default:	state = 8;
-									
+
 					}
-					break;	
+					break;
 			case 8:									//return token TK_NUM and retract
 					token->lineNo = lineNo;
 					temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					tInd = 0;
-					strcpy(token->Token,"TK_NUM"); 
+					strcpy(token->Token,"TK_NUM");
 					token->tkVal.intVal = stringToInteger(temp);
 					i-=2;
 					state = 0;
-					return token;	
+					return token;
 			case 9:
 					temp[tInd] = c;
 					tInd++;
@@ -401,7 +401,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					default:	;							//error it is
 				}
 
-			case 11:								//return token TK_RNUM 
+			case 11:								//return token TK_RNUM
 					token->lineNo = lineNo;
 					temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
@@ -410,7 +410,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					token->tkVal.floatVal =  stringToFloat(temp);
 					state = 0;
 					return token;
-			
+
 			case 12:
 					temp[tInd] = c;
 					tInd++;
@@ -431,7 +431,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						temp[tInd] = c;
 						tInd++;
 					}
-					
+
 					switch(c){
 					case '0' ... '9':
 						state = 15;
@@ -439,7 +439,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					//case '\n':  lineNo++;
 					default:   state = 14;
 					}
-			
+
 			case 14:
 					temp[tInd]='\0';
 					link tok = lookup(keywordsTable,temp,keywords);
@@ -448,15 +448,15 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						strcpy(token->lexeme,temp);
 						tInd = 0;
 						strcpy(token->Token,"TK_FUNID");
-						state = 0;  
-						i-=2; return token;			
+						state = 0;
+						i-=2; return token;
 					}
 					else{
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
 						strcpy(token->Token,keywords_tokens[tok->index]);
-						state = 0;  
+						state = 0;
 						i-=2; return token;
 					}
 
@@ -471,17 +471,17 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					tInd = 0;
-					strcpy(token->Token,"TK_FUNID"); 
+					strcpy(token->Token,"TK_FUNID");
 					state = 0;
 					return token;
 
 			case 16:
 					temp[tInd] = c;
-					tInd++;	
+					tInd++;
 					switch(c){
 						case 'a' ... 'z':  state=17;break;
 						//case '\n':  lineNo++;error
-						default: ;//TK_ERROR				
+						default: ;//TK_ERROR
 					}
 			case 17: 	while(i<end && c<='z' && c>='a'){
 						c = getNextChar();
@@ -495,20 +495,20 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					strcpy(token->lexeme,temp);
 					tInd = 0;
 					strcpy(token->Token,"TK_RECORDID");
-					state = 0; 
+					state = 0;
 					return token;
 
 			case 18:	return token;			// return one letter tokens '[' ,';'etc
-					
+
 			case 19:
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '&' :state=20;	
+						case '&' :state=20;
 							break;
 						default:   ;						//error
 					}
-						
+
 			case 20:
 					temp[tInd] = c;
 					tInd++;
@@ -516,26 +516,26 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						case '&' :	state=21;break;
 						default:		;				//error
 					}
-			
+
 			case 21:
 						token->lineNo = lineNo;
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_AND"); 
+						strcpy(token->Token,"TK_AND");
 						state = 0;
 						return token;
-				
+
 
 			case 22:
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '@' :state=20;	
+						case '@' :state=20;
 							break;
 						default:	;					//error
 					}
-						
+
 			case 23:
 					temp[tInd] = c;
 					tInd++;
@@ -549,27 +549,27 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_OR"); 
+						strcpy(token->Token,"TK_OR");
 						state = 0;
 						return token;
 			case 25:
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '=' :			
+						case '=' :
 							state = 30;
 							break;
 						case '-' :
 							state=26;
 							break;
-		
+
 					}
 
-			case 26 :	
+			case 26 :
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '-' :			
+						case '-' :
 							state = 27;
 							break;
 						default:	;			//error
@@ -578,7 +578,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '-' :i++;			
+						case '-' :i++;
 							state = 28;
 							break;
 						default:		;		//error
@@ -588,8 +588,8 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_ASSIGNOP"); 
-						state = 0; 
+						strcpy(token->Token,"TK_ASSIGNOP");
+						state = 0;
 						return token;
 
 			case 29:					//return TK_LT
@@ -597,7 +597,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					tInd = 0;
-					strcpy(token->Token,"TK_LT"); 
+					strcpy(token->Token,"TK_LT");
 					i -=2;
 					state = 0;
 					return token;
@@ -611,7 +611,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_LE"); 
+						strcpy(token->Token,"TK_LE");
 						state = 0;
 						return token;
 					}
@@ -620,19 +620,19 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 					temp[tInd] = c;
 					tInd++;
 					switch(c){
-						case '=': 			
+						case '=':
 						state=33;
 						break;
-						default:;		;				
+						default:;		;
 						state=32;
 					}
-		
+
 			case 32:
 						token->lineNo = lineNo;
 						temp[tInd] = '\0';			//return TK_GT and retract
 						strcpy(token->lexeme,temp);
 						tInd = 0;
-						strcpy(token->Token,"TK_GT"); 
+						strcpy(token->Token,"TK_GT");
 						i -=2;
 						state = 0;
 						return token;
@@ -661,7 +661,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						strcpy(token->Token,"TK_EQ");
 						state = 0;
 						return token;
-					
+
 			case 36:
 					temp[tInd] = c;
 					tInd++;

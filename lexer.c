@@ -10,20 +10,21 @@ FILE *fp;
 
 void initialize(FILE *f)	// initializes hashtable ,filepointers
 {
+	fp=f;
 	lineNo = 1;
-	i=0; end;flag=0,end1,end2,ans=1;
+	i=0;end=0;flag=0;end1=0;end2=0;ans=1;
 	int tableSize=53;
-	if(twinBuf1!=NULL)
+	if(twinBuf1==NULL)
 		twinBuf1 = (char*)malloc(sizeof(char)*BUF_SIZE);
-	if(twinBuf2!=NULL)
+	if(twinBuf2==NULL)
     	twinBuf2 = (char*)malloc(sizeof(char)*BUF_SIZE);
-
-	if(keywordsTable!=NULL){
+    end1=fread(twinBuf1,sizeof(char),BUF_SIZE-1,fp);
+	if(keywordsTable==NULL){
 		keywordsTable=create(tableSize);
 		for(int j=0;j<24;j++)//24 is keyword table size
 			insert(keywordsTable,keywords,j);
 	}
-	fp=f;
+	
 }
 
 char getNextChar()				// returns next character in buf and also increments i

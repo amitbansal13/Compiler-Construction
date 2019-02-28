@@ -11,6 +11,12 @@ typedef union{
 	int intVal;
 	float floatVal;
 }tokenVal;
-};
+
+struct tokenInfo{
+	int lineNo;
+	char *lexeme;
+	char *Token;
+	TokenVal;
+}tokenInfo;
 
 

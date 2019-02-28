@@ -66,7 +66,8 @@ link lookup(Table t,char arr[],char *keywords[]){
 	link chain=t->buckets[key];
 	while(chain)
 	{
-		if(strcmp(keywords[chain->index],arr)==0)return chain;
+		
+		if(chain->index != -1 && strcmp(keywords[chain->index],arr)==0)return chain;
 		chain=chain->next;
 	}
 	return NULL;

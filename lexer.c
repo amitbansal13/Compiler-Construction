@@ -109,6 +109,7 @@ TokenInfo nextToken(){
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
 	memset(token->Token,0,MAX_TOKEN);
 	memset(token->lexeme,0,MAX_LEXEME);
+	memset(temp,0,100);
 	
 	link tok;	//doubt
 
@@ -117,6 +118,8 @@ TokenInfo nextToken(){
 	int state = 0;
 	char c=getNextChar();
 	while(1){
+		if(c==0)
+			return NULL;
 		switch(state){
 			case 0:
 				switch(c){
@@ -340,7 +343,19 @@ TokenInfo nextToken(){
 						state = 3;
 						c=getNextChar();
 						break;
-					
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+						i--;
 					case ' ':
 					case '\t':
 					case '\0':
@@ -415,6 +430,9 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 
+					case '[':
+					case ']':
+						i--;
 						case ' ':
 						case '\t':
 						case '\0':
@@ -448,6 +466,19 @@ TokenInfo nextToken(){
 							state=6;
 							c=getNextChar();
 							break;
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+						i--;
 
 						case ' ':
 						case '\t':

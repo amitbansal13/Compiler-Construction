@@ -1,6 +1,10 @@
+#ifndef LEXER_H
+#define LEXER_H
+
 #include<stdio.h>
 #include<stdlib.h>
 #include "HashTable.h"
+
 #define MAX_TOKEN 20
 #define MAX_LEXEME 100
 
@@ -24,3 +28,5 @@ int stringToInteger(char *str);
 TokenInfo nextToken();
 void removeComments();
 void printAllTokens();
+
+#endif

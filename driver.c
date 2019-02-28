@@ -1,7 +1,6 @@
 #include "lexer.h"
 #include <time.h>
 
-void printFile(FILE *fp);
 int main()
 {
 	////////// Variables /////////////////////
@@ -16,9 +15,8 @@ int main()
 	
 
 
-	printf("%d\n",calculateHash("physics",31,53));
 	////////////// Initialization /////////////
-	FILE* fp=fopen("testcase3.txt","r");//change sample.txt to the file name containing code
+	FILE* fp=fopen("testcase1.txt","r");//change sample.txt to the file name containing code
 	if(fp==NULL){
 		printf("File not found\n");
 		return 1;
@@ -26,12 +24,12 @@ int main()
 	initialize(fp);//to initialize hashtable and file pointer
 	
 	////////////// Execution ///////////////
-	printf("Enter your choice: ");
+	printf("\nSelect your choice: \n");
+	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
 	scanf("%d",&choice);
 	while(choice!=0)
 	{
 		if(choice==1)removeComments();
-		//	printFile(fp);
 		//We have to change the implementation of remove comments....
 		else if (choice==2)printAllTokens();
 		else if (choice==3)
@@ -44,7 +42,8 @@ int main()
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
-		printf("Enter your choice: ");
+		printf("\nSelect your choice: \n");
+		printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
 		scanf("%d",&choice);
 	}
 	return 0;

@@ -4,6 +4,14 @@
 all: driver.o lexer.o HashTable.o
 	gcc driver.o lexer.o HashTable.o -o compiler
 
+test: test.o parser.o HashTable.o
+	gcc test.o parser.o HashTable.o -o test
+
+parser.o: parser.c parser.h
+	gcc -g -c parser.c
+
+test.o: test.c parser.h
+	gcc -g -c test.c
 
 driver.o:	driver.c	lexer.h
 	gcc -g -c driver.c
@@ -11,15 +19,10 @@ driver.o:	driver.c	lexer.h
 lexer.o:	lexer.c lexer.h
 	gcc -g -c lexer.c
 
-# lexer2.o:	Lexer2_0.c	HashTable.h
-# 	gcc -g -c Lexer2_0.c
-
 
 HashTable.o:	HashTable.c	HashTable.h
 	gcc -g -c HashTable.c
 
-FileIO.o:	FileIO.c	lexer.h
-	gcc -g -c FileIO.c
 
 clean:
 	rm -rf *.o

@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "HashTable.h"
-extern FILE *fp;
 typedef struct tokenInfo* TokenInfo;
 typedef union{
 	int intVal;
@@ -15,7 +14,7 @@ char* Token;
 tokenVal tkVal;
 };
 
-void initialize();
+void initialize(FILE *fp);
 char getNextChar();
 float stringToFloat(char *str);
 int stringToInteger(char *str);

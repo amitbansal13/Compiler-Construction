@@ -1,3 +1,5 @@
 # Compiler-Construction
 -Compilable code
--Still we need to make one main or driver file
+-Pull this before working
+-We have to change the implementation of removeComments as we are not reading in str
+

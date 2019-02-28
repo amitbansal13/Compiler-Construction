@@ -11,6 +11,7 @@ FILE *fp;
 void initialize(FILE *f)	// initializes hashtable ,filepointers
 {
 	fp=f;
+	fseek(fp,0,SEEK_SET);
 	lineNo = 1;
 	i=0;end=0;flag=0;end1=0;end2=0;ans=1;
 	int tableSize=53;
@@ -106,6 +107,9 @@ int stringToInteger(char *str)
 
 TokenInfo nextToken(){
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
+	memset(token->Token,0,MAX_TOKEN);
+	memset(token->lexeme,0,MAX_LEXEME);
+	
 	link tok;	//doubt
 
 	/* INITIALIZE STATE AND TOKEN */
@@ -306,6 +310,7 @@ TokenInfo nextToken(){
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
+				break;
 
 			case 1:
 					temp[tInd++] = c;
@@ -319,6 +324,7 @@ TokenInfo nextToken(){
 						c=getNextChar();
 						state = 1;
 					}
+					break;
 
 			case 2:
 					token->lineNo = lineNo;
@@ -366,6 +372,7 @@ TokenInfo nextToken(){
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
+					break;
 
 			case 4:
 					switch(c){
@@ -393,6 +400,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 
 			case 5:	
 					switch(c){
@@ -431,6 +439,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 
 			case 6:
 					switch(c){
@@ -464,6 +473,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 
 			case 7:		//switch to state 8 or 9
 					switch(c){
@@ -481,6 +491,7 @@ TokenInfo nextToken(){
 							state = 8;
 							break;
 					}
+					break;
 
 			case 8:									//return token TK_NUM and retract
         	   	   	token->lineNo = lineNo;
@@ -510,6 +521,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 			case 10:
 					switch(c){
 						case '0' ... '9' :
@@ -529,6 +541,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 
 			case 11:								//return token TK_RNUM
 					token->lineNo = lineNo;
@@ -550,6 +563,7 @@ TokenInfo nextToken(){
 							state = 13;
 							c=getNextChar();
 							break;
+					
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
@@ -562,7 +576,8 @@ TokenInfo nextToken(){
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
 							return token;
-					}
+					}	
+					break;
 
 			case 13:
 					switch(c){
@@ -584,6 +599,7 @@ TokenInfo nextToken(){
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							state=14;
 					}
+					break;
 
 			case 14:								//return TK_FUNID OR TK_MAIN and retract
         	   	   	token->lineNo = lineNo;
@@ -629,6 +645,7 @@ TokenInfo nextToken(){
 							return token;
 					}
 
+					break;
 			case 16:
 					switch(c){
 						case 'a' ... 'z':
@@ -649,6 +666,7 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
+					break;
 
 			case 17: 
 					switch(c){
@@ -684,6 +702,7 @@ TokenInfo nextToken(){
 							return token;
 					}
 
+					break;
 												//for case 18 token already made before
 			case 18:	return token;			// return one letter tokens '[' ,';'etc
 
@@ -705,6 +724,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 20:
 					switch(c){
@@ -720,6 +740,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 						
 			case 21:								//return token TK_AND
 					token->lineNo = lineNo;
@@ -743,6 +764,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 23:
 					switch(c){
@@ -758,6 +780,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 						
 			case 24:								//return token TK_OR
 					token->lineNo = lineNo;
@@ -781,6 +804,7 @@ TokenInfo nextToken(){
 							state = 29;
 							break;
 					}
+					break;
 
 			case 26:		//switch to state 27
 					switch(c){
@@ -797,6 +821,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 27:
 					switch(c){
@@ -812,6 +837,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 28:								//return token TK_ASSIGNOP
 					token->lineNo = lineNo;
@@ -845,6 +871,7 @@ TokenInfo nextToken(){
 							state = 32;
 							break;
 					}
+					break;
 
 			case 32:								//return token TK_GT and retract
 					token->lineNo = lineNo;
@@ -875,6 +902,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 35:
 					token->lineNo = lineNo;
@@ -897,6 +925,7 @@ TokenInfo nextToken(){
 							i--;
 							return token;
 					}
+					break;
 
 			case 37:						//return TK_NE
 					token->lineNo = lineNo;
@@ -915,18 +944,26 @@ TokenInfo nextToken(){
 	}
 }
 
-void removeComments(char *testcaseFile, char *cleanFile){
-	int i=0;
-	while(testcaseFile[i])
+void removeComments(){//char *testcaseFile, char *cleanFile){
+	char c;
+	int isCommment=0;//to check whether '\n' is comming from comment or is normal '\n'
+	while(c=getNextChar())
 	{
-		if(testcaseFile[i]=='%')
+		if(c=='%')
 		{
-			while(testcaseFile[i]!='\n')i++;
-			i++;
+			c=getNextChar();
+			while(c && c!='\n')c=getNextChar();
+			isCommment=1;
 		}
-		cleanFile[i]=testcaseFile[i];
-		i++;
+		if(isCommment && c=='\n')
+		{
+			isCommment=0;
+			continue;
+		}
+		printf("%c", c);
 	}
+	i=0;//resetting buffer pointer
+	fseek(fp, 0, SEEK_SET);//resetting file pointer to start of file
 }
 
 void printAllTokens()
@@ -937,5 +974,13 @@ void printAllTokens()
 	{
 		printf("%d. %s %s\n",tk->lineNo,tk->lexeme,tk->Token);
 		free(tk);
+	}
+}
+
+void printFile(FILE *fp){
+	char c=getNextChar();
+	while(c!=0){
+		c=getNextChar();
+		printf("%c",c);
 	}
 }

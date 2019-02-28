@@ -22,5 +22,5 @@ char getNextChar();
 float stringToFloat(char *str);
 int stringToInteger(char *str);
 TokenInfo nextToken();
-void removeComments(char *testcaseFile, char *cleanFile);
+void removeComments();
 void printAllTokens();

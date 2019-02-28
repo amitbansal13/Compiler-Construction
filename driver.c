@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include <time.h>
 
+void printFile(FILE *fp);
 int main()
 {
 	////////// Variables /////////////////////
@@ -16,7 +17,7 @@ int main()
 
 
 	////////////// Initialization /////////////
-	FILE* fp=fopen("sample.txt","r");//change sample.txt to the file name containing code
+	FILE* fp=fopen("testcase1.txt","r");//change sample.txt to the file name containing code
 	if(fp==NULL){
 		printf("File not found\n");
 		return 1;
@@ -28,7 +29,8 @@ int main()
 	scanf("%d",&choice);
 	while(choice!=0)
 	{
-		if(choice==1)//removeComments();
+		if(choice==1)removeComments();
+		//	printFile(fp);
 		//We have to change the implementation of remove comments....
 		else if (choice==2)printAllTokens();
 		else if (choice==3)

@@ -323,18 +323,25 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						default: ;//error handling
 					}
 
-			case 5:		/*if(c>='2' && c<='7'){
-						state = 6; i++; break;
+			case 5:	
+					if(c>='2' && c<='7'){
+						state = 6; break;
 					}
-					while(i<end && c<='d' && c>='b')
-						i++;
-					i--;
+					while( c<='d' && c>='b')
+					{
+						c = getNextChar();
+						if(c=='\0')return NULL;
+						temp[tInd] = c;
+						tInd++;
+					}	
+					i-=2;
 					state = 5;
 					token->lineNo = lineNo;
-					strncpy(token->lexeme,buf,i-*index+1);
+					temp[tInd] = '\0';
+					strcpy(token->lexeme,temp);
+					tInd = 0;
 					strcpy(token->Token,"TK_ID");
-					*index=i;
-					return token;*/
+					return token;
 
 			case 6:		while(i<end && c<='7' && c>='2'){
 						c = getNextChar();
@@ -697,3 +704,13 @@ void removeComments(char *testcaseFile, char *cleanFile){
 	}
 }
 
+void printAllTokens()
+{
+	TokenInfo tk;
+	int count=0;
+	while(tk=nextToken())
+	{
+		printf("%d. %s %s\n",tk->lineNo,tk->lexeme,tk->Token);
+		free(tk);
+	}
+}

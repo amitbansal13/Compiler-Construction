@@ -5,7 +5,7 @@ all: driver.o lexer.o HashTable.o
 	gcc driver.o lexer.o HashTable.o -o compiler
 
 
-driver.o:	driver.c	HashTable.h
+driver.o:	driver.c	lexer.h
 	gcc -g -c driver.c
 
 lexer.o:	lexer.c lexer.h

@@ -94,11 +94,9 @@ int stringToInteger(char *str)
 	return ans;
 }
 
-TokenInfo nextToken(){//char *buf,int *index,int end){
-	// assuming fp = fopen("language.txt") is written in main before calling
+TokenInfo nextToken(){
 	TokenInfo token = (TokenInfo)malloc(sizeof(struct tokenInfo));
 	link tok;
-	//end = fread(twinBuf0,sizeof(char),256,fp);//First fread is from here
 	while(1){
 	    char c=getNextChar();
 	    while(c == '\n'){
@@ -256,7 +254,7 @@ TokenInfo nextToken(){//char *buf,int *index,int end){
 						break;                      //'[', ']', '|'...etc. are handled below
 
 						default:;
-											//need to update
+							//need to update
 				}
 			case 1:
 				switch(c){

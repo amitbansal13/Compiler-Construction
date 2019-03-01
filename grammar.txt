@@ -36,8 +36,6 @@ stmt 1 ioStmt
 stmt 1 funCallStmt
 assignmentStmt 4 singleOrRecId TK_ASSIGNOP arithmeticExpression TK_SEM
 singleOrRecId 2 TK_ID singleOrRecIdPrime
-singleOrRecIdPrime 2 TK_DOT TK_FIELDID
-singleOrRecIdPrime 1 eps
 funCallStmt 7 outputParameters TK_CALL TK_FUNID TK_WITH TK_PARAMETERS inputParameters TK_SEM
 outputParameters 4 TK_SQL idList TK_SQR TK_ASSIGNOP
 outputParameters 1 eps
@@ -58,10 +56,6 @@ termPrime 3 highPrecedenceOperators factor termPrime
 termPrime 1 eps
 factor 3 TK_OP arithmeticExpression TK_CL
 factor 1 all
-highPrecedenceOperators 1 TK_MUL
-highPrecedenceOperators 1 TK_DIV
-lowPrecedenceOperators 1 TK_PLUS
-lowPrecedenceOperators 1 TK_MINUS
 all 1 TK_ID
 all 1 TK_NUM
 all 1 TK_RNUM
@@ -86,5 +80,3 @@ returnStmt 3 TK_RETURN optionalReturn TK_SEM
 optionalReturn 3 TK_SQL idList TK_SQR
 optionalReturn 1 eps
 idList 2 TK_ID more_ids
-more_ids 2 TK_COMMA idList
-more_ids 1 eps

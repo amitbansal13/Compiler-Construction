@@ -21,6 +21,7 @@ char *nonterminals[]={
 	"typeDefinitions",
 	"typeDefinition",
 	"fieldDefinitions",
+	"fieldDefinition",
 	"moreFields",
 	"declarations",
 	"declaration",
@@ -105,8 +106,8 @@ grammar* makeNewRule(FILE* fp,int d)		//makes a new grammar rule and returns gra
 }
 
 Grammar* readFile(char* fileName){			// making the Grammar data structures
-	FILE* fp=fopen(fileName,"r");
-	if(fp==NULL)
+	FILE* f=fopen(fileName,"r");
+	if(f==NULL)
 	{
 		printf("File Not opened\n");
 		return NULL;
@@ -122,23 +123,28 @@ Grammar* readFile(char* fileName){			// making the Grammar data structures
 	
 	int d=0,i=0;
 	for(i=0;i<nonTerminalsSize;i++)
-		arr[i]=(grammar*)malloc(sizeof(grammar));
+	//	arr[i]=(grammar*)malloc(sizeof(grammar));
+		arr[i]=NULL;
 	char temp[30];
 	link check=NULL;
-	while(fscanf(fp,"%s %d",temp,&d)!=-1)//scan till EOF
+	while(fscanf(f,"%s %d",temp,&d)!=-1)//scan till EOF
 	{
 		printf("%s %d\n",temp,d);
 		check=lookup(nonTerminals,temp,nonterminals);
 		grammar* head;
-		if(arr[check->index]->more==NULL)//if this is the first rule to be added 
-			arr[check->index]->more=makeNewRule(fp,d);
+	//	if(arr[check->index]->more==NULL)//if this is the first rule to be added 
+	//		arr[check->index]->more=makeNewRule(fp,d);
+		if(arr[check->index]==NULL){//if this is the first rule to be added 
+			arr[i]=(grammar*)malloc(sizeof(grammar));
+			arr[check->index]=makeNewRule(f,d);
+		}
 		else
 		{
-			head=makeNewRule(fp,d);
+			head=makeNewRule(f,d);
 			head->more=arr[check->index]->more;
 			arr[check->index]->more=head;
 		}
 	}
-	fclose(fp);
+	fflush(f);
 	return g;
 }

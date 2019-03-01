@@ -9,18 +9,19 @@ int main()
 	for(i=0;i<size;i++)
 	{
 		temp=arr[i];
-		temp1=arr[i]->more;
-		while(temp1)
+		if(temp==NULL)
+			continue;
+		while(temp)
 		{
-			temp2=temp1;
-			printf("%s ",temp->name);
-			while(temp2)
+			temp1=temp;
+			printf("%s->",nonterminals[i]);
+			while(temp1)
 			{
-				printf("%s ",temp2->name);
-				temp2=temp->next;
+				printf("%s ",temp1->name);
+				temp1=temp1->next;
 			}
 			printf("\n");
-			temp1=temp1->more;
+			temp=temp->more;
 		}
 	}
 	return 0;

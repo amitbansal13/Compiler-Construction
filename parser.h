@@ -3,6 +3,8 @@
 
 
 #include "lexer.h"
+extern char *tokens[];
+extern char *nonterminals[];
 extern char* tokens[];
 
 typedef struct grammar{//contains one rule of grammar

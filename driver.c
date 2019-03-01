@@ -26,9 +26,18 @@ int main()
 	
 	////////////// Execution ///////////////
 	printf("\nSelect your choice: \n");
-	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
+	//printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
+
+
+	/****kept this for testing,will make driver.c later finally ****/
+
+
+
+	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6. Print Time taken by program\n");
 	printf("Choice = ");
+
 	scanf("%d",&choice);
+
 	while(choice!=0)
 	{
 		if(choice==1)removeComments();
@@ -43,10 +52,20 @@ int main()
 			total_CPU_time  =  (double) (end_time - start_time);
 			total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;
 		}
+		else if(choice ==4){
+			Grammar *g = makeGrammar("grammar.txt");
+			printGrammar(g);
+		}
+		else if(choice ==5){
+			Grammar *g = makeGrammar("grammar.txt");
+			computeFirstnFollow(g);
+			printFirst();
+		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
 		printf("\nSelect your choice: \n");
-		printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
+	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6. Print Time taken by program\n");
+	//	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
 		printf("Choice = ");
 		scanf("%d",&choice);
 

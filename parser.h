@@ -1,12 +1,15 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#define terminalsSize 54 //Number of Terminals including epsilon
+#define nonTerminalsSize 52//actual no of terminals in our code
 
 #include "lexer.h"
+#include<stdbool.h>
 extern char *tokens[];
 extern char *nonterminals[];
-extern char* tokens[];
-
+extern Table terminals;
+extern Table nonTerminals;
 typedef struct grammar{//contains one rule of grammar
 	char name[30];
 	struct grammar* next;
@@ -34,9 +37,17 @@ typedef struct ff* ffset;
 void initializeTNT();//to initialize terminal and non terminals hash table
 grammar* newNode(char *temp);
 grammar* makeNewRule(FILE* fp,int d);
-Grammar* readFile(char* fileName);
+Grammar* makeGrammar(char* fileName);
+void printGrammar(Grammar *g);
+bool isTerminal(char *text);
+bool isNTerminal(char *text);
+void initializeFF();
+void addFirst(int index,char *text);
+int findFirst(int index_orig,int index,Grammar *g);
+void computeFirstnFollow(Grammar *g);
+void printFirst();
 
-ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
+//ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
 
 
 

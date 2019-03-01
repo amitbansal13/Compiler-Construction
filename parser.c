@@ -1,7 +1,5 @@
 #include "parser.h"
 #include "HashTable.h"
-#define terminalsSize 54 //Number of Terminals including epsilon
-#define nonTerminalsSize 51
 
 
 char *tokens[]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID","TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL","TK_COMMA", "TK_SEM","TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP","TK_CL","TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_PLUS","TK_MINUS","TK_MUL","TK_DIV","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE","TK_AND","TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_LE", "TK_NE","eps"};  
@@ -39,7 +37,6 @@ char *nonterminals[]={
 	"outputParameters",
 	"inputParameters",
 	"elsePart",
-	"ioStmt",
 	"allVar",
 	"arithmeticExpression",
 	"expPrime",
@@ -49,6 +46,7 @@ char *nonterminals[]={
 	"highPrecedenceOperator",
 	"lowPrecedenceOperators",
 	"all",
+	"all_t",
 	"temp",
 	"booleanExpression",
 	"var",
@@ -105,7 +103,7 @@ grammar* makeNewRule(FILE* fp,int d)		//makes a new grammar rule and returns gra
 	return head;
 }
 
-Grammar* readFile(char* fileName){			// making the Grammar data structures
+Grammar* makeGrammar(char* fileName){			// making the Grammar data structures
 	FILE* f=fopen(fileName,"r");
 	if(f==NULL)
 	{
@@ -148,3 +146,26 @@ Grammar* readFile(char* fileName){			// making the Grammar data structures
 	fflush(f);
 	return g;
 }
+
+void printGrammar(Grammar *g)		//prints the already made grammar
+{
+    int size=g->size;
+    grammar** arr=g->arr,*temp,*temp1,*temp2;
+    int i=0;
+    for(i=0;i<size;i++)
+    {
+        temp=arr[i];
+        while(temp)
+        {
+            temp1=temp;
+            printf("%s->",nonterminals[i]);
+            while(temp1)
+            {
+                printf("%s ",temp1->name);
+                temp1=temp1->next;
+            }
+            printf("\n");
+            temp=temp->more;
+        }
+    }
+} 

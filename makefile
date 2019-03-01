@@ -1,17 +1,17 @@
 # all:	main.o	lexer.o	HashTable.o FileIO.o
 # 	gcc main.o lexer.o HashTable.o FileIO.o -o compiler
 
-all: driver.o lexer.o HashTable.o
-	gcc driver.o lexer.o HashTable.o -o compiler
-
-test: test.o parser.o HashTable.o
-	gcc test.o parser.o HashTable.o -o test
+all: driver.o lexer.o HashTable.o parser.o firstFollow.o
+	gcc driver.o lexer.o HashTable.o parser.o firstFollow.o -o compiler
 
 parser.o: parser.c parser.h
 	gcc -g -c parser.c
 
 test.o: test.c parser.h
 	gcc -g -c test.c
+
+firstFollow.o: firstFollow.c parser.h
+	gcc -g -c firstFollow.c
 
 driver.o:	driver.c	lexer.h
 	gcc -g -c driver.c

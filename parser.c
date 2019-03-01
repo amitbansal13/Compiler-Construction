@@ -129,7 +129,7 @@ Grammar* readFile(char* fileName){			// making the Grammar data structures
 	link check=NULL;
 	while(fscanf(f,"%s %d",temp,&d)!=-1)//scan till EOF
 	{
-		printf("%s %d\n",temp,d);
+	//	printf("%s %d\n",temp,d);
 		check=lookup(nonTerminals,temp,nonterminals);
 		grammar* head;
 	//	if(arr[check->index]->more==NULL)//if this is the first rule to be added 

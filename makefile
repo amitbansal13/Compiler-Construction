@@ -19,10 +19,8 @@ driver.o:	driver.c	lexer.h
 lexer.o:	lexer.c lexer.h
 	gcc -g -c lexer.c
 
-
 HashTable.o:	HashTable.c	HashTable.h
 	gcc -g -c HashTable.c
-
 
 clean:
 	rm -rf *.o

@@ -8,6 +8,15 @@ int main()
 	clock_t start_time, end_time;
 	int choice;
     double total_CPU_time, total_CPU_time_in_seconds;
+/*
+			Grammar *g = makeGrammar("grammar.txt");
+			computeFirstnFollow(g);
+			link check = lookup(nonTerminals,"more_ids",nonterminals);
+            int new_index = check->index;
+            bool b = checkEps(new_index,g);
+			printf("%d\n",b);
+			return 1;
+*/
     
     //////////// Status ///////////////////
 	printf("Status:-\n");
@@ -27,6 +36,7 @@ int main()
 	////////////// Execution ///////////////
 	printf("\nSelect your choice: \n");
 	//printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
+
 
 
 	/****kept this for testing,will make driver.c later finally ****/

@@ -44,9 +44,10 @@ bool isTerminal(char *text);
 bool isNTerminal(char *text);
 void initializeFF();
 void addFirst(int index,char *text);
-int findFirst(int index_orig,int index,Grammar *g);
+void findFirst(int index_orig,int index,Grammar *g);
 void computeFirstnFollow(Grammar *g);
 void printFirst();
+bool checkEps(int index,Grammar *g);
 
 //ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
 

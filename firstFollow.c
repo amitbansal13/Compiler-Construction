@@ -28,52 +28,69 @@ void initializeFF(){ 	//initializes firt follow sets to NULL
 	return;
 }
 void addFirst(int index,char *text){
-	FF t = (FF)malloc(sizeof(struct firstfollow));
+	FF t = fset[index].first;
+	while(t!=NULL){
+		if(strcmp(t->elem,text)==0)
+			return;
+		t=t->next;
+	}
+	t = (FF)malloc(sizeof(struct firstfollow));
 	strcpy(t->elem,text);
 	t->next=fset[index].first;
 	fset[index].first = t;
 	return;
 	
 }
-int findFirst(int index_orig,int index,Grammar *g){
+
+bool checkEps(int index,Grammar *g){
+	grammar *temp = g->arr[index];
+	while(temp!=NULL){
+		if(strcmp(temp->name,"eps")==0)
+			return true;
+		temp=temp->more;
+	}
+	return false;
+}
+	
+void findFirst(int index_orig,int index,Grammar *g){
 	if(index>=nonTerminalsSize){
 		printf("Error\n");
-		return 0;
+		return;
 	}
 	grammar *temp = g->arr[index];
-	grammar *temp2;
+	grammar *temp1;
+	link check;int new_index;bool b;
 	int eps_flag=0;
 	while(temp!=NULL){
-		if(strcmp(temp->name,"eps")==0){
-	//		addFirst(index_orig,"eps");
-			eps_flag=1;		//set flag
-		}
-		else if(isTerminal(temp->name))		//if terminal,add to the first set
+		if(strcmp(temp->name,"eps")!=0 && isTerminal(temp->name))//if terminal,add to the first set
 			addFirst(index_orig,temp->name);
 
 		else if(isNTerminal(temp->name)){		//if NT,
-			link check = lookup(nonTerminals,temp->name,nonterminals);
-			int new_index = check->index;
-			int ret = findFirst(index_orig,new_index,g);
-			if(ret==1){		//this non terminal has eps 
-				temp2=temp->next;
-				if(temp2==NULL)
-					addFirst(index_orig,"eps");
-				else if(isTerminal(temp2->name))		//if terminal,add to the first set
-					addFirst(index_orig,temp2->name);
-				else if(isNTerminal(temp->name)){		//if NT,
-					check = lookup(nonTerminals,temp2->name,nonterminals);
-					int new_index = check->index;
+			check = lookup(nonTerminals,temp->name,nonterminals);
+			new_index = check->index;
+			findFirst(index_orig,new_index,g);
+			b = checkEps(new_index,g);		//if NT has an eps,go till all eps found
+			temp1=temp;
+			while(b==true){
+				temp1=temp1->next;
+				if(temp1==NULL)
+					break;
+				if(isTerminal(temp->name))		//if terminal,add to the first set
+					addFirst(index_orig,temp1->name);
+				else if(isNTerminal(temp1->name)){		//if NT,
+					check = lookup(nonTerminals,temp1->name,nonterminals);
+					new_index = check->index;
 					findFirst(index_orig,new_index,g);
+					b = checkEps(new_index,g);
 				}
 			}
 		}
 		temp=temp->more;
 	}
-	//if(fset[index_orig].first ==NULL)
-	if(eps_flag==1 && index_orig == index)
-		addFirst(index_orig,"eps");
-	return eps_flag;
+	if(index == index_orig){
+			if(checkEps(index,g) || fset[index].first==NULL)
+				addFirst(index_orig,"eps");
+	}
 }
 
 void computeFirstnFollow(Grammar *g){

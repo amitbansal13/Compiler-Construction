@@ -77,7 +77,7 @@ void initializeTNT()
 	}
 }
 
-grammar* newNode(char *temp)
+grammar* newNode(char *temp)			//new grammar node
 //returns a new grammar node
 {
 	grammar* g=(grammar*)malloc(sizeof(grammar));
@@ -87,7 +87,7 @@ grammar* newNode(char *temp)
 	return g;
 }
 
-grammar* makeNewRule(FILE* fp,int d)
+grammar* makeNewRule(FILE* fp,int d)		//makes a new grammar rule and returns grammar*
 //makes a new Rule by scanning d space separated strings in a line
 {
 	int i=0;
@@ -104,7 +104,7 @@ grammar* makeNewRule(FILE* fp,int d)
 	return head;
 }
 
-Grammar* readFile(char* fileName){
+Grammar* readFile(char* fileName){			// making the Grammar data structures
 	FILE* fp=fopen(fileName,"r");
 	if(fp==NULL)
 	{

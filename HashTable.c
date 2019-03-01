@@ -15,7 +15,7 @@ int calculateHash(char arr[],int a,int tableSize)
 	}
 	return key%tableSize;
 }
-Table create(int tableSize){
+Table create(int tableSize){				// creates a hashtable of tableSize
 	Table t=(Table)malloc(sizeof(struct hash));
 	t->tableSize=tableSize;
 	t->a=31;//setting a to some prime number to be used for horner rule
@@ -23,7 +23,7 @@ Table create(int tableSize){
 	int i=0;
 	for(i=0;i<tableSize;i++){
 		(t->buckets)[i]=(link)malloc(sizeof(struct record));
-		((t->buckets)[i])->index=-1;
+		((t->buckets)[i])->index=-1;			// initial entry on each bucket is -1
 	}
 	return t;
 }

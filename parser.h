@@ -10,6 +10,7 @@ extern char *tokens[];
 extern char *nonterminals[];
 extern Table terminals;
 extern Table nonTerminals;
+
 typedef struct grammar{//contains one rule of grammar
 	char name[30];
 	struct grammar* next;

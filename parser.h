@@ -3,8 +3,6 @@
 
 
 #include "lexer.h"
-extern char *tokens[];
-extern char *nonterminals[];
 extern char* tokens[];
 
 typedef struct grammar{//contains one rule of grammar
@@ -36,7 +34,7 @@ grammar* newNode(char *temp);
 grammar* makeNewRule(FILE* fp,int d);
 Grammar* readFile(char* fileName);
 
-ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
+ffset computeFirstFollow(Grammar* g);//, Table nTerm, Table term);//,Table nt);//returns array of first and follow for all non terminals
 
 
 

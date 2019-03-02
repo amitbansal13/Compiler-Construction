@@ -11,16 +11,18 @@ int main()
 /*
 			Grammar *g = makeGrammar("grammar.txt");
 			computeFirstnFollow(g);
-			link check = lookup(nonTerminals,"more_ids",nonterminals);
-            int new_index = check->index;
-            bool b = checkEps(new_index,g);
-			printf("%d\n",b);
+	//		link check = lookup(nonTerminals,"more_ids",nonterminals);
+       //     int new_index = check->index;
+        //    bool b = checkEps(new_index,g);
+	//		printf("%d\n",b);
+			printf("%d\n",isTerminal("DOsLLAR"));
 			return 1;
-*/
+
 	//		Grammar *g = makeGrammar("grammar.txt");
 //			computeFirstnFollow(g);
 //
     
+*/
     //////////// Status ///////////////////
 	printf("Status:-\n");
 	printf("1. Lexer Implemented\n");
@@ -77,7 +79,7 @@ int main()
 		else if(choice ==5){
 			Grammar *g = makeGrammar("grammar.txt");
 			computeFirstnFollow(g);
-			printFirst();
+			printFirstnFollow();
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

@@ -54,7 +54,7 @@ arithmeticExpression 2 term expPrime
 expPrime 3 lowPrecedenceOperators term expPrime
 expPrime 1 eps
 term 2 factor termPrime
-termPrime 3 highPrecedenceOperators factor termPrime
+termPrime 3 highPrecedenceOperator factor termPrime
 termPrime 1 eps
 factor 3 TK_OP arithmeticExpression TK_CL 
 factor 1 all

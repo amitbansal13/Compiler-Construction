@@ -34,7 +34,7 @@ stmt 1 iterativeStmt
 stmt 1 conditionalStmt
 stmt 1 ioStmt
 stmt 1 funCallStmt
-assignmentStmt 4 SingleOrRecId TK_ASSIGNOP arithmeticExpression TK_SEM
+assignmentStmt 4 singleOrRecId TK_ASSIGNOP arithmeticExpression TK_SEM
 singleOrRecId 2 TK_ID new_24
 new_24 1 eps  
 new_24 2 TK_DOT TK_FIELDID

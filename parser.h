@@ -2,7 +2,7 @@
 #define PARSER_H
 
 #define terminalsSize 54 //Number of Terminals including epsilon
-#define nonTerminalsSize 52//actual no of terminals in our code
+#define nonTerminalsSize 51//actual no of terminals in our code
 
 #include "lexer.h"
 #include<stdbool.h>
@@ -43,11 +43,12 @@ void printGrammar(Grammar *g);
 bool isTerminal(char *text);
 bool isNTerminal(char *text);
 void initializeFF();
-void addFirst(int index,char *text);
+//void addFirst(int index,char *text);
 void findFirst(int index_orig,int index,Grammar *g);
 void computeFirstnFollow(Grammar *g);
 void printFirst();
 bool checkEps(int index,Grammar *g);
+FF addToSet(FF set,char *text);
 
 //ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
 

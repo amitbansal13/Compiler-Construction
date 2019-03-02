@@ -17,11 +17,19 @@ int main()
 			printf("%d\n",b);
 			return 1;
 */
+	//		Grammar *g = makeGrammar("grammar.txt");
+//			computeFirstnFollow(g);
+//
     
     //////////// Status ///////////////////
 	printf("Status:-\n");
 	printf("1. Lexer Implemented\n");
 	// printf("2. Parser Implemented\n"); Hopefully
+/*
+	printf("%d\n",isNTerminal("outputParameters"));
+	printf("%d\n",isTerminal("TK_CALL"));
+	return 1;
+*/
 	
 
 

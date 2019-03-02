@@ -33,7 +33,6 @@ char *nonterminals[]={
 	"funCallStmt",
 	"singleOrRecId",
 	"new_24",
-	"funCallStmt",
 	"outputParameters",
 	"inputParameters",
 	"elsePart",

@@ -35,38 +35,8 @@ void createParseTable(Grammar *g){
 				
 			while(temp2!=NULL){
 
-				if(isTerminal(temp2->name)){	//means rule->name is in first of nonterminals[i]		
-					if(strcmp(temp2->name,"eps") == 0){	//wont get anything after eps
 	
-				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
-	
-						for(int j=0;j<terminalsSize;j++){
-							if(checkSet(fset[i].follow,tokens[j]) == true){
-								if(pTable->tEntry[i][j]->rule!=NULL)
-									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
-								pTable->tEntry[i][j]->index=i;	
-							    pTable->tEntry[i][j]->rule=temp_rule;	
-							}
-						}
-						//temp2=temp2->next;
-						//continue;//since this rule can be replaced with eps
-						break;
-					}
-	
-			//if other terminals,replace with this rule only
-	
-					else{
-							check = lookup(terminals,temp2->name,tokens);
-							T_index = check->index;
-							if(pTable->tEntry[i][T_index]->rule!=NULL)
-								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
-							pTable->tEntry[i][T_index]->index=i;
-						    pTable->tEntry[i][T_index]->rule=temp_rule;	
-						break;	//if got a terminal,always break
-					}
-				}
-	
-				else if(isNTerminal(temp2->name)){
+				if(isNTerminal(temp2->name)){
 					check = lookup(nonTerminals,temp2->name,nonterminals);
 					nonT_index = check->index;
 				
@@ -95,6 +65,37 @@ void createParseTable(Grammar *g){
 					}
 					else
 						break;
+				}
+
+				else if(isTerminal(temp2->name)){	//means rule->name is in first of nonterminals[i]		
+					if(strcmp(temp2->name,"eps") == 0){	//wont get anything after eps
+	
+				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
+	
+						for(int j=0;j<terminalsSize;j++){
+							if(checkSet(fset[i].follow,tokens[j]) == true){
+								if(pTable->tEntry[i][j]->rule!=NULL)
+									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
+								pTable->tEntry[i][j]->index=i;	
+							    pTable->tEntry[i][j]->rule=temp_rule;	
+							}
+						}
+						//temp2=temp2->next;
+						//continue;//since this rule can be replaced with eps
+						break;
+					}
+	
+			//if other terminals,replace with this rule only
+	
+					else{
+							check = lookup(terminals,temp2->name,tokens);
+							T_index = check->index;
+							if(pTable->tEntry[i][T_index]->rule!=NULL)
+								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
+							pTable->tEntry[i][T_index]->index=i;
+						    pTable->tEntry[i][T_index]->rule=temp_rule;	
+						break;	//if got a terminal,always break
+					}
 				}
 			}
 			temp_rule=temp_rule->more;

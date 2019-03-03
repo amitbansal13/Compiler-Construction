@@ -32,8 +32,8 @@ void createParseTable(Grammar *g){
 				
 			while(temp2!=NULL){
 
-				if(isTerminal(temp_rule->name)){	//means rule->name is in first of nonterminals[i]		
-					if(strcmp(temp_rule->name,"eps") == 0){	//wont get anything after eps
+				if(isTerminal(temp2->name)){	//means rule->name is in first of nonterminals[i]		
+					if(strcmp(temp2->name,"eps") == 0){	//wont get anything after eps
 	
 				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
 	
@@ -53,18 +53,18 @@ void createParseTable(Grammar *g){
 			//if other terminals,replace with this rule only
 	
 					else{
-							check = lookup(terminals,temp_rule->name,tokens);
+							check = lookup(terminals,temp2->name,tokens);
 							T_index = check->index;
 							if(pTable->tEntry[i][T_index]->rule!=NULL)
-								printf("Multiple rules clashing in Entry[%d][%d]\n",i,T_index);
+								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
 							pTable->tEntry[i][T_index]->index=i;
 						    pTable->tEntry[i][T_index]->rule=temp_rule;	
 						break;	//if got a terminal,always break
 					}
 				}
 	
-				else if(isNTerminal(temp_rule->name)){
-					check = lookup(nonTerminals,temp_rule->name,nonterminals);
+				else if(isNTerminal(temp2->name)){
+					check = lookup(nonTerminals,temp2->name,nonterminals);
 					nonT_index = check->index;
 				
 					//if first set of nonT_index has eps,need to traverse rule continuation
@@ -80,7 +80,7 @@ void createParseTable(Grammar *g){
 							check = lookup(terminals,temp_f->elem,tokens);
 							T_index = check->index;
 							if(pTable->tEntry[i][T_index]->rule!=NULL)
-								printf("Multiple rules clashing in Entry[%d][%d]\n",i,T_index);
+								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
 							pTable->tEntry[i][T_index]->index=i;
 						    pTable->tEntry[i][T_index]->rule=temp_rule;	
 						}
@@ -94,23 +94,27 @@ void createParseTable(Grammar *g){
 						break;
 				}
 			}
-			temp_rule=temp_rule->next;
+			temp_rule=temp_rule->more;
 		}
 	}
 }
 
 void printParseTable(){
+		printf("\n\n");
 	for(int i=0;i<nonTerminalsSize;i++){
 		for(int j=0;j<terminalsSize;j++){
-			printf("pEntry[%d][%d]:",i,j);
-			printf("index:%d \n",pTable->tEntry[i][j]->index);
-			printf("rule:");
+			if(pTable->tEntry[i][j]->index ==-2)
+				continue;
+			printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+			//printf("index:%d \n",pTable->tEntry[i][j]->index);
+			//printf("\nrule:");
 			grammar *temp = pTable->tEntry[i][j]->rule;
+			printf("\n%s-> ",nonterminals[i]);
 			while(temp!=NULL){
 				printf("%s ",temp->name);
 				temp=temp->next;
 			}
-		printf("\n");
+		printf("\n\n");
 		}
 	}
 }

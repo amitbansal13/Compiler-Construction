@@ -77,10 +77,16 @@ int main()
 			printGrammar(g);
 		}
 		else if(choice ==5){
-	//		Grammar *g = makeGrammar("grammar.txt");
-			Grammar *g;
+			Grammar *g = makeGrammar("grammar.txt");
 			computeFirstnFollow(g);
 			printFirstnFollow();
+		}
+		else if(choice ==6){
+			Grammar *g = makeGrammar("grammar.txt");
+			computeFirstnFollow(g);
+	//		printFirstnFollow();
+			initializePT();
+			createParseTable(g);
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

@@ -62,6 +62,7 @@ FF addToSet(FF set,char *text){	//adds text  to set FF
 	return temp;
 }
 
+
 bool checkEps(int index,Grammar *g){//returns true if "eps" found in g->arr[index] mores
 	grammar *temp = g->arr[index];
 	while(temp!=NULL){

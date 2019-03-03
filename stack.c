@@ -1,3 +1,4 @@
+#include "parsetree.h"
 #include "stack.h"
 
 Stack createStack(){
@@ -15,7 +16,7 @@ Stack pop(Stack s){
 	return s;
 }
 
-Stack push(Stack s,int t){
+Stack push(Stack s,TreeNode t){
 	stack_node *new_node = (stack_node*)malloc(sizeof(stack_node));
 	new_node->t=t;
 	new_node->next=s->top;
@@ -23,8 +24,10 @@ Stack push(Stack s,int t){
 	return s;
 }
 
-stack_node *top(Stack s){
-	return s->top;
+TreeNode top(Stack s){
+	if(s->top==NULL)
+		return NULL;
+	return s->top->t;
 }
 
 bool isEmpty(Stack s){
@@ -33,6 +36,7 @@ bool isEmpty(Stack s){
 	return false;
 }
 
+/*
 void printStack(Stack s){
 	printf("printing\n");
 	stack_node *temp = s->top;
@@ -41,4 +45,4 @@ void printStack(Stack s){
 		temp=temp->next;
 	}
 }
-
+*/

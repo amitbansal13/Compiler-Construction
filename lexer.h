@@ -15,10 +15,10 @@ typedef union{
 }tokenVal;
 // tokenVal.floatVal=stringToFloat(lexeme);
 struct tokenInfo{
-int lineNo;
-char lexeme[MAX_LEXEME];
-char Token[MAX_TOKEN];
-tokenVal tkVal;
+	int lineNo;
+	char lexeme[MAX_LEXEME];
+	char Token[MAX_TOKEN];
+	tokenVal tkVal;
 };
 
 void initialize(FILE *fp);

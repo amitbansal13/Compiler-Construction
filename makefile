@@ -1,8 +1,8 @@
 # all:	main.o	lexer.o	HashTable.o FileIO.o
 # 	gcc main.o lexer.o HashTable.o FileIO.o -o compiler
 
-all: driver.o lexer.o HashTable.o parser.o firstFollow.o parseTable.o
-	gcc driver.o lexer.o HashTable.o parser.o firstFollow.o parseTable.o -o compiler
+all: driver.o lexer.o HashTable.o parser.o firstFollow.o parseTable.o	stack.o	parsetree.o
+	gcc driver.o lexer.o HashTable.o parser.o firstFollow.o parseTable.o stack.o parsetree.o -o compiler
 
 parser.o: parser.c parser.h
 	gcc -g -c parser.c
@@ -22,10 +22,13 @@ driver.o:	driver.c	lexer.h
 lexer.o:	lexer.c lexer.h
 	gcc -g -c lexer.c
 
+parsetree.o:	parsetree.c parser.h	parsetree.h
+	gcc -g -c parsetree.c
+
 HashTable.o:	HashTable.c	HashTable.h
 	gcc -g -c HashTable.c
 
-stack.o:	stack.c	stack.h
+stack.o:	stack.c	stack.h	parsetree.h
 	gcc -g -c stack.c
 
 clean:

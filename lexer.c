@@ -245,7 +245,7 @@ TokenInfo nextToken(){
                         temp[tInd++] = c;
                         temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
-						strcpy(token->Token,"TK_CP");
+						strcpy(token->Token,"TK_CL");
 						state = 18;
 						break;
                     case '+':
@@ -677,7 +677,8 @@ TokenInfo nextToken(){
 					strcpy(token->lexeme,temp);
 					if(strcmp(token->lexeme,"_main")==0)
 						strcpy(token->Token,"TK_MAIN");
-					strcpy(token->Token,"TK_FUNID");
+					else
+						strcpy(token->Token,"TK_FUNID");
 					i--;
 					return token;
 

@@ -1,7 +1,7 @@
 #include "HashTable.h"
 #include "parser.h"
 
-PT *pTable;	// parsetable;
+//PT *pTable;	// parsetable;
 
 void initializePT(){
 	pTable = (PT*)malloc(sizeof(PT));

@@ -1,6 +1,9 @@
 #include "lexer.h"
 #include "parser.h"
+#include "parsetree.h"
 #include <time.h>
+
+PT *pTable; // parsetable;
 
 int main()
 {
@@ -88,6 +91,13 @@ int main()
 			initializePT();
 			createParseTable(g);
 			printParseTable();
+		}
+		else if(choice ==7){
+			Grammar *g = makeGrammar("grammar.txt");
+			computeFirstnFollow(g);
+			initializePT();
+			createParseTable(g);
+			parseInputSourceCode("testcase3.txt");
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

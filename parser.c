@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "HashTable.h"
+extern PT* pTable;
 
 //DOLLAR AND eps in tokens ie terminals
 

@@ -73,6 +73,7 @@ typedef struct parseTable{
 
 
 
+extern PT* pTable;
 //***********functions***************
 
 

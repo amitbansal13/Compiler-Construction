@@ -25,5 +25,8 @@ lexer.o:	lexer.c lexer.h
 HashTable.o:	HashTable.c	HashTable.h
 	gcc -g -c HashTable.c
 
+stack.o:	stack.c	stack.h
+	gcc -g -c stack.c
+
 clean:
 	rm -rf *.o

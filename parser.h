@@ -60,11 +60,11 @@ extern ffset fset;
 
 
 typedef struct elem{
-	int index;			//stores the index of rule to be used
+	int type;		//stores the type of parsetable entry,-1->error,0->rule exists,1->syn,2->accept
 	grammar* rule;		//stores the specific pointer of the rule to be used
 						// as there can be rule spanning in multiple rows i.e rules having same LHS
 }elem;				//an element of parse table
-					//if syn is to be used then we can use index =-1 ,accept is -2
+					//if syn is to be used then we can use 
 						//check slide 48 topdown parsing for more
 typedef struct parseTable{
 	elem* tEntry[nonTerminalsSize][terminalsSize];

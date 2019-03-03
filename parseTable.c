@@ -8,14 +8,14 @@ void initializePT(){
 	for(int i=0;i<nonTerminalsSize;i++){
 		for(int j=0;j<terminalsSize;j++){
 			pTable->tEntry[i][j]=(elem*)malloc(sizeof(elem));
-			pTable->tEntry[i][j]->index=-3;	//since -2 onwards can are valid
+			pTable->tEntry[i][j]->type=-1;	//since -1->error,0->grammar exist,1->syn,2->accept
 			pTable->tEntry[i][j]->rule=NULL;	
 		}
 	}
 }
 			
 void createParseTable(Grammar *g){
-	pTable->tEntry[0][terminalsSize-1]->index=-2;	
+	pTable->tEntry[0][terminalsSize-1]->type=2;		//2 is accept state	
 	for(int i=0;i<nonTerminalsSize;i++){
 		
 
@@ -54,7 +54,7 @@ void createParseTable(Grammar *g){
 							T_index = check->index;
 							if(pTable->tEntry[i][T_index]->rule!=NULL)
 								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
-							pTable->tEntry[i][T_index]->index=i;
+							pTable->tEntry[i][T_index]->type=0;// 0 is grammar exists
 						    pTable->tEntry[i][T_index]->rule=temp_rule;	
 						}
 						temp_f=temp_f->next;
@@ -76,12 +76,10 @@ void createParseTable(Grammar *g){
 							if(checkSet(fset[i].follow,tokens[j]) == true){
 								if(pTable->tEntry[i][j]->rule!=NULL)
 									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
-								pTable->tEntry[i][j]->index=i;	
+								pTable->tEntry[i][j]->type=0;	
 							    pTable->tEntry[i][j]->rule=temp_rule;	
 							}
 						}
-						//temp2=temp2->next;
-						//continue;//since this rule can be replaced with eps
 						break;
 					}
 	
@@ -92,7 +90,7 @@ void createParseTable(Grammar *g){
 							T_index = check->index;
 							if(pTable->tEntry[i][T_index]->rule!=NULL)
 								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
-							pTable->tEntry[i][T_index]->index=i;
+							pTable->tEntry[i][T_index]->type=0;//1 for syn
 						    pTable->tEntry[i][T_index]->rule=temp_rule;	
 						break;	//if got a terminal,always break
 					}
@@ -102,11 +100,11 @@ void createParseTable(Grammar *g){
 		}
 		if(checkSet(fset[i].first,"eps") ==false){ 	//if doesnt have eps in first,get syn entries
 			temp_f = fset[i].follow;
-			while(temp_f=NULL){
+			while(temp_f!=NULL){
 				check = lookup(terminals,temp_f->elem,tokens);
 				T_index = check->index;
-				if(pTable->tEntry[i][T_index]->index==-3)
-					pTable->tEntry[i][T_index]->index=-1;
+				if(pTable->tEntry[i][T_index]->type==-1)
+					pTable->tEntry[i][T_index]->type=1;//1 is for syn
 				temp_f = temp_f->next;
 			}
 		}
@@ -117,25 +115,25 @@ void printParseTable(){
 		printf("\n\n");
 	for(int i=0;i<nonTerminalsSize;i++){
 		for(int j=0;j<terminalsSize;j++){
-			if(pTable->tEntry[i][j]->index ==-3)
+			if(pTable->tEntry[i][j]->type ==-1)//error case
 				continue;
-			if(pTable->tEntry[i][j]->index ==-2){	//accept case
+			if(pTable->tEntry[i][j]->type ==2){	//accept case
 				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
 				printf("accept\n\n");
 				continue;
 			}
-			if(pTable->tEntry[i][j]->index ==-1){	//SYN case
+			if(pTable->tEntry[i][j]->type ==1){	//SYN case
 				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
 				printf("SYN\n\n");
 				continue;
 			}
 			printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
-			//printf("index:%d \n",pTable->tEntry[i][j]->index);
-			//printf("\nrule:");
+		//	printf("index:%d \n",pTable->tEntry[i][j]->type);
+		//	printf("\nrule:");
 			grammar *temp = pTable->tEntry[i][j]->rule;
 			printf("\n%s-> ",nonterminals[i]);
 			while(temp!=NULL){
-				printf("%s ",temp->name);
+			printf("%s ",temp->name);
 				temp=temp->next;
 			}
 		printf("\n\n");

@@ -64,7 +64,7 @@ typedef struct elem{
 	grammar* rule;		//stores the specific pointer of the rule to be used
 						// as there can be rule spanning in multiple rows i.e rules having same LHS
 }elem;				//an element of parse table
-					//if syn is to be used then we can use index =-1
+					//if syn is to be used then we can use index =-1 ,accept is -2
 						//check slide 48 topdown parsing for more
 typedef struct parseTable{
 	elem* tEntry[nonTerminalsSize][terminalsSize];

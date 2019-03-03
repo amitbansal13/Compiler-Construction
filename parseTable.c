@@ -8,14 +8,16 @@ void initializePT(){
 	for(int i=0;i<nonTerminalsSize;i++){
 		for(int j=0;j<terminalsSize;j++){
 			pTable->tEntry[i][j]=(elem*)malloc(sizeof(elem));
-			pTable->tEntry[i][j]->index=-2;	//since -1 onwards can are valid
+			pTable->tEntry[i][j]->index=-3;	//since -2 onwards can are valid
 			pTable->tEntry[i][j]->rule=NULL;	
 		}
 	}
 }
 			
 void createParseTable(Grammar *g){
+	pTable->tEntry[0][terminalsSize-1]->index=-2;	
 	for(int i=0;i<nonTerminalsSize;i++){
+		
 
 			//iterating all the grammar rules
 		grammar *rule = g->arr[i];
@@ -23,6 +25,7 @@ void createParseTable(Grammar *g){
 		link check;
 
 		grammar *temp_rule = rule;
+		FF temp_f;
 
 		grammar *temp2;
 		int eps_flag=0,T_index,nonT_index;
@@ -70,7 +73,7 @@ void createParseTable(Grammar *g){
 					//if first set of nonT_index has eps,need to traverse rule continuation
 	
 					FF first_set = fset[nonT_index].first;
-					FF temp_f = first_set;
+					temp_f = first_set;
 					eps_flag=0;
 					while(temp_f!=NULL){
 						if(strcmp(temp_f->elem,"eps")==0){
@@ -96,6 +99,16 @@ void createParseTable(Grammar *g){
 			}
 			temp_rule=temp_rule->more;
 		}
+		if(checkSet(fset[i].first,"eps") ==false){ 	//if doesnt have eps in first,get syn entries
+			temp_f = fset[i].follow;
+			while(temp_f=NULL){
+				check = lookup(terminals,temp_f->elem,tokens);
+				T_index = check->index;
+				if(pTable->tEntry[i][T_index]->index==-3)
+					pTable->tEntry[i][T_index]->index=-1;
+				temp_f = temp_f->next;
+			}
+		}
 	}
 }
 
@@ -103,8 +116,18 @@ void printParseTable(){
 		printf("\n\n");
 	for(int i=0;i<nonTerminalsSize;i++){
 		for(int j=0;j<terminalsSize;j++){
-			if(pTable->tEntry[i][j]->index ==-2)
+			if(pTable->tEntry[i][j]->index ==-3)
 				continue;
+			if(pTable->tEntry[i][j]->index ==-2){	//accept case
+				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+				printf("accept\n\n");
+				continue;
+			}
+			if(pTable->tEntry[i][j]->index ==-1){	//SYN case
+				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+				printf("SYN\n\n");
+				continue;
+			}
 			printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
 			//printf("index:%d \n",pTable->tEntry[i][j]->index);
 			//printf("\nrule:");

@@ -52,8 +52,8 @@ int main()
 	/****kept this for testing,will make driver.c later finally ****/
 
 
+	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6.Make and Print ParseTable \n7.Print Time taken by program\n");
 
-	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6. Print Time taken by program\n");
 	printf("Choice = ");
 
 	scanf("%d",&choice);
@@ -92,7 +92,7 @@ int main()
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
 		printf("\nSelect your choice: \n");
-	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6. Print Time taken by program\n");
+	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.print grammar\n5.make grammar and make and print first follow 6.Make and Print ParseTable \n7.Print Time taken by program\n");
 	//	printf("0.Exit\n1. View comments removed file\n2.Print all tokens\n3.Call Parser and Lexer\n4.Print Time taken by program\n");
 		printf("Choice = ");
 		scanf("%d",&choice);

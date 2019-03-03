@@ -3,7 +3,7 @@
 #include<stdbool.h>
 
 typedef struct stack_node{
-	int t;
+	int t;				//will change to tree* later
 	struct stack_node *next;
 }stack_node;
 

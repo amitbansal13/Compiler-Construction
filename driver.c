@@ -36,7 +36,7 @@ int main()
 
 
 	////////////// Initialization /////////////
-	FILE* fp=fopen("testcase1.txt","r");//change sample.txt to the file name containing code
+	FILE* fp=fopen("testcase3.txt","r");//change sample.txt to the file name containing code
 	if(fp==NULL){
 		printf("File not found\n");
 		return 1;

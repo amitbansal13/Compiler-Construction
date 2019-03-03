@@ -291,7 +291,9 @@ TokenInfo nextToken(){
 
 		/***\n \t ' ' -> remain in same state and getnextchar *****/
 
+					case '\r':
 					case '\n':
+					case '\v':
 						lineNo++;
 					case ' ':
 					case '\t':
@@ -355,6 +357,14 @@ TokenInfo nextToken(){
 					case ';':
 					case '[':
 					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
 						i--;
 					case ' ':
 					case '\t':
@@ -362,6 +372,7 @@ TokenInfo nextToken(){
 							token->lineNo = lineNo;
 							strcpy(token->lexeme,temp);
 					case '\n':
+					case '\r':
 						lineNo++;
 
 						temp[tInd]='\0';
@@ -403,7 +414,7 @@ TokenInfo nextToken(){
 							break;
 										//MAXIMAL MUNCH CASE and returns TK_ERROR
 						default: 
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
                    				temp[tInd++] = c;
 								c=getNextChar();
 							}
@@ -430,14 +441,33 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
 					case '[':
 					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
 						i--;
 						case ' ':
 						case '\t':
 						case '\0':
         	           	    token->lineNo = lineNo;
 						case '\n':
+						case '\r':
 							lineNo++;
         	           	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
@@ -445,7 +475,7 @@ TokenInfo nextToken(){
 							return token;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
@@ -478,6 +508,14 @@ TokenInfo nextToken(){
 					case ';':
 					case '[':
 					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
 						i--;
 
 						case ' ':
@@ -485,6 +523,7 @@ TokenInfo nextToken(){
 						case '\0':
         	           	    token->lineNo = lineNo;
 						case '\n':
+						case '\r':
 							lineNo++;
 
         	           	    temp[tInd] = '\0';
@@ -492,12 +531,12 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_ID");
 							return token;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
+							if(c=='\n' || c=='\r')
 								lineNo++;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
@@ -540,7 +579,7 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
@@ -596,7 +635,7 @@ TokenInfo nextToken(){
 							break;
 					
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
@@ -654,7 +693,8 @@ TokenInfo nextToken(){
 						case '\t':
 						case '\0':
         	           	    token->lineNo = lineNo;
-						case '\n':						
+						case '\n':						  
+						case '\r':						  
 							lineNo++;
 
         	           		temp[tInd++] = c;
@@ -663,12 +703,12 @@ TokenInfo nextToken(){
 							strcpy(token->Token,"TK_FUNID");
 							return token;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
+							if(c=='\n' || c=='\r')
 								lineNo++;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
@@ -685,12 +725,12 @@ TokenInfo nextToken(){
 							break;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
+							if(c=='\n' || c=='\r')
 								lineNo++;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
@@ -712,6 +752,7 @@ TokenInfo nextToken(){
 						case '\0':
         	           	    token->lineNo = lineNo;
 						case '\n':						
+						case '\r':						  
 							lineNo++;
 
         	           	    temp[tInd] = '\0';
@@ -720,12 +761,12 @@ TokenInfo nextToken(){
 							return token;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
+							if(c=='\n' || c=='\r')
 								lineNo++;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);

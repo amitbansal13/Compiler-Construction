@@ -120,7 +120,7 @@ void findFirst(int index_orig,int index,Grammar *g){	//finds first of the index_
 
 
 void printFirstnFollow(){					//print all the first's
-	printf("Printing First sets\n\n");
+	printf("\n\n*********Printing First sets**************\n\n");
 	FF temp;
 	for(int i=0;i<nonTerminalsSize;i++){
 		printf("%s->",nonterminals[i]);
@@ -132,7 +132,7 @@ void printFirstnFollow(){					//print all the first's
 		printf("\n");
 	}
 
-	printf("\n\n\n*******Printing Follow sets\n\n\n");
+	printf("\n\n\n*******Printing Follow sets***********\n\n\n");
 	for(int i=0;i<nonTerminalsSize;i++){
 		printf("%s->",nonterminals[i]);
 		temp=fset[i].follow;

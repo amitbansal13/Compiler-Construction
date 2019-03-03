@@ -77,7 +77,8 @@ int main()
 			printGrammar(g);
 		}
 		else if(choice ==5){
-			Grammar *g = makeGrammar("grammar.txt");
+	//		Grammar *g = makeGrammar("grammar.txt");
+			Grammar *g;
 			computeFirstnFollow(g);
 			printFirstnFollow();
 		}

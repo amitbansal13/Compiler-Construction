@@ -148,6 +148,7 @@ Grammar* makeGrammar(char* fileName){			// making the Grammar data structures
 
 void printGrammar(Grammar *g)		//prints the already made grammar
 {
+	printf("\n\n********Printing Grammar ******\n\n");
     int size=g->size;
     grammar** arr=g->arr,*temp,*temp1,*temp2;
     int i=0;

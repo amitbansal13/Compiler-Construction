@@ -87,6 +87,7 @@ int main()
 	//		printFirstnFollow();
 			initializePT();
 			createParseTable(g);
+			printParseTable();
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

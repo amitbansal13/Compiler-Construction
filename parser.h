@@ -98,6 +98,7 @@ int computeFollow(Grammar *g);
 void printFirstnFollow();
 void initializePT();
 void createParseTable(Grammar *g);
+void printParseTable();
 //ffset computeFirstFollow(Grammar* g,Table nt);//returns array of first and follow for all non terminals
 
 

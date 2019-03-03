@@ -98,3 +98,19 @@ void createParseTable(Grammar *g){
 		}
 	}
 }
+
+void printParseTable(){
+	for(int i=0;i<nonTerminalsSize;i++){
+		for(int j=0;j<terminalsSize;j++){
+			printf("pEntry[%d][%d]:",i,j);
+			printf("index:%d \n",pTable->tEntry[i][j]->index);
+			printf("rule:");
+			grammar *temp = pTable->tEntry[i][j]->rule;
+			while(temp!=NULL){
+				printf("%s ",temp->name);
+				temp=temp->next;
+			}
+		printf("\n");
+		}
+	}
+}

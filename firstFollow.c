@@ -1,8 +1,9 @@
-#include "parser.h"
 #include "HashTable.h"
+#include "parserDef.h"
+#include "parser.h"
 #include<stdbool.h>
 
-ffset fset = NULL;
+//ffset fset = NULL;
 
 bool isTerminal(char *text){
 	link check = lookup(terminals,text,tokens);
@@ -18,30 +19,15 @@ bool isNTerminal(char *text){
 	return true;
 }
 
-void initializeFF(){ 	//initializes firt follow sets to NULL
-	fset = (ffset)malloc(sizeof(struct ff)*nonTerminalsSize);
+ffset initializeFF(){ 	//initializes firt follow sets to NULL
+	ffset fset = (ffset)malloc(sizeof(struct ff)*nonTerminalsSize);
 	for(int i=0;i<nonTerminalsSize;i++){
 		fset[i].first=NULL;
 		fset[i].follow=NULL;
 	}
 	fset[0].follow = addToSet(fset[0].follow,"DOLLAR");
+	return fset;
 }
-/*
-void addFirst(int index,char *text){
-	FF t = fset[index].first;
-	while(t!=NULL){
-		if(strcmp(t->elem,text)==0)
-			return;
-		t=t->next;
-	}
-	t = (FF)malloc(sizeof(struct firstfollow));
-	strcpy(t->elem,text);
-	t->next=fset[index].first;
-	fset[index].first = t;
-	return;
-	
-}
-*/
 
 FF addToSet(FF set,char *text){	//adds text  to set FF
 	if(set==NULL){
@@ -73,7 +59,7 @@ bool checkEps(int index,Grammar *g){//returns true if "eps" found in g->arr[inde
 	return false;
 }
 	
-void findFirst(int index_orig,int index,Grammar *g){	//finds first of the index_orig of nonTs
+void findFirst(int index_orig,int index,Grammar *g,ffset fset){	//finds first of the index_orig of nonTs
 	if(index>=nonTerminalsSize){
 		printf("Error\n");
 		return;
@@ -90,7 +76,7 @@ void findFirst(int index_orig,int index,Grammar *g){	//finds first of the index_
 		else if(isNTerminal(temp->name)){		//if NT,
 			check = lookup(nonTerminals,temp->name,nonterminals);
 			new_index = check->index;
-			findFirst(index_orig,new_index,g);
+			findFirst(index_orig,new_index,g,fset);
 			b = checkEps(new_index,g);		//if NT has an eps,go till all eps found
 			temp1=temp;
 			while(b==true){
@@ -105,7 +91,7 @@ void findFirst(int index_orig,int index,Grammar *g){	//finds first of the index_
 				else if(isNTerminal(temp1->name)){		//if NT,
 					check = lookup(nonTerminals,temp1->name,nonterminals);
 					new_index = check->index;
-					findFirst(index_orig,new_index,g);
+					findFirst(index_orig,new_index,g,fset);
 					b = checkEps(new_index,g);
 				}
 			}
@@ -120,7 +106,7 @@ void findFirst(int index_orig,int index,Grammar *g){	//finds first of the index_
 }
 
 
-void printFirstnFollow(){					//print all the first's
+void printFirstnFollow(ffset fset){					//print all the first's
 	printf("\n\n*********Printing First sets**************\n\n");
 	FF temp;
 	for(int i=0;i<nonTerminalsSize;i++){
@@ -145,14 +131,15 @@ void printFirstnFollow(){					//print all the first's
 	}
 }
 
-void computeFirstnFollow(Grammar *g){		//compute both first and follow
+ffset computeFirstnFollow(Grammar *g){		//compute both first and follow
 	initializeTNT();
-	initializeFF();
+	ffset fset = initializeFF();
 	for(int i=0;i<nonTerminalsSize;i++)
-		findFirst(i,i,g);
+		findFirst(i,i,g,fset);
 	int follow_changes=1;
 	while(follow_changes!=0)
-		follow_changes = computeFollow(g);
+		follow_changes = computeFollow(g,fset);
+	return fset;
 }
 
 bool checkSet(FF set,char *elem){	//checks if elem exists already in FF set
@@ -183,7 +170,7 @@ FF addSets(FF set1,FF set2,int *no_added){//Adds all elements of FF set2 to set 
 	return set1;
 }
 			
-int computeFollow(Grammar *g){
+int computeFollow(Grammar *g,ffset fset){
 	grammar *rule,*temp1,*temp2;
 
 	int change_flag=0;

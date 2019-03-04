@@ -1,6 +1,7 @@
+#include "parserDef.h"
 #include "parser.h"
 #include "HashTable.h"
-extern PT* pTable;
+#include "stack.h"
 
 //DOLLAR AND eps in tokens ie terminals
 
@@ -61,6 +62,7 @@ char *nonterminals[]={
 
 Table terminals=NULL;//HashTable to store Terminals
 Table nonTerminals=NULL;//HashTable to store non Terminals
+
 void initializeTNT()
 //initializes both Terminals and Non Terminals hash tables
 {
@@ -76,6 +78,9 @@ void initializeTNT()
 			insert(nonTerminals,nonterminals,i);
 	}
 }
+
+
+		//************GRAMMAR**************
 
 grammar* newNode(char *temp)			//new grammar node
 //returns a new grammar node
@@ -171,3 +176,663 @@ void printGrammar(Grammar *g)		//prints the already made grammar
         }
     }
 } 
+
+
+
+
+		//***************FIRSTANDFOLLOW***********************
+
+
+
+
+bool isTerminal(char *text){
+	link check = lookup(terminals,text,tokens);
+	if(check==NULL)
+		return false;
+	return true;
+}
+
+bool isNTerminal(char *text){
+	link check = lookup(nonTerminals,text,nonterminals);
+	if(check==NULL)
+		return false;
+	return true;
+}
+
+ffset initializeFF(){ 	//initializes firt follow sets to NULL
+	ffset fset = (ffset)malloc(sizeof(struct ff)*nonTerminalsSize);
+	for(int i=0;i<nonTerminalsSize;i++){
+		fset[i].first=NULL;
+		fset[i].follow=NULL;
+	}
+	fset[0].follow = addToSet(fset[0].follow,"DOLLAR");
+	return fset;
+}
+
+FF addToSet(FF set,char *text){	//adds text  to set FF
+	if(set==NULL){
+		set = (FF)malloc(sizeof(struct firstfollow));
+		strcpy(set->elem,text);
+		set->next=NULL;
+		return set;
+	}
+	FF temp = set;
+	while(temp!=NULL){
+		if(strcmp(temp->elem,text)==0)
+			return set;
+		temp=temp->next;
+	}
+	temp = (FF)malloc(sizeof(struct firstfollow));
+	strcpy(temp->elem,text);
+	temp->next=set;
+	return temp;
+}
+
+
+bool checkEps(int index,Grammar *g){//returns true if "eps" found in g->arr[index] mores
+	grammar *temp = g->arr[index];
+	while(temp!=NULL){
+		if(strcmp(temp->name,"eps")==0)
+			return true;
+		temp=temp->more;
+	}
+	return false;
+}
+	
+void findFirst(int index_orig,int index,Grammar *g,ffset fset){	//finds first of the index_orig of nonTs
+	if(index>=nonTerminalsSize){
+		printf("Error\n");
+		return;
+	}
+	grammar *temp = g->arr[index];
+	grammar *temp1;
+	link check;int new_index;bool b;
+	int eps_flag=0;
+	while(temp!=NULL){
+		if(strcmp(temp->name,"eps")!=0 && isTerminal(temp->name))//if terminal,add to the first set
+			fset[index_orig].first = addToSet(fset[index_orig].first,temp->name);
+			//addFirst(index_orig,temp->name);
+
+		else if(isNTerminal(temp->name)){		//if NT,
+			check = lookup(nonTerminals,temp->name,nonterminals);
+			new_index = check->index;
+			findFirst(index_orig,new_index,g,fset);
+			b = checkEps(new_index,g);		//if NT has an eps,go till all eps found
+			temp1=temp;
+			while(b==true){
+				temp1=temp1->next;
+				if(temp1==NULL)
+					break;
+				if(isTerminal(temp1->name)){		//if terminal,add to the first set
+					//addFirst(index_orig,temp1->name);
+					fset[index_orig].first = addToSet(fset[index_orig].first,temp1->name);
+					break;
+				}
+				else if(isNTerminal(temp1->name)){		//if NT,
+					check = lookup(nonTerminals,temp1->name,nonterminals);
+					new_index = check->index;
+					findFirst(index_orig,new_index,g,fset);
+					b = checkEps(new_index,g);
+				}
+			}
+		}
+		temp=temp->more;
+	}
+	if(index == index_orig){
+			if(checkEps(index,g) || fset[index].first==NULL)
+			//	addFirst(index_orig,"eps");
+				fset[index_orig].first = addToSet(fset[index_orig].first,"eps");
+	}
+}
+
+
+void printFirstnFollow(ffset fset){					//print all the first's
+	printf("\n\n*********Printing First sets**************\n\n");
+	FF temp;
+	for(int i=0;i<nonTerminalsSize;i++){
+		printf("%s->",nonterminals[i]);
+		temp=fset[i].first;
+		while(temp!=NULL){
+			printf("%s ",temp->elem);
+			temp=temp->next;
+		}
+		printf("\n");
+	}
+
+	printf("\n\n\n*******Printing Follow sets***********\n\n\n");
+	for(int i=0;i<nonTerminalsSize;i++){
+		printf("%s->",nonterminals[i]);
+		temp=fset[i].follow;
+		while(temp!=NULL){
+			printf("%s ",temp->elem);
+			temp=temp->next;
+		}
+		printf("\n");
+	}
+}
+
+ffset computeFirstnFollow(Grammar *g){		//compute both first and follow
+	initializeTNT();
+	ffset fset = initializeFF();
+	for(int i=0;i<nonTerminalsSize;i++)
+		findFirst(i,i,g,fset);
+	int follow_changes=1;
+	while(follow_changes!=0)
+		follow_changes = computeFollow(g,fset);
+	return fset;
+}
+
+bool checkSet(FF set,char *elem){	//checks if elem exists already in FF set
+	FF temp = set;
+	while(temp!=NULL){
+		if(strcmp(temp->elem,elem)==0)
+			return true;
+		temp=temp->next;
+	}
+	return false;
+}
+
+FF addSets(FF set1,FF set2,int *no_added){//Adds all elements of FF set2 to set 1,returns set1
+	FF temp2 = set2;
+	while(temp2!=NULL){
+
+		if(strcmp(temp2->elem,"eps")==0){		//Dont add eps
+			temp2=temp2->next;
+			continue;
+		}
+
+		if(checkSet(set1,temp2->elem)==false){
+			*no_added+=1;
+			set1 = addToSet(set1,temp2->elem);
+		}
+		temp2=temp2->next;
+	}
+	return set1;
+}
+			
+int computeFollow(Grammar *g,ffset fset){
+	grammar *rule,*temp1,*temp2;
+
+	int change_flag=0;
+	link check;
+	int nonT_index,index2;
+	for(int i=0;i<nonTerminalsSize;i++){
+
+		rule = g->arr[i];
+
+		while(rule!=NULL){		//iterate all rules of that non terminal
+
+			temp1=rule;
+
+			while(temp1!=NULL){		//iterate all production elements on by one of that rule
+
+				if(isTerminal(temp1->name)){	//if terminal,no need to calc its follow
+
+					temp1=temp1->next;
+
+					continue;
+				}
+
+			/* will calc follow of temp1 */
+							
+				check = lookup(nonTerminals,temp1->name,nonterminals);
+				nonT_index = check->index;
+
+			//got index of the non terminal whose follow to be calc
+
+				temp2=temp1->next;	
+				while(temp2!=NULL){
+					if(isTerminal(temp2->name)){	//if followed by a terminal,add it if not already
+	
+						if(checkSet(fset[nonT_index].follow,temp2->name) == false ){
+
+						fset[nonT_index].follow = addToSet((fset[nonT_index].follow),temp2->name);
+							change_flag+=1;
+						}
+						break;
+	
+					}
+					else if(isNTerminal(temp2->name)){
+	
+						check = lookup(nonTerminals,temp2->name,nonterminals);
+						index2 = check->index;
+			fset[nonT_index].follow=addSets(fset[nonT_index].follow,fset[index2].first,&change_flag);
+	
+						if(checkEps(index2,g)==false)	// if this NT doesnt give epsilon,done
+							break;
+					}
+					temp2=temp2->next;
+				}
+				if(temp2==NULL){
+			fset[nonT_index].follow=addSets(fset[nonT_index].follow,fset[i].follow,&change_flag);
+				}
+				temp1=temp1->next;	
+			}
+			rule=rule->more;	
+		}
+	}	
+	return change_flag;
+}
+
+
+
+
+
+
+
+
+
+		//***************PARSETABLE*******************
+
+
+
+
+
+
+
+
+
+PT* initializePT(){
+	PT *pTable = (PT*)malloc(sizeof(PT));
+	for(int i=0;i<nonTerminalsSize;i++){
+		for(int j=0;j<terminalsSize;j++){
+			pTable->tEntry[i][j]=(elem*)malloc(sizeof(elem));
+			pTable->tEntry[i][j]->type=-1;	//since -1->error,0->grammar exist,1->syn,2->accept
+			pTable->tEntry[i][j]->rule=NULL;	
+		}
+	}
+	return pTable;
+}
+			
+void createParseTable(Grammar *g,ffset fset,PT *pTable){
+	pTable->tEntry[0][terminalsSize-1]->type=2;		//2 is accept state	
+	for(int i=0;i<nonTerminalsSize;i++){
+		
+
+			//iterating all the grammar rules
+		grammar *rule = g->arr[i];
+
+		link check;
+
+		grammar *temp_rule = rule;
+		FF temp_f;
+
+		grammar *temp2;
+		int eps_flag=0,T_index,nonT_index;
+		while(temp_rule!=NULL){
+
+			temp2 = temp_rule;			//need to traverse this rule if NT gives eps
+				
+			while(temp2!=NULL){
+
+	
+				if(isNTerminal(temp2->name)){
+					check = lookup(nonTerminals,temp2->name,nonterminals);
+					nonT_index = check->index;
+				
+					//if first set of nonT_index has eps,need to traverse rule continuation
+	
+					FF first_set = fset[nonT_index].first;
+					temp_f = first_set;
+					eps_flag=0;
+					while(temp_f!=NULL){
+						if(strcmp(temp_f->elem,"eps")==0){
+							eps_flag=1;
+						}
+						else{
+							check = lookup(terminals,temp_f->elem,tokens);
+							T_index = check->index;
+							if(pTable->tEntry[i][T_index]->rule!=NULL)
+								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
+							pTable->tEntry[i][T_index]->type=0;// 0 is grammar exists
+						    pTable->tEntry[i][T_index]->rule=temp_rule;	
+						}
+						temp_f=temp_f->next;
+					}
+					if(eps_flag==1){
+						temp2=temp2->next;
+						continue;
+					}
+					else
+						break;
+				}
+
+				else if(isTerminal(temp2->name)){	//means rule->name is in first of nonterminals[i]		
+					if(strcmp(temp2->name,"eps") == 0){	//wont get anything after eps
+	
+				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
+	
+						for(int j=0;j<terminalsSize;j++){
+							if(checkSet(fset[i].follow,tokens[j]) == true){
+								if(pTable->tEntry[i][j]->rule!=NULL)
+									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
+								pTable->tEntry[i][j]->type=0;	
+							    pTable->tEntry[i][j]->rule=temp_rule;	
+							}
+						}
+						break;
+					}
+	
+			//if other terminals,replace with this rule only
+	
+					else{
+							check = lookup(terminals,temp2->name,tokens);
+							T_index = check->index;
+							if(pTable->tEntry[i][T_index]->rule!=NULL)
+								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
+							pTable->tEntry[i][T_index]->type=0;//1 for syn
+						    pTable->tEntry[i][T_index]->rule=temp_rule;	
+						break;	//if got a terminal,always break
+					}
+				}
+			}
+			temp_rule=temp_rule->more;
+		}
+		if(checkSet(fset[i].first,"eps") ==false){ 	//if doesnt have eps in first,get syn entries
+			temp_f = fset[i].follow;
+			while(temp_f!=NULL){
+				check = lookup(terminals,temp_f->elem,tokens);
+				T_index = check->index;
+				if(pTable->tEntry[i][T_index]->type==-1)
+					pTable->tEntry[i][T_index]->type=1;//1 is for syn
+				temp_f = temp_f->next;
+			}
+		}
+	}
+}
+
+void printParseTable(PT *pTable){
+		printf("\n\n");
+	for(int i=0;i<nonTerminalsSize;i++){
+		for(int j=0;j<terminalsSize;j++){
+			if(pTable->tEntry[i][j]->type ==-1)//error case
+				continue;
+			if(pTable->tEntry[i][j]->type ==2){	//accept case
+				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+				printf("accept\n\n");
+				continue;
+			}
+			if(pTable->tEntry[i][j]->type ==1){	//SYN case
+				printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+				printf("SYN\n\n");
+				continue;
+			}
+			printf("pEntry[%s][%s]:",nonterminals[i],tokens[j]);
+		//	printf("index:%d \n",pTable->tEntry[i][j]->type);
+		//	printf("\nrule:");
+			grammar *temp = pTable->tEntry[i][j]->rule;
+			printf("\n%s-> ",nonterminals[i]);
+			while(temp!=NULL){
+			printf("%s ",temp->name);
+				temp=temp->next;
+			}
+		printf("\n\n");
+		}
+	}
+}
+
+
+		//******************PARSETREE*******************
+
+
+
+
+
+
+ParseTree initializeParseTree(void){
+	ParseTree pt = (ParseTree)malloc(sizeof(struct parsetree));
+	pt->root=createtreeNode(1,0);	//nonterminal , "program",index=0;
+	return pt;
+}
+
+TreeNode createtreeNode(int tNt,int index){
+	TreeNode n = (TreeNode)malloc(sizeof(struct treenode));
+	n->next=NULL;
+	n->children=NULL;
+	n->index=index;
+	n->tNt=tNt;
+	n->token_info=NULL;
+	n->parent=NULL;
+	return n;
+}
+	
+TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children of node
+	TreeNode newNode;
+	link check;
+	int T_index,nonT_index;
+	if(rule!=NULL){
+		if(isTerminal(rule->name)){
+			check = lookup(terminals,rule->name,tokens);
+            T_index = check->index;
+			newNode = createtreeNode(0,T_index);
+		}	
+		else if(isNTerminal(rule->name)){
+			check = lookup(nonTerminals,rule->name,nonterminals);
+            nonT_index = check->index;
+			newNode = createtreeNode(1,nonT_index);
+		}
+		newNode->parent=node;
+		node->children=newNode;
+	}
+	TreeNode prev = newNode;
+	grammar *temp = rule->next;
+	while(temp!=NULL){
+		if(isTerminal(temp->name)){
+			check = lookup(terminals,temp->name,tokens);
+            T_index = check->index;
+			newNode = createtreeNode(0,T_index);
+		}	
+		else if(isNTerminal(temp->name)){
+			check = lookup(nonTerminals,temp->name,nonterminals);
+            nonT_index = check->index;
+			newNode = createtreeNode(1,nonT_index);
+		}
+		newNode->parent=node;
+		prev->next=newNode;
+		temp=temp->next;
+		prev=newNode;
+	}
+	return node;
+}
+
+ParseTree parseInputSourceCode(char *testFile,PT *pTable){
+	//HASHTABLE ALREADY INITIALIZED,GRAMMAR,FIRSTFOLLOW,PARSETABLE ALREADY CREATED
+
+	FILE *fp = fopen(testFile,"r");
+
+    if(fp==NULL){
+    	printf("File not found\n");
+		return NULL;
+	}
+
+	//Initializing parsetree and Stack
+
+	ParseTree tree = initializeParseTree();
+	Stack s = createStack();
+	Stack s2 = createStack();//helper stack
+	
+	//Pushing Dollar node to stack
+
+	TreeNode Dollar  = createtreeNode(0,terminalsSize-1);
+
+	s = push(s,Dollar);
+	
+	s = push(s,tree->root);
+
+	//EVERYTHING INITIALIZED,now,get the tokens and parse the tokens extracted
+	TreeNode top_stack,temp_treenode;
+
+	TokenInfo lookAhead = nextToken();
+
+	grammar *rule,*temp_rule;
+	link check;
+	int T_index,nonT_index;
+
+	while(1){
+
+		top_stack = top(s);
+
+			
+		if(top_stack==NULL){
+			printf("error for now\n");
+			return tree;
+		}
+
+
+		if(top_stack==Dollar && lookAhead == NULL){	//if top of stack is dollar and input consumed
+			printf("successfully parsed\n");
+			return tree;
+		}
+
+		//printf("Parsing :%s\n",lookAhead->Token);
+
+		if(strcmp(lookAhead->Token,"TK_COMMENT") == 0){
+				lookAhead = nextToken();
+				continue;
+		}
+			
+		if(top_stack->tNt==0){	//if top of stack is terminal
+			if(strcmp(tokens[top_stack->index],"eps")==0){
+				s = pop(s);
+				top_stack->token_info=lookAhead;	//store the tokenInfo,doubt if it copies
+				continue;
+			}
+			
+			if(strcmp(tokens[top_stack->index],lookAhead->Token)==0){
+				top_stack->token_info=lookAhead;	//store the tokenInfo
+				s = pop(s);
+				lookAhead = nextToken();
+			}
+			else{
+				printf("error for now in terminal\n");
+				return tree;
+			}
+		}
+		else{//if top of stack is nonterminal,pop the stack and push the rule in reverse
+			check = lookup(terminals,lookAhead->Token,tokens);
+            T_index = check->index;
+			rule = pTable->tEntry[top_stack->index][T_index]->rule;
+
+		//add the rules as children of the treenode at top of stack
+
+
+			if(rule==NULL){
+				printf("error \n");
+				return tree ;
+			}
+
+			temp_treenode = top_stack;
+			temp_treenode = addChildren(temp_treenode,rule);
+			temp_treenode = temp_treenode->children;
+
+			s = pop(s);
+
+		//add the rules to stack in reverse
+
+			while(temp_treenode!=NULL){
+				s2 = push(s2,temp_treenode);
+				temp_treenode = temp_treenode->next;
+			}
+			while(top(s2)!=NULL){
+				temp_treenode = top(s2);
+				s = push(s,temp_treenode);
+				pop(s2);	
+			}
+		}
+	}
+	return tree;
+}
+
+void printParseTree(ParseTree ptree,char *outfile){
+	if(ptree==NULL){
+		printf("Tree not initialized\n");	
+		return;
+	}
+	printf("***********PRINTING PARSE TREE ***************");
+
+	printf("%s %s %s %s %s %s %s\n\n\n", "LEXEME","LINE","TOKEN","VALUE","PARENT","LEAF","NODE");
+
+	printInOrder(ptree->root,outfile);
+}
+
+void printInOrder(TreeNode node,char *outfile){
+	if(node==NULL)
+		return;
+
+	TreeNode temp_node = node->children;
+
+	if(temp_node!=NULL){	//if it has children
+			
+		//printing left child
+		printInOrder(temp_node,outfile);
+		
+		//printing node;
+		
+		printNode(node,outfile);
+		//printing right childs in order
+		temp_node=temp_node->next;
+
+		while(temp_node!=NULL){
+			printInOrder(temp_node,outfile);
+			temp_node=temp_node->next;
+		}
+	}		
+	else
+		printNode(node,outfile);
+		//printing node;
+
+}	
+
+void printNode(TreeNode node,char *outfile){	//file already opened
+
+	FILE *f = fopen(outfile,"a");
+
+	//did not do value type now
+
+	bool isLeaf=false,isTerminal=false,isRoot=false;	
+	int val_type=-1;	//-1=>error,0=>int,1=>float
+
+	if(node->tNt==-1){//errorcase	TK_ERROR
+
+	}
+
+	if(node->children==NULL)		//if leaf node
+		isLeaf=true;
+
+	if(node->tNt==0)		//if it contains terminal symbol
+		isTerminal=true;
+	
+	if(node->parent==NULL)		//if this node is the root
+		isRoot=true;
+
+	TreeNode parent = node->parent;
+
+	if(isLeaf){	//for leaf node
+		if(isTerminal==false){
+			//leaf node is non terminal => error case
+		}	
+		else{
+			if(isRoot)
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"VALUE","ROOT","yes","----");
+
+			else
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"VALUE",nonterminals[parent->index],"yes","----");
+			//print it;
+		}
+	}
+
+	else{	//will be a nonterminal only
+		if(isTerminal==true){
+			//not possible
+		}
+		if(isRoot)
+				fprintf(f,"%21s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","VALUE","ROOT","no","----");
+			//root node print
+		else
+				fprintf(f,"%21s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","VALUE",nonterminals[parent->index],"no",nonterminals[node->index]);
+			//nonterminal print	
+	}
+	fclose(f);
+}
+
+

@@ -87,7 +87,6 @@ float stringToFloat(char *str)
 	}
 	i++;
     while(str[i]){
-	    printf("%c",str[i]);
 		f=(str[i]-'0')/p+f;
 		i++;
 		p*=10.0;
@@ -111,7 +110,7 @@ TokenInfo nextToken(){
 	memset(token->lexeme,0,MAX_LEXEME);
 	memset(temp,0,100);
 	
-	link tok;	//doubt
+	link tok;	
 
 	/* INITIALIZE STATE AND TOKEN */
 	int tInd=0;		 
@@ -316,7 +315,7 @@ TokenInfo nextToken(){
                    		temp[tInd++] = c;
                    	    temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
-						printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+						printf("Line %d:Unknown symbol %s\n",lineNo,token->lexeme);
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
@@ -401,7 +400,7 @@ TokenInfo nextToken(){
 							i--;
                    	    temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
-						printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+						printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
@@ -431,7 +430,7 @@ TokenInfo nextToken(){
 								i--;
                    		    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
@@ -484,7 +483,7 @@ TokenInfo nextToken(){
             	       	    	temp[tInd] = '\0';
 								strcpy(token->lexeme,temp);
 								strcpy(token->Token,"TK_ERROR");
-								printf("identifier too long on line no %d\n",lineNo);
+								printf("Line %d:Identifier is longer than the prescribed length of 20 characters\n",lineNo);
 								return token;
 							}
 							else{
@@ -504,7 +503,7 @@ TokenInfo nextToken(){
 								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
@@ -552,7 +551,7 @@ TokenInfo nextToken(){
             	       	    	temp[tInd] = '\0';
 								strcpy(token->lexeme,temp);
 								strcpy(token->Token,"TK_ERROR");
-								printf("identifier too long on line no %d\n",lineNo);
+								printf("Line %d:Identifier is longer than the prescribed length of 20 characters\n",lineNo);
 								return token;
 							}
 							else{
@@ -572,7 +571,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 					break;
@@ -600,6 +599,7 @@ TokenInfo nextToken(){
         	   	   	temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					strcpy(token->Token,"TK_NUM");
+					token->tkVal.intVal =  stringToInteger(temp);
 					i--;
 					return token;
 
@@ -621,7 +621,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 					break;
@@ -642,7 +642,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 					break;
@@ -681,7 +681,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}	
 					break;
@@ -716,6 +716,7 @@ TokenInfo nextToken(){
             	    	temp[tInd] = '\0';
 				  		strcpy(token->lexeme,temp);
 				   		strcpy(token->Token,"TK_ERROR");
+						printf("identifier too long on line no %d\n",lineNo);
 				   		printf("Funidentifier too long on line no %d\n",lineNo);
 				   		return token;
 				   	}
@@ -753,7 +754,7 @@ TokenInfo nextToken(){
             	    			temp[tInd] = '\0';
 				  				strcpy(token->lexeme,temp);
 				   				strcpy(token->Token,"TK_ERROR");
-				   				printf("FunIdentifier too long on line no %d\n",lineNo);
+								printf("Line %d:FunIdentifier is longer than the prescribed length of 30 characters\n",lineNo);
 				   				return token;
 				   			}
 							else{
@@ -774,7 +775,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 
@@ -797,7 +798,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 					break;
@@ -835,7 +836,7 @@ TokenInfo nextToken(){
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							return token;
 					}
 
@@ -858,7 +859,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -875,7 +876,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -900,7 +901,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -917,7 +918,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -959,7 +960,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -976,7 +977,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -1042,7 +1043,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -1066,7 +1067,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
-							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 							i--;
 							return token;
 					}
@@ -1083,7 +1084,7 @@ TokenInfo nextToken(){
 	                temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					strcpy(token->Token,"TK_ERROR");
-					printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
+					printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
 					return token;
 
 		}
@@ -1093,20 +1094,22 @@ TokenInfo nextToken(){
 void removeComments(){//char *testcaseFile, char *cleanFile){
 	char c;
 	int isCommment=0;//to check whether '\n' is comming from comment or is normal '\n'
-	while(c=getNextChar())
+	c=getNextChar();
+	while(c!=0)
 	{
 		if(c=='%')
 		{
 			c=getNextChar();
-			while(c && c!='\n')c=getNextChar();
+			while(c && (c!='\n' && c!='\r' && c!='\v' ))c=getNextChar();
 			isCommment=1;
 		}
-		if(isCommment && c=='\n')
+		if(isCommment && (c=='\n' || c=='\r' || c=='\v'))
 		{
 			isCommment=0;
 			continue;
 		}
 		printf("%c", c);
+		c=getNextChar();
 	}
 	i=0;//resetting buffer pointer
 	fseek(fp, 0, SEEK_SET);//resetting file pointer to start of file

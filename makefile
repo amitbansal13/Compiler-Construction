@@ -2,7 +2,7 @@
 # 	gcc main.o lexer.o HashTable.o FileIO.o -o compiler
 
 all: driver.o lexer.o HashTable.o parser.o	stack.o	
-	gcc driver.o lexer.o HashTable.o parser.o  stack.o -o compiler
+	gcc driver.o lexer.o HashTable.o parser.o  stack.o -o stage1exe
 
 parser.o: parser.c parser.h
 	gcc -g -c parser.c

@@ -1,0 +1,1821 @@
+                      _swpints	     1	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+                         input	     3	              TK_INPUT	 ------	            input_par	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             function	  no	            input_par
+
+
+                     parameter	     3	          TK_PARAMETER	 ------	            input_par	 yes	                 ----
+
+
+                          list	     3	               TK_LIST	 ------	            input_par	 yes	                 ----
+
+
+                             [	     3	                TK_SQL	 ------	            input_par	 yes	                 ----
+
+
+                           int	     3	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	            input_par	  no	       parameter_list
+
+
+                           b2b	     3	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ,	     3	              TK_COMMA	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                           int	     3	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	       remaining_list	  no	       parameter_list
+
+
+                           b2c	     3	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ]	     3	                TK_SQR	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                             ]	     3	                TK_SQR	 ------	            input_par	 yes	                 ----
+
+
+                        output	     5	             TK_OUTPUT	 ------	           output_par	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             function	  no	           output_par
+
+
+                     parameter	     5	          TK_PARAMETER	 ------	           output_par	 yes	                 ----
+
+
+                          list	     5	               TK_LIST	 ------	           output_par	 yes	                 ----
+
+
+                             [	     5	                TK_SQL	 ------	           output_par	 yes	                 ----
+
+
+                           int	     5	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	           output_par	  no	       parameter_list
+
+
+                           c2b	     5	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ,	     5	              TK_COMMA	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                           int	     5	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	       remaining_list	  no	       parameter_list
+
+
+                           c2c	     5	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ]	     5	                TK_SQR	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                             ]	     5	                TK_SQR	 ------	           output_par	 yes	                 ----
+
+
+                             ;	     5	                TK_SEM	 ------	             function	 yes	                 ----
+
+
+                           c2b	     7	                 TK_ID	 ------	      typeDefinitions	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	      typeDefinitions
+
+
+                          ----	 -----	                ------	 -----	             function	  no	                stmts
+
+
+                           c2b	     7	                 TK_ID	 ------	         declarations	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	         declarations
+
+
+                           c2b	     7	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	     7	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	     7	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           b2c	     7	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             ;	     7	                TK_SEM	 ------	                all_t	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	     7	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	     7	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	     7	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           otherStmts
+
+
+                           c2c	     9	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	     9	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	     9	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           b2b	     9	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             ;	     9	                TK_SEM	 ------	                all_t	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	     9	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	     9	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	     9	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    11	             TK_RETURN	 ------	           otherStmts	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    11	             TK_RETURN	 ------	           returnStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           returnStmt
+
+
+                             [	    11	                TK_SQL	 ------	       optionalReturn	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           returnStmt	  no	       optionalReturn
+
+
+                           c2b	    11	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       optionalReturn	  no	               idList
+
+
+                             ,	    11	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                           c2c	    11	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    11	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    11	                TK_SQR	 ------	       optionalReturn	 yes	                 ----
+
+
+                             ;	    11	                TK_SEM	 ------	           returnStmt	 yes	                 ----
+
+
+                           end	    13	                TK_END	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	              program	  no	       otherFunctions
+
+
+                      _swprecs	    19	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+                         input	    21	              TK_INPUT	 ------	            input_par	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             function	  no	            input_par
+
+
+                     parameter	    21	          TK_PARAMETER	 ------	            input_par	 yes	                 ----
+
+
+                          list	    21	               TK_LIST	 ------	            input_par	 yes	                 ----
+
+
+                             [	    21	                TK_SQL	 ------	            input_par	 yes	                 ----
+
+
+                        record	    21	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    21	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	            input_par	  no	       parameter_list
+
+
+                           d5b	    21	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ,	    21	              TK_COMMA	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                        record	    21	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    21	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	       remaining_list	  no	       parameter_list
+
+
+                           d2c	    21	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ]	    21	                TK_SQR	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                             ]	    21	                TK_SQR	 ------	            input_par	 yes	                 ----
+
+
+                        output	    23	             TK_OUTPUT	 ------	           output_par	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             function	  no	           output_par
+
+
+                     parameter	    23	          TK_PARAMETER	 ------	           output_par	 yes	                 ----
+
+
+                          list	    23	               TK_LIST	 ------	           output_par	 yes	                 ----
+
+
+                             [	    23	                TK_SQL	 ------	           output_par	 yes	                 ----
+
+
+                        record	    23	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    23	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	           output_par	  no	       parameter_list
+
+
+                           d5d	    23	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ,	    23	              TK_COMMA	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                        record	    23	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    23	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+                          ----	 -----	                ------	 -----	       remaining_list	  no	       parameter_list
+
+
+                            d2	    23	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+                             ]	    23	                TK_SQR	 ------	       remaining_list	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+                             ]	    23	                TK_SQR	 ------	           output_par	 yes	                 ----
+
+
+                             ;	    23	                TK_SEM	 ------	             function	 yes	                 ----
+
+
+                          type	    25	               TK_TYPE	 ------	      typeDefinitions	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	      typeDefinitions
+
+
+                          ----	 -----	                ------	 -----	             function	  no	                stmts
+
+
+                          type	    25	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                           int	    25	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    25	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                          d3c2	    25	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             ;	    25	                TK_SEM	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                             ;	    25	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	         declarations
+
+
+                          type	    27	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                           int	    27	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    27	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                          d3c3	    27	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             ;	    27	                TK_SEM	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                             ;	    27	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                          type	    29	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                           int	    29	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    29	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                          d3c4	    29	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             ;	    29	                TK_SEM	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                             ;	    29	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                          type	    31	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                           int	    31	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    31	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                          d3c5	    31	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             ;	    31	                TK_SEM	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                             ;	    31	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                          d3c2	    33	                 TK_ID	 ------	         declarations	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                          d3c2	    33	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	    33	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    33	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           d5b	    33	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             .	    33	                TK_DOT	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                all_t	  no	                 temp
+
+
+                           len	    33	            TK_FIELDID	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    33	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    33	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    33	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           otherStmts
+
+
+                          d3c3	    35	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	    35	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    35	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           d2c	    35	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             .	    35	                TK_DOT	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                all_t	  no	                 temp
+
+
+                           len	    35	            TK_FIELDID	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    35	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    35	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    35	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                             [	    39	                TK_SQL	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	     outputParameters
+
+
+                          d3c4	    39	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     outputParameters	  no	               idList
+
+
+                             ,	    39	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                          d3c5	    39	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    39	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    39	                TK_SQR	 ------	     outputParameters	 yes	                 ----
+
+
+                          <---	    39	           TK_ASSIGNOP	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	          funCallStmt
+
+
+                          call	    39	               TK_CALL	 ------	          funCallStmt	 yes	                 ----
+
+
+                      _swpints	    39	              TK_FUNID	 ------	          funCallStmt	 yes	                 ----
+
+
+                          with	    39	               TK_WITH	 ------	          funCallStmt	 yes	                 ----
+
+
+                    parameters	    39	         TK_PARAMETERS	 ------	          funCallStmt	 yes	                 ----
+
+
+                             [	    39	                TK_SQL	 ------	      inputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	      inputParameters
+
+
+                          d3c2	    39	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      inputParameters	  no	               idList
+
+
+                             ,	    39	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                          d3c3	    39	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    39	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    39	                TK_SQR	 ------	      inputParameters	 yes	                 ----
+
+
+                             ;	    39	                TK_SEM	 ------	          funCallStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                          d3c2	    41	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	    41	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    41	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           d5b	    41	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             .	    41	                TK_DOT	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                all_t	  no	                 temp
+
+
+                        height	    41	            TK_FIELDID	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    41	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    41	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    41	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                          d3c3	    43	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                          <---	    43	           TK_ASSIGNOP	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    43	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                           d2c	    43	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             .	    43	                TK_DOT	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                all_t	  no	                 temp
+
+
+                        height	    43	            TK_FIELDID	 ------	                 temp	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    43	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    43	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    43	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                             [	    45	                TK_SQL	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	     outputParameters
+
+
+                           d5d	    45	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     outputParameters	  no	               idList
+
+
+                             ,	    45	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                            d2	    45	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    45	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    45	                TK_SQR	 ------	     outputParameters	 yes	                 ----
+
+
+                          <---	    45	           TK_ASSIGNOP	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	          funCallStmt
+
+
+                          call	    45	               TK_CALL	 ------	          funCallStmt	 yes	                 ----
+
+
+                      _swpints	    45	              TK_FUNID	 ------	          funCallStmt	 yes	                 ----
+
+
+                          with	    45	               TK_WITH	 ------	          funCallStmt	 yes	                 ----
+
+
+                    parameters	    45	         TK_PARAMETERS	 ------	          funCallStmt	 yes	                 ----
+
+
+                             [	    45	                TK_SQL	 ------	      inputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	      inputParameters
+
+
+                          d3c2	    45	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      inputParameters	  no	               idList
+
+
+                             ,	    45	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                          d3c3	    45	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    45	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    45	                TK_SQR	 ------	      inputParameters	 yes	                 ----
+
+
+                             ;	    45	                TK_SEM	 ------	          funCallStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                           d5d	    47	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    47	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                           len	    47	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    47	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          d3c4	    47	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             ;	    47	                TK_SEM	 ------	                all_t	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    47	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    47	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    47	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                            d2	    49	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    49	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                           len	    49	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    49	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          d3c5	    49	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                             ;	    49	                TK_SEM	 ------	                all_t	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                  all	  no	                all_t
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    49	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    49	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    49	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    53	             TK_RETURN	 ------	           otherStmts	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    53	             TK_RETURN	 ------	           returnStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           returnStmt
+
+
+                             [	    53	                TK_SQL	 ------	       optionalReturn	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           returnStmt	  no	       optionalReturn
+
+
+                           d2d	    53	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       optionalReturn	  no	               idList
+
+
+                             ,	    53	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                            d2	    53	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    53	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    53	                TK_SQR	 ------	       optionalReturn	 yes	                 ----
+
+
+                             ;	    53	                TK_SEM	 ------	           returnStmt	 yes	                 ----
+
+
+                           end	    55	                TK_END	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	       otherFunctions
+
+
+                         _main	    59	               TK_MAIN	 ------	       otherFunctions	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	       otherFunctions
+
+
+                        ------	 -----	                 -----	 ------	                 ROOT	  no	                 ----
+
+
+                         _main	    59	               TK_MAIN	 ------	         mainFunction	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	              program	  no	         mainFunction
+
+
+                        record	    61	             TK_RECORD	 ------	       typeDefinition	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      typeDefinitions	  no	       typeDefinition
+
+
+                         #rrec	    61	           TK_RECORDID	 ------	       typeDefinition	 yes	                 ----
+
+
+                          type	    63	               TK_TYPE	 ------	      fieldDefinition	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     fieldDefinitions	  no	      fieldDefinition
+
+
+                           int	    63	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      fieldDefinition	  no	    primitiveDatatype
+
+
+                             :	    63	              TK_COLON	 ------	      fieldDefinition	 yes	                 ----
+
+
+                           len	    63	            TK_FIELDID	 ------	      fieldDefinition	 yes	                 ----
+
+
+                             ;	    63	                TK_SEM	 ------	      fieldDefinition	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       typeDefinition	  no	     fieldDefinitions
+
+
+                          type	    65	               TK_TYPE	 ------	      fieldDefinition	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     fieldDefinitions	  no	      fieldDefinition
+
+
+                           int	    65	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      fieldDefinition	  no	    primitiveDatatype
+
+
+                             :	    65	              TK_COLON	 ------	      fieldDefinition	 yes	                 ----
+
+
+                        height	    65	            TK_FIELDID	 ------	      fieldDefinition	 yes	                 ----
+
+
+                             ;	    65	                TK_SEM	 ------	      fieldDefinition	 yes	                 ----
+
+
+                     endrecord	    67	          TK_ENDRECORD	 ------	           moreFields	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     fieldDefinitions	  no	           moreFields
+
+
+                     endrecord	    67	          TK_ENDRECORD	 ------	       typeDefinition	 yes	                 ----
+
+
+                             ;	    67	                TK_SEM	 ------	       typeDefinition	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	      typeDefinitions
+
+
+                          type	    69	               TK_TYPE	 ------	      typeDefinitions	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      typeDefinitions	  no	      typeDefinitions
+
+
+                          ----	 -----	                ------	 -----	         mainFunction	  no	                stmts
+
+
+                          type	    69	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                        record	    69	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    69	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    69	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                            b2	    69	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             ;	    69	                TK_SEM	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                             ;	    69	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	         declarations
+
+
+                          type	    71	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+                        record	    71	             TK_RECORD	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             dataType	  no	  constructedDatatype
+
+
+                         #rrec	    71	           TK_RECORDID	 ------	  constructedDatatype	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+                             :	    71	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+                           d5b	    71	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+                             :	    71	              TK_COLON	 ------	        global_or_not	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+                        global	    71	             TK_GLOBAL	 ------	        global_or_not	 yes	                 ----
+
+
+                             ;	    71	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                            b2	    75	                 TK_ID	 ------	         declarations	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+                            b2	    75	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    75	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                           len	    75	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    75	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                             5	    75	                TK_NUM	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    75	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    75	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    75	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           otherStmts
+
+
+                            b2	    77	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    77	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                        height	    77	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    77	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                             7	    77	                TK_NUM	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    77	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    77	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    77	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                           d5b	    79	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    79	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                           len	    79	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    79	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                         10.56	    79	               TK_RNUM	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    79	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    79	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    79	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                           d5b	    81	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+                             .	    81	                TK_DOT	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+                        height	    81	            TK_FIELDID	 ------	               new_24	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+                          <---	    81	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+                            20	    81	                TK_NUM	 ------	                  all	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+                             ;	    81	                TK_SEM	 ------	            termPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+                             ;	    81	                TK_SEM	 ------	             expPrime	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+                             ;	    81	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                             [	    83	                TK_SQL	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	     outputParameters
+
+
+                            b2	    83	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	     outputParameters	  no	               idList
+
+
+                             ,	    83	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                            c2	    83	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    83	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    83	                TK_SQR	 ------	     outputParameters	 yes	                 ----
+
+
+                          <---	    83	           TK_ASSIGNOP	 ------	     outputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	          funCallStmt
+
+
+                          call	    83	               TK_CALL	 ------	          funCallStmt	 yes	                 ----
+
+
+                      _swprecs	    83	              TK_FUNID	 ------	          funCallStmt	 yes	                 ----
+
+
+                          with	    83	               TK_WITH	 ------	          funCallStmt	 yes	                 ----
+
+
+                    parameters	    83	         TK_PARAMETERS	 ------	          funCallStmt	 yes	                 ----
+
+
+                             [	    83	                TK_SQL	 ------	      inputParameters	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	          funCallStmt	  no	      inputParameters
+
+
+                            b2	    83	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	      inputParameters	  no	               idList
+
+
+                             ,	    83	              TK_COMMA	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                           d5b	    83	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	             more_ids	  no	               idList
+
+
+                             ]	    83	                TK_SQR	 ------	             more_ids	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+                             ]	    83	                TK_SQR	 ------	      inputParameters	 yes	                 ----
+
+
+                             ;	    83	                TK_SEM	 ------	          funCallStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                         write	    85	              TK_WRITE	 ------	               ioStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	               ioStmt
+
+
+                             (	    85	                 TK_OP	 ------	               ioStmt	 yes	                 ----
+
+
+                            b2	    85	                 TK_ID	 ------	               allVar	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               ioStmt	  no	               allVar
+
+
+                             )	    85	                 TK_CL	 ------	                  var	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               allVar	  no	                  var
+
+
+                             )	    85	                 TK_CL	 ------	               ioStmt	 yes	                 ----
+
+
+                             ;	    85	                TK_SEM	 ------	               ioStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                         write	    87	              TK_WRITE	 ------	               ioStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                 stmt	  no	               ioStmt
+
+
+                             (	    87	                 TK_OP	 ------	               ioStmt	 yes	                 ----
+
+
+                            c2	    87	                 TK_ID	 ------	               allVar	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               ioStmt	  no	               allVar
+
+
+                             )	    87	                 TK_CL	 ------	                  var	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	               allVar	  no	                  var
+
+
+                             )	    87	                 TK_CL	 ------	               ioStmt	 yes	                 ----
+
+
+                             ;	    87	                TK_SEM	 ------	               ioStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    89	             TK_RETURN	 ------	           otherStmts	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+                        return	    89	             TK_RETURN	 ------	           returnStmt	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	                stmts	  no	           returnStmt
+
+
+                             ;	    89	                TK_SEM	 ------	       optionalReturn	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	           returnStmt	  no	       optionalReturn
+
+
+                             ;	    89	                TK_SEM	 ------	           returnStmt	 yes	                 ----
+
+
+                           end	    91	                TK_END	 ------	         mainFunction	 yes	                 ----
+
+

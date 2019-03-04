@@ -1,3 +1,4 @@
+#include "lexerDef.h"
 #include "lexer.h"
 #define BUF_SIZE 256
 

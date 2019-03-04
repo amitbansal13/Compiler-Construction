@@ -12,9 +12,9 @@ int main()
     double total_CPU_time, total_CPU_time_in_seconds;
 
 	char *grammarFile = "grammar2.txt";
-	char *testcaseFile = "testcase2.txt";
+	char *testcaseFile = "testcase4.txt";
 	char *outfile = "outfile.txt";
-
+	bool parseError = false;
 	ffset fset;
 	PT *pTable;
 
@@ -83,8 +83,9 @@ int main()
 			fset = computeFirstnFollow(g);
 			pTable = initializePT();
 			createParseTable(g,fset,pTable);
-			ParseTree ptree=parseInputSourceCode(testcaseFile,pTable);
-			printParseTree(ptree,outfile);
+			ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+			if(parseError==false)
+				printParseTree(ptree,outfile);
 		}
 		else 
 

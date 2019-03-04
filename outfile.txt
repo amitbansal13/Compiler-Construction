@@ -1,25 +1,25 @@
-           _readMarks	     8	              TK_FUNID	 VALUE	             function	 yes	                 ----
+_computeFunctionValue	     6	              TK_FUNID	 VALUE	             function	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       otherFunctions	  no	             function
 
 
-                input	     8	              TK_INPUT	 VALUE	            input_par	 yes	                 ----
+                input	     6	              TK_INPUT	 VALUE	            input_par	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	             function	  no	            input_par
 
 
-            parameter	     9	          TK_PARAMETER	 VALUE	            input_par	 yes	                 ----
+            parameter	     7	          TK_PARAMETER	 VALUE	            input_par	 yes	                 ----
 
 
-                 list	    10	               TK_LIST	 VALUE	            input_par	 yes	                 ----
+                 list	     8	               TK_LIST	 VALUE	            input_par	 yes	                 ----
 
 
-                    [	    11	                TK_SQL	 VALUE	            input_par	 yes	                 ----
+                    [	     9	                TK_SQL	 VALUE	            input_par	 yes	                 ----
 
 
-                  int	    11	                TK_INT	 VALUE	    primitiveDatatype	 yes	                 ----
+                  int	     9	                TK_INT	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
@@ -31,40 +31,79 @@
                  ----	 -----	                ------	 VALUE	            input_par	  no	       parameter_list
 
 
-                   b7	    12	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
+                   c3	    10	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
 
 
-                    ]	    13	                TK_SQR	 VALUE	       remaining_list	 yes	                 ----
+                    ,	    11	              TK_COMMA	 VALUE	       remaining_list	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       parameter_list	  no	       remaining_list
 
 
-                    ]	    13	                TK_SQR	 VALUE	            input_par	 yes	                 ----
+                  int	    11	                TK_INT	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
-               output	    14	             TK_OUTPUT	 VALUE	           output_par	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
+
+
+                 ----	 -----	                ------	 VALUE	       parameter_list	  no	             dataType
+
+
+                 ----	 -----	                ------	 VALUE	       remaining_list	  no	       parameter_list
+
+
+                   c4	    12	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
+
+
+                    ,	    13	              TK_COMMA	 VALUE	       remaining_list	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	       parameter_list	  no	       remaining_list
+
+
+                  int	    13	                TK_INT	 VALUE	    primitiveDatatype	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
+
+
+                 ----	 -----	                ------	 VALUE	       parameter_list	  no	             dataType
+
+
+                 ----	 -----	                ------	 VALUE	       remaining_list	  no	       parameter_list
+
+
+                   c5	    14	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
+
+
+                    ]	    15	                TK_SQR	 VALUE	       remaining_list	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	       parameter_list	  no	       remaining_list
+
+
+                    ]	    15	                TK_SQR	 VALUE	            input_par	 yes	                 ----
+
+
+               output	    16	             TK_OUTPUT	 VALUE	           output_par	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	             function	  no	           output_par
 
 
-            parameter	    15	          TK_PARAMETER	 VALUE	           output_par	 yes	                 ----
+            parameter	    17	          TK_PARAMETER	 VALUE	           output_par	 yes	                 ----
 
 
-                 list	    16	               TK_LIST	 VALUE	           output_par	 yes	                 ----
+                 list	    18	               TK_LIST	 VALUE	           output_par	 yes	                 ----
 
 
-                    [	    17	                TK_SQL	 VALUE	           output_par	 yes	                 ----
+                    [	    19	                TK_SQL	 VALUE	           output_par	 yes	                 ----
 
 
-               record	    17	             TK_RECORD	 VALUE	  constructedDatatype	 yes	                 ----
+                 real	    19	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	             dataType	  no	  constructedDatatype
-
-
-              #mmarks	    18	           TK_RECORDID	 VALUE	  constructedDatatype	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
 
 
                  ----	 -----	                ------	 VALUE	       parameter_list	  no	             dataType
@@ -73,22 +112,22 @@
                  ----	 -----	                ------	 VALUE	           output_par	  no	       parameter_list
 
 
-                b3c45	    19	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
+                   c6	    20	                 TK_ID	 VALUE	       parameter_list	 yes	                 ----
 
 
-                    ]	    20	                TK_SQR	 VALUE	       remaining_list	 yes	                 ----
+                    ]	    21	                TK_SQR	 VALUE	       remaining_list	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       parameter_list	  no	       remaining_list
 
 
-                    ]	    20	                TK_SQR	 VALUE	           output_par	 yes	                 ----
+                    ]	    21	                TK_SQR	 VALUE	           output_par	 yes	                 ----
 
 
-                    ;	    20	                TK_SEM	 VALUE	             function	 yes	                 ----
+                    ;	    21	                TK_SEM	 VALUE	             function	 yes	                 ----
 
 
-                 read	    21	               TK_READ	 VALUE	      typeDefinitions	 yes	                 ----
+                 type	    22	               TK_TYPE	 VALUE	      typeDefinitions	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	      typeDefinitions
@@ -97,40 +136,124 @@
                  ----	 -----	                ------	 VALUE	             function	  no	                stmts
 
 
-                 read	    21	               TK_READ	 VALUE	         declarations	 yes	                 ----
+                 type	    22	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	         declarations	  no	          declaration
+
+
+                 real	    23	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
+
+
+                 ----	 -----	                ------	 VALUE	          declaration	  no	             dataType
+
+
+                    :	    24	              TK_COLON	 VALUE	          declaration	 yes	                 ----
+
+
+           d4cbcd5677	    24	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+
+
+                    ;	    25	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	          declaration	  no	        global_or_not
+
+
+                    ;	    25	                TK_SEM	 VALUE	          declaration	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	         declarations
 
 
-                 read	    21	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
+                 type	    26	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
+                 ----	 -----	                ------	 VALUE	         declarations	  no	          declaration
 
 
-                    (	    22	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
+                 real	    27	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
-                b3c45	    22	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
 
 
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	        singleOrRecId
+                 ----	 -----	                ------	 VALUE	          declaration	  no	             dataType
 
 
-                    .	    23	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                    :	    28	              TK_COLON	 VALUE	          declaration	 yes	                 ----
+
+
+                c4bbb	    28	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+
+
+                    ;	    29	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	          declaration	  no	        global_or_not
+
+
+                    ;	    29	                TK_SEM	 VALUE	          declaration	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	         declarations	  no	         declarations
+
+
+                   c6	    30	                 TK_ID	 VALUE	         declarations	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	         declarations	  no	         declarations
+
+
+                   c6	    30	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
+
+
+                 <---	    31	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
 
 
-                maths	    23	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
 
 
-                    )	    24	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
+                 <---	    31	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
 
 
-                    ;	    24	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
+              5000.79	    31	               TK_RNUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    ;	    31	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
+
+
+                    ;	    31	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    ;	    31	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -139,34 +262,268 @@
                  ----	 -----	                ------	 VALUE	                stmts	  no	           otherStmts
 
 
-                 read	    25	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
+           d4cbcd5677	    32	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
 
 
-                    (	    26	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
-
-
-                b3c45	    26	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	        singleOrRecId
-
-
-                    .	    27	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                 <---	    33	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
 
 
-              physics	    27	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
 
 
-                    )	    28	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
+                 <---	    33	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
 
 
-                    ;	    28	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
+                    (	    33	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                    (	    33	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                   c3	    33	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    +	    34	               TK_PLUS	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    +	    34	               TK_PLUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    +	    34	               TK_PLUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    2	    34	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    *	    34	                TK_MUL	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                   c4	    34	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    )	    35	                 TK_CL	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                    )	    35	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                    )	    35	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    )	    35	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    -	    35	              TK_MINUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    -	    35	              TK_MINUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    (	    35	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                   c5	    35	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    -	    36	              TK_MINUS	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    -	    36	              TK_MINUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    -	    36	              TK_MINUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    5	    36	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    )	    36	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    )	    36	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    )	    36	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    )	    36	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    )	    36	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    )	    36	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    /	    36	                TK_DIV	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    4	    36	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                    ;	    36	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
+
+
+                    ;	    36	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    ;	    36	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -175,34 +532,280 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                 read	    29	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
+                c4bbb	    37	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
 
 
-                    (	    30	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
-
-
-                b3c45	    30	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	        singleOrRecId
-
-
-                    .	    31	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                 <---	    38	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
 
 
-            chemistry	    31	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
 
 
-                    )	    32	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
+                 <---	    38	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
 
 
-                    ;	    32	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
+                    (	    38	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                    (	    38	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+           d4cbcd5677	    38	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    -	    39	              TK_MINUS	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    -	    39	              TK_MINUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    -	    39	              TK_MINUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                 2.35	    39	               TK_RNUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    )	    39	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    )	    39	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    )	    39	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    *	    39	                TK_MUL	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    (	    39	                 TK_OP	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                 2345	    39	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    -	    39	              TK_MINUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    -	    39	              TK_MINUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                  234	    39	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    *	    39	                TK_MUL	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                    8	    39	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                    )	    39	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                    )	    39	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    )	    39	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                    )	    39	                 TK_CL	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	 arithmeticExpression
+
+
+                    )	    39	                 TK_CL	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    )	    39	                 TK_CL	 VALUE	               factor	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    +	    39	               TK_PLUS	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
+
+
+                    +	    39	               TK_PLUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    5	    39	                TK_NUM	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
+
+
+                    *	    39	                TK_MUL	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                   c3	    39	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    ;	    40	                TK_SEM	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                    ;	    40	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                    ;	    40	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
+
+
+                    ;	    40	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -211,40 +814,280 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-               return	    33	             TK_RETURN	 VALUE	           otherStmts	 yes	                 ----
+                   if	    41	                 TK_IF	 VALUE	      conditionalStmt	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	      conditionalStmt
+
+
+                    (	    42	                 TK_OP	 VALUE	      conditionalStmt	 yes	                 ----
+
+
+                    (	    42	                 TK_OP	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	      conditionalStmt	  no	    booleanExpression
+
+
+                    ~	    42	                TK_NOT	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	    booleanExpression
+
+
+                    (	    42	                 TK_OP	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                c4bbb	    42	                 TK_ID	 VALUE	               allVar	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
+
+
+                   ==	    43	                 TK_EQ	 VALUE	                  var	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	    booleanExpression
+
+
+                   ==	    43	                 TK_EQ	 VALUE	         relationalOp	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	         relationalOp
+
+
+                    0	    43	                TK_NUM	 VALUE	               allVar	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
+
+
+                    )	    43	                 TK_CL	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                    )	    43	                 TK_CL	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                  &&&	    43	                TK_AND	 VALUE	            logicalOp	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	            logicalOp
+
+
+                    (	    43	                 TK_OP	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                c4bbb	    43	                 TK_ID	 VALUE	               allVar	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
+
+
+                    >	    44	                 TK_GT	 VALUE	                  var	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	    booleanExpression
+
+
+                    >	    44	                 TK_GT	 VALUE	         relationalOp	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	         relationalOp
+
+
+                78.56	    44	               TK_RNUM	 VALUE	               allVar	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
+
+
+                    )	    44	                 TK_CL	 VALUE	    booleanExpression	 yes	                 ----
+
+
+                    )	    44	                 TK_CL	 VALUE	      conditionalStmt	 yes	                 ----
+
+
+                     	     0	               TK_THEN	 VALUE	      conditionalStmt	 yes	                 ----
+
+
+                   c6	    46	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
+
+
+                 <---	    47	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
+
+
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
+
+
+                 <---	    47	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
+
+
+           d4cbcd5677	    47	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    /	    48	                TK_DIV	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+
+
+                    /	    48	                TK_DIV	 VALUE	 highPrecedenceOperator	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
+
+
+                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+
+
+                c4bbb	    48	                 TK_ID	 VALUE	                  all	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+
+
+                    ;	    49	                TK_SEM	 VALUE	                all_t	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
+
+
+                    ;	    49	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
+
+
+                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
+
+
+                    ;	    49	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+
+
+                    ;	    49	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	      conditionalStmt	  no	                 stmt
+
+
+                     	     0	               TK_ELSE	 VALUE	           otherStmts	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	      conditionalStmt	  no	           otherStmts
+
+
+                     	     0	               TK_ELSE	 VALUE	             elsePart	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	      conditionalStmt	  no	             elsePart
+
+
+                write	    51	              TK_WRITE	 VALUE	               ioStmt	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
+
+
+                    (	    52	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
+
+
+                c4bbb	    52	                 TK_ID	 VALUE	               allVar	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               ioStmt	  no	               allVar
+
+
+                    )	    53	                 TK_CL	 VALUE	                  var	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
+
+
+                    )	    53	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
+
+
+                    ;	    53	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             elsePart	  no	                 stmt
+
+
+                     	     0	              TK_ENDIF	 VALUE	           otherStmts	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             elsePart	  no	           otherStmts
+
+
+                     	     0	              TK_ENDIF	 VALUE	             elsePart	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-               return	    33	             TK_RETURN	 VALUE	           returnStmt	 yes	                 ----
+               return	    56	             TK_RETURN	 VALUE	           otherStmts	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
+
+
+               return	    56	             TK_RETURN	 VALUE	           returnStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	           returnStmt
 
 
-                    [	    34	                TK_SQL	 VALUE	       optionalReturn	 yes	                 ----
+                    [	    57	                TK_SQL	 VALUE	       optionalReturn	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           returnStmt	  no	       optionalReturn
 
 
-                b3c45	    34	                 TK_ID	 VALUE	               idList	 yes	                 ----
+                   c6	    57	                 TK_ID	 VALUE	               idList	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       optionalReturn	  no	               idList
 
 
-                    ]	    35	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
+                    ]	    58	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
 
 
-                    ]	    35	                TK_SQR	 VALUE	       optionalReturn	 yes	                 ----
+                    ]	    58	                TK_SQR	 VALUE	       optionalReturn	 yes	                 ----
 
 
-                    ;	    35	                TK_SEM	 VALUE	           returnStmt	 yes	                 ----
+                    ;	    58	                TK_SEM	 VALUE	           returnStmt	 yes	                 ----
 
 
                      	     0	                TK_END	 VALUE	             function	 yes	                 ----
@@ -253,7 +1096,7 @@
                  ----	 -----	                ------	 VALUE	              program	  no	       otherFunctions
 
 
-                _main	    42	               TK_MAIN	 VALUE	       otherFunctions	 yes	                 ----
+                _main	    63	               TK_MAIN	 VALUE	       otherFunctions	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       otherFunctions	  no	       otherFunctions
@@ -262,145 +1105,49 @@
                ------	 -----	                 -----	 VALUE	                 ROOT	  no	                 ----
 
 
-                _main	    42	               TK_MAIN	 VALUE	         mainFunction	 yes	                 ----
+                _main	    63	               TK_MAIN	 VALUE	         mainFunction	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	              program	  no	         mainFunction
 
 
-               record	    43	             TK_RECORD	 VALUE	       typeDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      typeDefinitions	  no	       typeDefinition
-
-
-              #mmarks	     0	           TK_RECORDID	 VALUE	       typeDefinition	 yes	                 ----
-
-
-                 type	    45	               TK_TYPE	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	     fieldDefinitions	  no	      fieldDefinition
-
-
-                 real	    46	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      fieldDefinition	  no	    primitiveDatatype
-
-
-                    :	    47	              TK_COLON	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                maths	    47	            TK_FIELDID	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                    ;	    48	                TK_SEM	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	       typeDefinition	  no	     fieldDefinitions
-
-
-                 type	    49	               TK_TYPE	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	     fieldDefinitions	  no	      fieldDefinition
-
-
-                 real	    50	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      fieldDefinition	  no	    primitiveDatatype
-
-
-                    :	    51	              TK_COLON	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-              physics	    51	            TK_FIELDID	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                    ;	    52	                TK_SEM	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 type	    53	               TK_TYPE	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           moreFields	  no	      fieldDefinition
-
-
-                 real	    54	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      fieldDefinition	  no	    primitiveDatatype
-
-
-                    :	    55	              TK_COLON	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-            chemistry	    55	            TK_FIELDID	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                    ;	    56	                TK_SEM	 VALUE	      fieldDefinition	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	     fieldDefinitions	  no	           moreFields
-
-
-            endrecord	    57	          TK_ENDRECORD	 VALUE	           moreFields	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           moreFields	  no	           moreFields
-
-
-            endrecord	    57	          TK_ENDRECORD	 VALUE	       typeDefinition	 yes	                 ----
-
-
-                    ;	    58	                TK_SEM	 VALUE	       typeDefinition	 yes	                 ----
+                 type	    64	               TK_TYPE	 VALUE	      typeDefinitions	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	      typeDefinitions
 
 
-                 type	    61	               TK_TYPE	 VALUE	      typeDefinitions	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      typeDefinitions	  no	      typeDefinitions
-
-
                  ----	 -----	                ------	 VALUE	         mainFunction	  no	                stmts
 
 
-                 type	    61	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
+                 type	    64	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	         declarations	  no	          declaration
 
 
-               record	    62	             TK_RECORD	 VALUE	  constructedDatatype	 yes	                 ----
+                  int	    65	                TK_INT	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	             dataType	  no	  constructedDatatype
-
-
-              #mmarks	    63	           TK_RECORDID	 VALUE	  constructedDatatype	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
 
 
                  ----	 -----	                ------	 VALUE	          declaration	  no	             dataType
 
 
-                    :	    64	              TK_COLON	 VALUE	          declaration	 yes	                 ----
+                    :	    66	              TK_COLON	 VALUE	          declaration	 yes	                 ----
 
 
-                   d4	    64	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+                   b5	    66	                 TK_ID	 VALUE	          declaration	 yes	                 ----
 
 
-                    ;	    65	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
+                    ;	    67	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	          declaration	  no	        global_or_not
 
 
-                    ;	    65	                TK_SEM	 VALUE	          declaration	 yes	                 ----
+                    ;	    67	                TK_SEM	 VALUE	          declaration	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	         declarations
@@ -424,7 +1171,7 @@
                     :	    70	              TK_COLON	 VALUE	          declaration	 yes	                 ----
 
 
-                   b5	    70	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+            d5cb34567	    70	                 TK_ID	 VALUE	          declaration	 yes	                 ----
 
 
                     ;	    71	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
@@ -457,34 +1204,34 @@
                     :	    74	              TK_COLON	 VALUE	          declaration	 yes	                 ----
 
 
-            d5cb34567	    74	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+               b3b444	    74	                 TK_ID	 VALUE	          declaration	 yes	                 ----
 
 
-                    ;	    75	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
+                    :	    75	              TK_COLON	 VALUE	        global_or_not	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	          declaration	  no	        global_or_not
 
 
-                    ;	    75	                TK_SEM	 VALUE	          declaration	 yes	                 ----
+               global	    75	             TK_GLOBAL	 VALUE	        global_or_not	 yes	                 ----
+
+
+                    ;	    76	                TK_SEM	 VALUE	          declaration	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	         declarations	  no	         declarations
 
 
-                 type	    76	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
+                 type	    77	               TK_TYPE	 VALUE	          declaration	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	         declarations	  no	          declaration
 
 
-               record	    77	             TK_RECORD	 VALUE	  constructedDatatype	 yes	                 ----
+                 real	    78	               TK_REAL	 VALUE	    primitiveDatatype	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	             dataType	  no	  constructedDatatype
-
-
-              #mmarks	    78	           TK_RECORDID	 VALUE	  constructedDatatype	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	             dataType	  no	    primitiveDatatype
 
 
                  ----	 -----	                ------	 VALUE	          declaration	  no	             dataType
@@ -493,7 +1240,7 @@
                     :	    79	              TK_COLON	 VALUE	          declaration	 yes	                 ----
 
 
-                 b5c6	    79	                 TK_ID	 VALUE	          declaration	 yes	                 ----
+                   c3	    79	                 TK_ID	 VALUE	          declaration	 yes	                 ----
 
 
                     ;	    80	                TK_SEM	 VALUE	        global_or_not	 yes	                 ----
@@ -508,19 +1255,19 @@
                  ----	 -----	                ------	 VALUE	         declarations	  no	         declarations
 
 
-                   b5	    83	                 TK_ID	 VALUE	         declarations	 yes	                 ----
+                   b5	    81	                 TK_ID	 VALUE	         declarations	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	         declarations	  no	         declarations
 
 
-                   b5	    83	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+                   b5	    81	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
 
 
-                 <---	    84	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
+                 <---	    82	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
@@ -529,10 +1276,10 @@
                  ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
 
 
-                 <---	    84	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
+                 <---	    82	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
 
 
-                    1	    84	                TK_NUM	 VALUE	                  all	 yes	                 ----
+                    1	    82	                TK_NUM	 VALUE	                  all	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	               factor	  no	                  all
@@ -544,7 +1291,7 @@
                  ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
 
 
-                    ;	    84	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+                    ;	    82	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
@@ -553,13 +1300,13 @@
                  ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
 
 
-                    ;	    84	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+                    ;	    82	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
 
 
-                    ;	    84	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
+                    ;	    82	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -568,31 +1315,31 @@
                  ----	 -----	                ------	 VALUE	                stmts	  no	           otherStmts
 
 
-                 read	    85	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
+                 read	    83	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
 
 
-                    (	    86	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
+                    (	    84	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
 
 
-            d5cb34567	    86	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+            d5cb34567	    84	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	               ioStmt	  no	        singleOrRecId
 
 
-                    )	    87	                 TK_CL	 VALUE	               new_24	 yes	                 ----
+                    )	    85	                 TK_CL	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
 
 
-                    )	    87	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
+                    )	    85	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
 
 
-                    ;	    87	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
+                    ;	    85	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -601,55 +1348,31 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                 b5c6	    88	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+                 read	    86	               TK_READ	 VALUE	               ioStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
 
 
-                    .	    89	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                    (	    87	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
+
+
+               b3b444	    87	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               ioStmt	  no	        singleOrRecId
+
+
+                    )	    88	                 TK_CL	 VALUE	               new_24	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
 
 
-                maths	    89	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
+                    )	    88	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
-
-
-                 <---	    90	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 0.00	    90	               TK_RNUM	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
-
-
-                    ;	    90	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
-
-
-                    ;	    90	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
-
-
-                    ;	    90	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
+                    ;	    88	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -658,55 +1381,91 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                 b5c6	    91	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+                    [	    90	                TK_SQL	 VALUE	     outputParameters	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
+                 ----	 -----	                ------	 VALUE	          funCallStmt	  no	     outputParameters
 
 
-                    .	    92	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                   c3	    90	                 TK_ID	 VALUE	               idList	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
+                 ----	 -----	                ------	 VALUE	     outputParameters	  no	               idList
 
 
-              physics	    92	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
+                    ]	    91	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
+                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
 
 
-                 <---	    93	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
+                    ]	    91	                TK_SQR	 VALUE	     outputParameters	 yes	                 ----
 
 
-                 0.00	    93	               TK_RNUM	 VALUE	                  all	 yes	                 ----
+                 <---	    91	           TK_ASSIGNOP	 VALUE	     outputParameters	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	          funCallStmt
 
 
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
+                 call	    91	               TK_CALL	 VALUE	          funCallStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
+_computeFunctionValue	    92	              TK_FUNID	 VALUE	          funCallStmt	 yes	                 ----
 
 
-                    ;	    93	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
+                 with	    92	               TK_WITH	 VALUE	          funCallStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
+           parameters	    93	         TK_PARAMETERS	 VALUE	          funCallStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
+                    [	    94	                TK_SQL	 VALUE	      inputParameters	 yes	                 ----
 
 
-                    ;	    93	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	          funCallStmt	  no	      inputParameters
 
 
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
+                   b5	    94	                 TK_ID	 VALUE	               idList	 yes	                 ----
 
 
-                    ;	    93	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
+                 ----	 -----	                ------	 VALUE	      inputParameters	  no	               idList
+
+
+                    ,	    95	              TK_COMMA	 VALUE	             more_ids	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
+
+
+            d5cb34567	    95	                 TK_ID	 VALUE	               idList	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             more_ids	  no	               idList
+
+
+                    ,	    96	              TK_COMMA	 VALUE	             more_ids	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
+
+
+               b3b444	    96	                 TK_ID	 VALUE	               idList	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	             more_ids	  no	               idList
+
+
+                    ]	    97	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
+
+
+                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
+
+
+                    ]	    97	                TK_SQR	 VALUE	      inputParameters	 yes	                 ----
+
+
+                    ;	    97	                TK_SEM	 VALUE	          funCallStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -715,97 +1474,19 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                 b5c6	    94	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
+                write	    98	              TK_WRITE	 VALUE	               ioStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
+                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
 
 
-                    .	    95	                TK_DOT	 VALUE	               new_24	 yes	                 ----
+                    (	    99	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
 
 
-                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
+                   c3	    99	                 TK_ID	 VALUE	               allVar	 yes	                 ----
 
 
-            chemistry	    95	            TK_FIELDID	 VALUE	               new_24	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
-
-
-                 <---	    96	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 0.00	    96	               TK_RNUM	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
-
-
-                    ;	    96	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
-
-
-                    ;	    96	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
-
-
-                    ;	    96	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-                while	    97	              TK_WHILE	 VALUE	        iterativeStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	        iterativeStmt
-
-
-                    (	    98	                 TK_OP	 VALUE	        iterativeStmt	 yes	                 ----
-
-
-                   b5	    98	                 TK_ID	 VALUE	               allVar	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
-
-
-                   <=	    99	                 TK_LE	 VALUE	                  var	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
-
-
-                 ----	 -----	                ------	 VALUE	        iterativeStmt	  no	    booleanExpression
-
-
-                   <=	    99	                 TK_LE	 VALUE	         relationalOp	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	         relationalOp
-
-
-            d5cb34567	    99	                 TK_ID	 VALUE	               allVar	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	    booleanExpression	  no	               allVar
+                 ----	 -----	                ------	 VALUE	               ioStmt	  no	               allVar
 
 
                     )	   100	                 TK_CL	 VALUE	                  var	 yes	                 ----
@@ -814,247 +1495,10 @@
                  ----	 -----	                ------	 VALUE	               allVar	  no	                  var
 
 
-                    )	   100	                 TK_CL	 VALUE	        iterativeStmt	 yes	                 ----
+                    )	   100	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
 
 
-                    [	   101	                TK_SQL	 VALUE	     outputParameters	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	          funCallStmt	  no	     outputParameters
-
-
-                   d4	   101	                 TK_ID	 VALUE	               idList	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	     outputParameters	  no	               idList
-
-
-                    ]	   102	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
-
-
-                    ]	   102	                TK_SQR	 VALUE	     outputParameters	 yes	                 ----
-
-
-                 <---	   102	           TK_ASSIGNOP	 VALUE	     outputParameters	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	          funCallStmt
-
-
-                 call	   102	               TK_CALL	 VALUE	          funCallStmt	 yes	                 ----
-
-
-           _readMarks	   103	              TK_FUNID	 VALUE	          funCallStmt	 yes	                 ----
-
-
-                 with	   103	               TK_WITH	 VALUE	          funCallStmt	 yes	                 ----
-
-
-           parameters	   104	         TK_PARAMETERS	 VALUE	          funCallStmt	 yes	                 ----
-
-
-                    [	   105	                TK_SQL	 VALUE	      inputParameters	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	          funCallStmt	  no	      inputParameters
-
-
-                   b5	   105	                 TK_ID	 VALUE	               idList	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	      inputParameters	  no	               idList
-
-
-                    ]	   106	                TK_SQR	 VALUE	             more_ids	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               idList	  no	             more_ids
-
-
-                    ]	   106	                TK_SQR	 VALUE	      inputParameters	 yes	                 ----
-
-
-                    ;	   106	                TK_SEM	 VALUE	          funCallStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	        iterativeStmt	  no	                 stmt
-
-
-                 b5c6	   107	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
-
-
-                 <---	   108	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
-
-
-                 <---	   108	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 b5c6	   108	                 TK_ID	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                    +	   109	               TK_PLUS	 VALUE	                all_t	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
-
-
-                    +	   109	               TK_PLUS	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
-
-
-                    +	   109	               TK_PLUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
-
-
-                   d4	   109	                 TK_ID	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                    ;	   110	                TK_SEM	 VALUE	                all_t	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
-
-
-                    ;	   110	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                    ;	   110	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
-
-
-                    ;	   110	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	        iterativeStmt	  no	           otherStmts
-
-
-                   b5	   112	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
-
-
-                 <---	   113	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
-
-
-                 <---	   113	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                   b5	   113	                 TK_ID	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                    +	   114	               TK_PLUS	 VALUE	                all_t	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
-
-
-                    +	   114	               TK_PLUS	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
-
-
-                    +	   114	               TK_PLUS	 VALUE	 lowPrecedenceOperators	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	 lowPrecedenceOperators
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
-
-
-                    1	   114	                TK_NUM	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	                 term
-
-
-                    ;	   114	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-                    ;	   114	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	             expPrime	  no	             expPrime
-
-
-                    ;	   114	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
+                    ;	   100	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
@@ -1063,232 +1507,25 @@
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                     	     0	           TK_ENDWHILE	 VALUE	           otherStmts	 yes	                 ----
+               return	   101	             TK_RETURN	 VALUE	           otherStmts	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
 
 
-                     	     0	           TK_ENDWHILE	 VALUE	        iterativeStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-                   d4	   116	                 TK_ID	 VALUE	        singleOrRecId	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	        singleOrRecId
-
-
-                 <---	   117	           TK_ASSIGNOP	 VALUE	               new_24	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	        singleOrRecId	  no	               new_24
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	       assignmentStmt
-
-
-                 <---	   117	           TK_ASSIGNOP	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 b5c6	   117	                 TK_ID	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                    /	   118	                TK_DIV	 VALUE	                all_t	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	               factor
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	                 term
-
-
-                    /	   118	                TK_DIV	 VALUE	 highPrecedenceOperator	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	            termPrime	  no	 highPrecedenceOperator
-
-
-                 ----	 -----	                ------	 VALUE	                 term	  no	            termPrime
-
-
-            d5cb34567	   118	                 TK_ID	 VALUE	                  all	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               factor	  no	                  all
-
-
-                    ;	   119	                TK_SEM	 VALUE	                all_t	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                  all	  no	                all_t
-
-
-                 ----	 -----	                ------	 VALUE	            termPrime	  no	               factor
-
-
-                    ;	   119	                TK_SEM	 VALUE	            termPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	            termPrime	  no	            termPrime
-
-
-                 ----	 -----	                ------	 VALUE	       assignmentStmt	  no	 arithmeticExpression
-
-
-                    ;	   119	                TK_SEM	 VALUE	             expPrime	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	 arithmeticExpression	  no	             expPrime
-
-
-                    ;	   119	                TK_SEM	 VALUE	       assignmentStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-                write	   120	              TK_WRITE	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
-
-
-                    (	   121	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
-
-
-                   d4	   121	                 TK_ID	 VALUE	               allVar	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	               allVar
-
-
-                    .	   122	                TK_DOT	 VALUE	                  var	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
-
-
-                maths	   122	            TK_FIELDID	 VALUE	                  var	 yes	                 ----
-
-
-                    )	   123	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
-
-
-                    ;	   123	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-                write	   124	              TK_WRITE	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
-
-
-                    (	   125	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
-
-
-                   d4	   125	                 TK_ID	 VALUE	               allVar	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	               allVar
-
-
-                    .	   126	                TK_DOT	 VALUE	                  var	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
-
-
-              physics	   126	            TK_FIELDID	 VALUE	                  var	 yes	                 ----
-
-
-                    )	   127	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
-
-
-                    ;	   127	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-                write	   128	              TK_WRITE	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	                 stmt	  no	               ioStmt
-
-
-                    (	   129	                 TK_OP	 VALUE	               ioStmt	 yes	                 ----
-
-
-                   d4	   129	                 TK_ID	 VALUE	               allVar	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               ioStmt	  no	               allVar
-
-
-                    .	   130	                TK_DOT	 VALUE	                  var	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	               allVar	  no	                  var
-
-
-            chemistry	   130	            TK_FIELDID	 VALUE	                  var	 yes	                 ----
-
-
-                    )	   131	                 TK_CL	 VALUE	               ioStmt	 yes	                 ----
-
-
-                    ;	   131	                TK_SEM	 VALUE	               ioStmt	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	                 stmt
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-               return	   132	             TK_RETURN	 VALUE	           otherStmts	 yes	                 ----
-
-
-                 ----	 -----	                ------	 VALUE	           otherStmts	  no	           otherStmts
-
-
-               return	   132	             TK_RETURN	 VALUE	           returnStmt	 yes	                 ----
+               return	   101	             TK_RETURN	 VALUE	           returnStmt	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	                stmts	  no	           returnStmt
 
 
-                    ;	   133	                TK_SEM	 VALUE	       optionalReturn	 yes	                 ----
+                    ;	   102	                TK_SEM	 VALUE	       optionalReturn	 yes	                 ----
 
 
                  ----	 -----	                ------	 VALUE	           returnStmt	  no	       optionalReturn
 
 
-                    ;	   133	                TK_SEM	 VALUE	           returnStmt	 yes	                 ----
+                    ;	   102	                TK_SEM	 VALUE	           returnStmt	 yes	                 ----
 
 
                      	     0	                TK_END	 VALUE	         mainFunction	 yes	                 ----

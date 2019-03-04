@@ -635,7 +635,7 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
 	return node;
 }
 
-ParseTree parseInputSourceCode(char *testFile,PT *pTable){
+ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 	//HASHTABLE ALREADY INITIALIZED,GRAMMAR,FIRSTFOLLOW,PARSETABLE ALREADY CREATED
 
 	FILE *fp = fopen(testFile,"r");
@@ -660,7 +660,7 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable){
 	s = push(s,tree->root);
 
 	//EVERYTHING INITIALIZED,now,get the tokens and parse the tokens extracted
-	TreeNode top_stack,temp_treenode;
+	TreeNode top_tree,temp_treenode;
 
 	TokenInfo lookAhead = nextToken();
 
@@ -670,73 +670,136 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable){
 
 	while(1){
 
-		top_stack = top(s);
+		top_tree = top(s);	//get top of stack node
+		s = pop(s);			//also pop the stack
 
-			
-		if(top_stack==NULL){
-			printf("error for now\n");
-			return tree;
-		}
-
-
-		if(top_stack==Dollar && lookAhead == NULL){	//if top of stack is dollar and input consumed
+		if(top_tree==Dollar && lookAhead == NULL){	//if top of stack is dollar and input consumed
 			printf("successfully parsed\n");
-			return tree;
+			break;
 		}
+
+		if(top_tree==Dollar && lookAhead!=NULL){		//input consumed 
+			printf("Stack Empty,but unexpected tokens left\n");
+			break;
+		}
+
+		if(lookAhead==NULL){		//input consumed 
+			printf("Stack Empty,but unexpected tokens left\n");
+			break;
+		}
+		if(strcmp(lookAhead->Token,"TK_ERROR")==0){
+				lookAhead = nextToken();
+				s=push(s,top_tree);		//need to push back the stack content
+				continue;
+		}
+			
 
 		//printf("Parsing :%s\n",lookAhead->Token);
+	
 
-		if(strcmp(lookAhead->Token,"TK_COMMENT") == 0){
+		if(strcmp(lookAhead->Token,"TK_COMMENT") == 0){	//remove comments tokens
 				lookAhead = nextToken();
+				s=push(s,top_tree);		//need to push back the stack content
 				continue;
 		}
 			
-		if(top_stack->tNt==0){	//if top of stack is terminal
-			if(strcmp(tokens[top_stack->index],"eps")==0){
-				s = pop(s);
-				top_stack->token_info=lookAhead;	//store the tokenInfo,doubt if it copies
+		if(top_tree->tNt==0){	//if top of stack is terminal
+			if(strcmp(tokens[top_tree->index],"eps")==0){
+				top_tree->token_info=lookAhead;	//store the tokenInfo
 				continue;
 			}
 			
-			if(strcmp(tokens[top_stack->index],lookAhead->Token)==0){
-				top_stack->token_info=lookAhead;	//store the tokenInfo
-				s = pop(s);
+			if(strcmp(tokens[top_tree->index],lookAhead->Token)==0){	//token matched
+				top_tree->token_info=lookAhead;	//store the tokenInfo
 				lookAhead = nextToken();
 			}
-			else{
-				printf("error for now in terminal\n");
-				return tree;
+
+
+		/*********PANIC MODE************/
+
+			else{			
+				printf("The token %s for lexeme %s  does not match with the expected token %s\n",lookAhead->Token,lookAhead->lexeme,tokens[top_tree->index]);
+				*parseError = true;
+
+				TreeNode tnode = top(s);	//new top of stack since earlier popped
+
+				while(lookAhead!=NULL){
+
+					if(strcmp(lookAhead->Token,tokens[top_tree->index])==0){
+						s=push(s,top_tree);
+						break;
+					}
+					if(tnode->tNt==0 && strcmp(lookAhead->Token,tokens[tnode->index]) == 0){//if terminal
+						break;
+					}
+					check = lookup(terminals,lookAhead->Token,tokens);
+            		T_index = check->index;
+					if(tnode->tNt==1 && pTable->tEntry[tnode->index][T_index]->rule!= NULL){//if terminal
+						break;
+					}
+	
+
+					if(strcmp(lookAhead->Token,"TK_SEM")==0){
+						lookAhead = nextToken();
+						break;
+					}
+
+					lookAhead = nextToken();
+				}
+				
+
 			}
 		}
 		else{//if top of stack is nonterminal,pop the stack and push the rule in reverse
 			check = lookup(terminals,lookAhead->Token,tokens);
             T_index = check->index;
-			rule = pTable->tEntry[top_stack->index][T_index]->rule;
+			rule = pTable->tEntry[top_tree->index][T_index]->rule;
 
 		//add the rules as children of the treenode at top of stack
 
+			if(rule!=NULL){	// Grammar rule exists 
 
-			if(rule==NULL){
-				printf("error \n");
-				return tree ;
+
+				temp_treenode = top_tree;
+				temp_treenode = addChildren(temp_treenode,rule);
+				temp_treenode = temp_treenode->children;
+
+
+			//add the rules to stack in reverse
+
+				while(temp_treenode!=NULL){
+					s2 = push(s2,temp_treenode);
+					temp_treenode = temp_treenode->next;
+				}
+				while(top(s2)!=NULL){
+					temp_treenode = top(s2);
+					s = push(s,temp_treenode);
+					pop(s2);	
+				}
 			}
+		
+		/*********PANIC MODE************/
 
-			temp_treenode = top_stack;
-			temp_treenode = addChildren(temp_treenode,rule);
-			temp_treenode = temp_treenode->children;
+			else{		 
+				printf("The token of type %s for lexeme at line %d does not match \n",lookAhead->lexeme,lookAhead->lineNo);
+				
+					//keep iterating the inputs until you get input as syn on top_stack ie.type=1
+				check = lookup(terminals,lookAhead->Token,tokens);
+				T_index = check->index;
 
-			s = pop(s);
-
-		//add the rules to stack in reverse
-
-			while(temp_treenode!=NULL){
-				s2 = push(s2,temp_treenode);
-				temp_treenode = temp_treenode->next;
-			}
-			while(top(s2)!=NULL){
-				temp_treenode = top(s2);
-				s = push(s,temp_treenode);
-				pop(s2);	
+				if(pTable->tEntry[top_tree->index][T_index]->type==1)	//since already popped
+					continue;
+				while(lookAhead != NULL && pTable->tEntry[top_tree->index][T_index]->type!=1){
+					/*
+					if(strcmp(tokens[lookAhead->index],"TK_SEM")==0){
+						lookAhead = nextToken();
+						break;
+					}
+					*/
+					*parseError=true;
+					lookAhead = nextToken();
+				}
+				s=pop(s);
 			}
 		}
 	}

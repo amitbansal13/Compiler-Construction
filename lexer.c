@@ -117,6 +117,7 @@ TokenInfo nextToken(){
 	int tInd=0;		 
 	int state = 0;
 	char c=getNextChar();
+	int count=0;
 	while(1){
 		if(c==0)
 			return NULL;
@@ -130,8 +131,10 @@ TokenInfo nextToken(){
 						break;
 					case 'a' ... 'z' :
                         temp[tInd++] = c;
-						if(c>='b' && c<='d')
+						if(c>='b' && c<='d'){
 							state = 4; 
+							count++;
+						}
 						else
 							state = 3; 
 						c=getNextChar();
@@ -143,6 +146,7 @@ TokenInfo nextToken(){
 						c=getNextChar();
 						break;
 					case '_':
+						count++;
                         temp[tInd++] = c;
 					    state = 12;
 						c=getNextChar();
@@ -312,6 +316,7 @@ TokenInfo nextToken(){
                    		temp[tInd++] = c;
                    	    temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
+						printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
@@ -321,9 +326,9 @@ TokenInfo nextToken(){
 					temp[tInd++] = c;
 					if(c=='\0')
 						state=2;
-					else if(c=='\n'){
+					else if(c=='\n' || c=='\r' || c=='\v'){
 						state=2;
-						lineNo++;
+						i--;
 					}
 					else{
 						c=getNextChar();
@@ -365,15 +370,15 @@ TokenInfo nextToken(){
 					case '@':
 					case '&':
 					case '.':
+					case '\n':
+					case '\r':
+					case '\v':
 						i--;
 					case ' ':
 					case '\t':
 					case '\0':
 							token->lineNo = lineNo;
 							strcpy(token->lexeme,temp);
-					case '\n':
-					case '\r':
-						lineNo++;
 
 						temp[tInd]='\0';
 						tok = lookup(keywordsTable,temp,keywords);
@@ -386,15 +391,16 @@ TokenInfo nextToken(){
 
 
 					default:							/* MAXIMAL MUNCH  && returns TK_ERROR */
-						while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
-                   			temp[tInd++] = c;
+						while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
+               	    		temp[tInd++] = c;
 							c=getNextChar();
 						}
                    	    token->lineNo = lineNo;
-						if(c=='\n')
-							lineNo++;
+						if(c=='\n' || c=='\r' || c=='\v')
+							i--;
                    	    temp[tInd] = '\0';
 						strcpy(token->lexeme,temp);
+						printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 						strcpy(token->Token,"TK_ERROR");
 						return token;
 				}
@@ -408,6 +414,7 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 						case '2' ... '7':
+							count++;
 							temp[tInd++] = c;
 							state=5;
 							c=getNextChar();
@@ -419,10 +426,11 @@ TokenInfo nextToken(){
 								c=getNextChar();
 							}
                    		    token->lineNo = lineNo;
-							if(c=='\n')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
                    		    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
@@ -431,11 +439,13 @@ TokenInfo nextToken(){
 			case 5:	
 					switch(c){
 						case '2' ... '7':
+							count++;
 							temp[tInd++] = c;
 							state=6;
 							c=getNextChar();
 							break;
 						case 'b' ... 'd': 
+							count++;
 							temp[tInd++] = c;
 							state=5;
 							c=getNextChar();
@@ -461,29 +471,39 @@ TokenInfo nextToken(){
 					case '@':
 					case '&':
 					case '.':
+					case '\n':
+					case '\r':
+					case '\v':
 						i--;
 						case ' ':
 						case '\t':
 						case '\0':
         	           	    token->lineNo = lineNo;
-						case '\n':
-						case '\r':
-							lineNo++;
-        	           	    temp[tInd] = '\0';
-							strcpy(token->lexeme,temp);
-							strcpy(token->Token,"TK_ID");
-							return token;
+							if(count>=21){
+            	       	    	temp[tInd] = '\0';
+								strcpy(token->lexeme,temp);
+								strcpy(token->Token,"TK_ERROR");
+								printf("identifier too long on line no %d\n",lineNo);
+								return token;
+							}
+							else{
+        	           	    	temp[tInd] = '\0';
+								strcpy(token->lexeme,temp);
+								strcpy(token->Token,"TK_ID");
+								return token;
+							}
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							strcpy(token->Token,"TK_ERROR");
 							return token;
 					}
@@ -492,6 +512,7 @@ TokenInfo nextToken(){
 			case 6:
 					switch(c){
 						case '2' ... '7' :
+							count++;
 							temp[tInd++] = c;
 							state=6;
 							c=getNextChar();
@@ -516,31 +537,41 @@ TokenInfo nextToken(){
 					case '@':
 					case '&':
 					case '.':
+					case '\n':
+					case '\r':
+					case '\v':
 						i--;
 
 						case ' ':
 						case '\t':
 						case '\0':
         	           	    token->lineNo = lineNo;
-						case '\n':
-						case '\r':
-							lineNo++;
 
-        	           	    temp[tInd] = '\0';
-							strcpy(token->lexeme,temp);
-							strcpy(token->Token,"TK_ID");
-							return token;
+							if(count>=21){
+            	       	    	temp[tInd] = '\0';
+								strcpy(token->lexeme,temp);
+								strcpy(token->Token,"TK_ERROR");
+								printf("identifier too long on line no %d\n",lineNo);
+								return token;
+							}
+							else{
+        	           	    	temp[tInd] = '\0';
+								strcpy(token->lexeme,temp);
+								strcpy(token->Token,"TK_ID");
+								return token;
+							}
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n' || c=='\r')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 					break;
@@ -579,16 +610,17 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 					break;
@@ -599,16 +631,17 @@ TokenInfo nextToken(){
 							state=11;
 							break;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 					break;
@@ -624,27 +657,30 @@ TokenInfo nextToken(){
 			case 12:
 					switch(c){
 						case 'a' ... 'z':
+							count++;
 							temp[tInd++] = c;
 							state = 13;
 							c=getNextChar();
 							break;
 						case 'A' ... 'Z':
+							count++;
 							temp[tInd++] = c;
 							state = 13;
 							c=getNextChar();
 							break;
 					
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}	
 					break;
@@ -654,14 +690,17 @@ TokenInfo nextToken(){
 						case 'a' ... 'z':
 							temp[tInd++] = c;
 							state = 13;
+							count++;
 							c=getNextChar();
 							break;
 						case 'A' ... 'Z':
+							count++;
 							temp[tInd++] = c;
 							state = 13;
 							c=getNextChar();
 							break;
 						case '0' ... '9' :
+							count++;
 							temp[tInd++] = c;
 							state = 15;
 							break;
@@ -672,48 +711,69 @@ TokenInfo nextToken(){
 					break;
 
 			case 14:								//return TK_FUNID OR TK_MAIN and retract
-        	   	   	token->lineNo = lineNo;
-        	   	   	temp[tInd] = '\0';
-					strcpy(token->lexeme,temp);
-					if(strcmp(token->lexeme,"_main")==0)
-						strcpy(token->Token,"TK_MAIN");
-					else
-						strcpy(token->Token,"TK_FUNID");
-					i--;
-					return token;
+					if(count>=30){
+            	    	temp[tInd] = '\0';
+				  		strcpy(token->lexeme,temp);
+				   		strcpy(token->Token,"TK_ERROR");
+				   		printf("Funidentifier too long on line no %d\n",lineNo);
+				   		return token;
+				   	}
+					else{
+        	   		   	token->lineNo = lineNo;
+        	   		   	temp[tInd] = '\0';
+						strcpy(token->lexeme,temp);
+						if(strcmp(token->lexeme,"_main")==0)
+							strcpy(token->Token,"TK_MAIN");
+						else
+							strcpy(token->Token,"TK_FUNID");
+						i--;
+						return token;
+					}
 
 			case 15: 
 					switch(c){
 						case '0' ... '9' :
+							count++;
 							temp[tInd++] = c;
 							state=15;
 							c=getNextChar();
 							break;
 
+						case '\n':						  
+						case '\v':
+						case '\r':						  
+							i--;	//will increase in next set
+
 						case ' ':
 						case '\t':
 						case '\0':
         	           	    token->lineNo = lineNo;
-						case '\n':						  
-						case '\r':						  
-							lineNo++;
-
-        	           		temp[tInd++] = c;
-        	           	    temp[tInd] = '\0';
-							strcpy(token->lexeme,temp);
-							strcpy(token->Token,"TK_FUNID");
-							return token;
+							if(count>=30){
+            	    			temp[tInd] = '\0';
+				  				strcpy(token->lexeme,temp);
+				   				strcpy(token->Token,"TK_ERROR");
+				   				printf("FunIdentifier too long on line no %d\n",lineNo);
+				   				return token;
+				   			}
+							else{
+        	           			temp[tInd++] = c;
+        	           		    temp[tInd] = '\0';
+								strcpy(token->lexeme,temp);
+								strcpy(token->Token,"TK_FUNID");
+								return token;
+							}
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n' || c=='\r')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 
@@ -726,16 +786,17 @@ TokenInfo nextToken(){
 							break;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n' || c=='\r')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 					break;
@@ -748,13 +809,14 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 
+						case '\n':
+						case '\r':
+						case '\v':
 						case ' ':
 						case '\t':
 						case '\0':
+							i--;
         	           	    token->lineNo = lineNo;
-						case '\n':						
-						case '\r':						  
-							lineNo++;
 
         	           	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
@@ -762,16 +824,17 @@ TokenInfo nextToken(){
 							return token;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
-							while(c!='\n' && c!='\r' && c !=' ' && c!='\t' && c!='\0'){
+							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
 								c=getNextChar();
 							}
             	       	    token->lineNo = lineNo;
-							if(c=='\n' || c=='\r')
-								lineNo++;
+							if(c=='\n' || c=='\r' || c=='\v')
+								i--;
             	       	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							return token;
 					}
 
@@ -794,6 +857,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -810,6 +874,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -834,6 +899,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -850,6 +916,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -891,6 +958,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -907,6 +975,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -972,6 +1041,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -995,6 +1065,7 @@ TokenInfo nextToken(){
 	                   	    temp[tInd] = '\0';
 							strcpy(token->lexeme,temp);
 							strcpy(token->Token,"TK_ERROR");
+							printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 							i--;
 							return token;
 					}
@@ -1011,6 +1082,7 @@ TokenInfo nextToken(){
 	                temp[tInd] = '\0';
 					strcpy(token->lexeme,temp);
 					strcpy(token->Token,"TK_ERROR");
+					printf("Unknown symbol %s on line %d\n",token->lexeme,lineNo);
 					return token;
 
 		}

@@ -42,4 +42,5 @@ d5b.height <---20;
 [b2, c2]<--- call _swprecs with parameters [b2,d5b]; 
 write(b2);
 write(c2);
+return;
 end

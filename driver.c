@@ -39,7 +39,7 @@ int main()
 
 
 	////////////// Initialization /////////////
-	FILE* fp=fopen("testcase3.txt","r");//change sample.txt to the file name containing code
+	FILE* fp=fopen("testcase1.txt","r");//change sample.txt to the file name containing code
 	if(fp==NULL){
 		printf("File not found\n");
 		return 1;
@@ -76,16 +76,16 @@ int main()
 			total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;
 		}
 		else if(choice ==4){
-			Grammar *g = makeGrammar("grammar.txt");
+			Grammar *g = makeGrammar("grammar2.txt");
 			printGrammar(g);
 		}
 		else if(choice ==5){
-			Grammar *g = makeGrammar("grammar.txt");
+			Grammar *g = makeGrammar("grammar2.txt");
 			computeFirstnFollow(g);
 			printFirstnFollow();
 		}
 		else if(choice ==6){
-			Grammar *g = makeGrammar("grammar.txt");
+			Grammar *g = makeGrammar("grammar2.txt");
 			computeFirstnFollow(g);
 	//		printFirstnFollow();
 			initializePT();
@@ -97,7 +97,7 @@ int main()
 			computeFirstnFollow(g);
 			initializePT();
 			createParseTable(g);
-			parseInputSourceCode("testcase3.txt");
+			parseInputSourceCode("testcase1.txt");
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

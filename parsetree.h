@@ -10,6 +10,7 @@ struct treenode{
 	TreeNode children;
 	TreeNode next;
 	int index;		//terminal or non_terminals index
+	TreeNode parent;
 	//TokenInfo *token;	//TokenInfo structure pointer if terminal
 };
 
@@ -22,3 +23,5 @@ TreeNode addChildren(TreeNode node,grammar *rule);
 TreeNode createtreeNode(int tNt,int index);
 ParseTree initializeParseTree(void);
 void parseInputSourceCode(char *testFile);
+void printParseTree(ParseTree ptree);
+void printInOrder(TreeNode node);

@@ -14,6 +14,7 @@ TreeNode createtreeNode(int tNt,int index){
 	n->children=NULL;
 	n->index=index;
 	n->tNt=tNt;
+	n->parent=NULL;
 	return n;
 }
 	
@@ -32,6 +33,7 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
             nonT_index = check->index;
 			newNode = createtreeNode(1,nonT_index);
 		}
+		newNode->parent=node;
 		node->children=newNode;
 	}
 	TreeNode prev = newNode;
@@ -47,6 +49,7 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
             nonT_index = check->index;
 			newNode = createtreeNode(1,nonT_index);
 		}
+		newNode->parent=node;
 		prev->next=newNode;
 		temp=temp->next;
 		prev=newNode;
@@ -80,8 +83,6 @@ void parseInputSourceCode(char *testFile){
 
 	//EVERYTHING INITIALIZED,now,get the tokens and parse the tokens extracted
 	TreeNode top_stack,temp_treenode;
-
-	TreeNode temp_parent = tree->root;
 
 	TokenInfo lookAhead = nextToken();
 
@@ -131,21 +132,26 @@ void parseInputSourceCode(char *testFile){
 			check = lookup(terminals,lookAhead->Token,tokens);
             T_index = check->index;
 			rule = pTable->tEntry[top_stack->index][T_index]->rule;
+
+		//add the rules as children of the treenode at top of stack
+
+
+			if(rule==NULL){
+				printf("error \n");
+				return ;
+			}
+
+			temp_treenode = top_stack;
+			temp_treenode = addChildren(temp_treenode,rule);
+			temp_treenode = temp_treenode->children;
+
 			s = pop(s);
-			temp_rule = rule;
-			while(temp_rule!=NULL){
-				if(isTerminal(temp_rule->name)){
-					check = lookup(terminals,temp_rule->name,tokens);
-            		T_index = check->index;
-					temp_treenode  = createtreeNode(0,T_index);
-				}
-				else{
-					check = lookup(nonTerminals,temp_rule->name,nonterminals);
-            		nonT_index = check->index;
-					temp_treenode  = createtreeNode(1,nonT_index);
-				}
+
+		//add the rules to stack in reverse
+
+			while(temp_treenode!=NULL){
 				s2 = push(s2,temp_treenode);
-				temp_rule=temp_rule->next;
+				temp_treenode = temp_treenode->next;
 			}
 			while(top(s2)!=NULL){
 				temp_treenode = top(s2);
@@ -154,4 +160,20 @@ void parseInputSourceCode(char *testFile){
 			}
 		}
 	}
+}
+
+void printParseTree(ParseTree ptree){
+	if(ptree==NULL){
+		printf("Tree not initialized\n");	
+		return;
+	}
+	printf("***********PRINTING PARSE TREE ***************");
+
+	printf("%s %s %s %s %s %s %s\n\n\n", "LEXEME","LINE","TOKEN","VALUE","PARENT","LEAF","NODE");
+
+	printInOrder(ptree->root);
+}
+
+void printInOrder(TreeNode node){
+
 }

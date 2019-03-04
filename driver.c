@@ -12,7 +12,7 @@ int main()
     double total_CPU_time, total_CPU_time_in_seconds;
 
 	char *grammarFile = "grammar2.txt";
-	char *testcaseFile = "testcase4.txt";
+	char *testcaseFile = "testcase3.txt";
 	char *outfile = "outfile.txt";
 	bool parseError = false;
 	ffset fset;

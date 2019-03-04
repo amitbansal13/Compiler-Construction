@@ -329,6 +329,7 @@ TokenInfo nextToken(){
 					else if(c=='\n' || c=='\r' || c=='\v'){
 						state=2;
 						i--;
+						tInd--;
 					}
 					else{
 						c=getNextChar();

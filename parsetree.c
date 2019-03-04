@@ -14,6 +14,7 @@ TreeNode createtreeNode(int tNt,int index){
 	n->children=NULL;
 	n->index=index;
 	n->tNt=tNt;
+	n->token_info=NULL;
 	n->parent=NULL;
 	return n;
 }
@@ -57,14 +58,14 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
 	return node;
 }
 
-void parseInputSourceCode(char *testFile){
+ParseTree parseInputSourceCode(char *testFile){
 	//HASHTABLE ALREADY INITIALIZED,GRAMMAR,FIRSTFOLLOW,PARSETABLE ALREADY CREATED
 
 	FILE *fp = fopen(testFile,"r");
 
     if(fp==NULL){
     	printf("File not found\n");
-		return;
+		return NULL;
 	}
 
 	//Initializing parsetree and Stack
@@ -97,13 +98,13 @@ void parseInputSourceCode(char *testFile){
 			
 		if(top_stack==NULL){
 			printf("error for now\n");
-			return;
+			return tree;
 		}
 
 
 		if(top_stack==Dollar && lookAhead == NULL){	//if top of stack is dollar and input consumed
 			printf("successfully parsed\n");
-			return;
+			return tree;
 		}
 
 		printf("Parsing :%s\n",lookAhead->Token);
@@ -116,16 +117,18 @@ void parseInputSourceCode(char *testFile){
 		if(top_stack->tNt==0){	//if top of stack is terminal
 			if(strcmp(tokens[top_stack->index],"eps")==0){
 				s = pop(s);
+				top_stack->token_info=lookAhead;	//store the tokenInfo,doubt if it copies
 				continue;
 			}
 			
 			if(strcmp(tokens[top_stack->index],lookAhead->Token)==0){
+				top_stack->token_info=lookAhead;	//store the tokenInfo
 				s = pop(s);
 				lookAhead = nextToken();
 			}
 			else{
 				printf("error for now in terminal\n");
-				return;
+				return tree;
 			}
 		}
 		else{//if top of stack is nonterminal,pop the stack and push the rule in reverse
@@ -138,7 +141,7 @@ void parseInputSourceCode(char *testFile){
 
 			if(rule==NULL){
 				printf("error \n");
-				return ;
+				return tree ;
 			}
 
 			temp_treenode = top_stack;
@@ -160,9 +163,10 @@ void parseInputSourceCode(char *testFile){
 			}
 		}
 	}
+	return tree;
 }
 
-void printParseTree(ParseTree ptree){
+void printParseTree(ParseTree ptree,char *outfile){
 	if(ptree==NULL){
 		printf("Tree not initialized\n");	
 		return;
@@ -171,9 +175,87 @@ void printParseTree(ParseTree ptree){
 
 	printf("%s %s %s %s %s %s %s\n\n\n", "LEXEME","LINE","TOKEN","VALUE","PARENT","LEAF","NODE");
 
-	printInOrder(ptree->root);
+	printInOrder(ptree->root,outfile);
 }
 
-void printInOrder(TreeNode node){
+void printInOrder(TreeNode node,char *outfile){
+	if(node==NULL)
+		return;
 
+	TreeNode temp_node = node->children;
+
+	if(temp_node!=NULL){	//if it has children
+			
+		//printing left child
+		printInOrder(temp_node,outfile);
+		
+		//printing node;
+		
+		printNode(node,outfile);
+		//printing right childs in order
+		temp_node=temp_node->next;
+
+		while(temp_node!=NULL){
+			printInOrder(temp_node,outfile);
+			temp_node=temp_node->next;
+		}
+	}		
+	else
+		printNode(node,outfile);
+		//printing node;
+
+}	
+
+void printNode(TreeNode node,char *outfile){	//file already opened
+
+	FILE *f = fopen(outfile,"a");
+
+	//did not do value type now
+
+	bool isLeaf=false,isTerminal=false,isRoot=false;	
+	int val_type=-1;	//-1=>error,0=>int,1=>float
+
+	if(node->tNt==-1){//errorcase	TK_ERROR
+
+	}
+
+	if(node->children==NULL)		//if leaf node
+		isLeaf=true;
+
+	if(node->tNt==0)		//if it contains terminal symbol
+		isTerminal=true;
+	
+	if(node->parent==NULL)		//if this node is the root
+		isRoot=true;
+
+	TreeNode parent = node->parent;
+
+	if(isLeaf){	//for leaf node
+		if(isTerminal==false){
+			//leaf node is non terminal => error case
+		}	
+		else{
+			if(isRoot)
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"VALUE","ROOT","yes","----");
+
+			else
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"VALUE",nonterminals[parent->index],"yes","----");
+			//print it;
+		}
+	}
+
+	else{	//will be a nonterminal only
+		if(isTerminal==true){
+			//not possible
+		}
+		if(isRoot)
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","VALUE","ROOT","no","----");
+			//root node print
+		else
+				fprintf(f,"%21s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","VALUE",nonterminals[parent->index],"no",nonterminals[node->index]);
+			//nonterminal print	
+	}
+	fclose(f);
 }
+
+

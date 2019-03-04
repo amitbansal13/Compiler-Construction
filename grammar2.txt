@@ -72,7 +72,7 @@ temp 1 eps
 temp 2 TK_DOT TK_FIELDID
 booleanExpression 7 TK_OP booleanExpression TK_CL logicalOp TK_OP booleanExpression TK_CL
 booleanExpression 3 allVar relationalOp allVar
-booleanExpression 2 TK_NOT TK_OP
+booleanExpression 4 TK_NOT TK_OP booleanExpression TK_CL
 booleanExpression 1 TK_CL
 var 2 TK_DOT TK_FIELDID
 var 1 eps 

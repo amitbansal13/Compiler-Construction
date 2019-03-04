@@ -93,11 +93,12 @@ int main()
 			printParseTable();
 		}
 		else if(choice ==7){
-			Grammar *g = makeGrammar("grammar.txt");
+			Grammar *g = makeGrammar("grammar2.txt");
 			computeFirstnFollow(g);
 			initializePT();
 			createParseTable(g);
-			parseInputSourceCode("testcase1.txt");
+		ParseTree ptree=parseInputSourceCode("testcase1.txt");
+			printParseTree(ptree,"outfile");
 		}
 		else 
 			printf("Total CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);

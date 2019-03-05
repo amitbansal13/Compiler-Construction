@@ -48,8 +48,8 @@ elsePart 4 TK_ELSE stmt otherStmts TK_ENDIF
 elsePart 1 TK_ENDIF
 ioStmt 5 TK_READ TK_OP singleOrRecId TK_CL TK_SEM
 ioStmt 5 TK_WRITE TK_OP allVar TK_CL TK_SEM
-allVar 2 TK_ID var  
-allVar 1 TK_NUM 
+allVar 2 TK_ID temp
+allVar 1 TK_NUM
 allVar 1 TK_RNUM
 arithmeticExpression 2 term expPrime
 expPrime 3 lowPrecedenceOperators term expPrime
@@ -65,17 +65,15 @@ lowPrecedenceOperators 1 TK_PLUS
 lowPrecedenceOperators 1 TK_MINUS
 all 1 TK_NUM
 all 1 TK_RNUM
-all 2  TK_ID all_t
-all_t 1 eps
-all_t 1 temp
+all 2  TK_ID temp
 temp 1 eps 
 temp 2 TK_DOT TK_FIELDID
 booleanExpression 7 TK_OP booleanExpression TK_CL logicalOp TK_OP booleanExpression TK_CL
-booleanExpression 3 allVar relationalOp allVar
+booleanExpression 3 var relationalOp var
 booleanExpression 4 TK_NOT TK_OP booleanExpression TK_CL
-booleanExpression 1 TK_CL
-var 2 TK_DOT TK_FIELDID
-var 1 eps 
+var 1 TK_ID
+var 1 TK_NUM
+var 1 TK_RNUM 
 logicalOp 1 TK_AND
 logicalOp 1 TK_OR
 relationalOp 1 TK_LT

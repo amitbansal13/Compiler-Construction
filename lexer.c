@@ -1,3 +1,9 @@
+/* GROUP Number = 20
+Name-Amit Bansal ID Number- 2016A7PS0140P
+Name- Vedant Patwary ID Number-2016A7PS0031P
+Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
+Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
+
 #include "lexerDef.h"
 #include "lexer.h"
 #define BUF_SIZE 256
@@ -421,6 +427,33 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 										//MAXIMAL MUNCH CASE and returns TK_ERROR
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+						i--;
+            	       	    temp[tInd] = '\0';
+							strcpy(token->lexeme,temp);
+							strcpy(token->Token,"TK_ERROR");
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
+							return token;
+
 						default: 
 							while(c!='\n' && c!='\r' &&  c !=' ' && c!='\t' && c!='\0'){
                    				temp[tInd++] = c;
@@ -611,6 +644,32 @@ TokenInfo nextToken(){
 							state=10;
 							c=getNextChar();
 							break;
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+						i--;
+            	       	    temp[tInd] = '\0';
+							strcpy(token->lexeme,temp);
+							strcpy(token->Token,"TK_ERROR");
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
+							return token;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
@@ -632,6 +691,32 @@ TokenInfo nextToken(){
 							temp[tInd++] = c;
 							state=11;
 							break;
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+						i--;
+            	       	    temp[tInd] = '\0';
+							strcpy(token->lexeme,temp);
+							strcpy(token->Token,"TK_ERROR");
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
+							return token;
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
                	    			temp[tInd++] = c;
@@ -670,6 +755,32 @@ TokenInfo nextToken(){
 							state = 13;
 							c=getNextChar();
 							break;
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+						i--;
+            	       	    temp[tInd] = '\0';
+							strcpy(token->lexeme,temp);
+							strcpy(token->Token,"TK_ERROR");
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
+							return token;
 					
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
@@ -741,11 +852,30 @@ TokenInfo nextToken(){
 							state=15;
 							c=getNextChar();
 							break;
-
-						case '\n':						  
-						case '\v':
-						case '\r':						  
-							i--;	//will increase in next set
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+					case '\n':						  
+					case '\v':
+					case '\r':						  
+						i--;	//will increase in next set
 
 						case ' ':
 						case '\t':
@@ -787,6 +917,32 @@ TokenInfo nextToken(){
 							temp[tInd++] = c;
 							state = 17;
 							break;
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
+						i--;
+            	       	    temp[tInd] = '\0';
+							strcpy(token->lexeme,temp);
+							strcpy(token->Token,"TK_ERROR");
+							printf("Line %d:Unknown pattern %s\n",lineNo,token->lexeme);
+							return token;
 
 						default:						/* MAXIMAL MUNCH  && returns TK_ERROR */
 							while(c!='\n' && c!='\r' && c !=' ' && c!='\v' && c!='\t' && c!='\0'){
@@ -812,6 +968,26 @@ TokenInfo nextToken(){
 							c=getNextChar();
 							break;
 
+					case '(':
+					case ')':
+					case '*':
+					case '/':
+					case '~':
+					case ',':
+					case ':':
+					case '+':	
+					case '-':
+					case ';':
+					case '[':
+					case ']':
+					case '<':
+					case '>':
+					case '=':
+					case '!':
+					case '#':
+					case '@':
+					case '&':
+					case '.':
 						case '\n':
 						case '\r':
 						case '\v':
@@ -1122,7 +1298,7 @@ void printAllTokens()
 	int count=0;
 	while(tk=nextToken())
 	{
-		printf("%d. %s %s\n",tk->lineNo,tk->lexeme,tk->Token);
+		printf("Line %d\t\t%s\t%s\n",tk->lineNo,tk->lexeme,tk->Token);
 		free(tk);
 	}
 }

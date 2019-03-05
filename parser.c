@@ -1,3 +1,9 @@
+/* GROUP Number = 20
+Name-Amit Bansal ID Number- 2016A7PS0140P
+Name- Vedant Patwary ID Number-2016A7PS0031P
+Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
+Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
+
 #include "parserDef.h"
 #include "parser.h"
 #include "HashTable.h"
@@ -48,7 +54,6 @@ char *nonterminals[]={
 	"highPrecedenceOperator",
 	"lowPrecedenceOperators",
 	"all",
-	"all_t",
 	"temp",
 	"booleanExpression",
 	"var",
@@ -520,7 +525,7 @@ void createParseTable(Grammar *g,ffset fset,PT *pTable){
 							T_index = check->index;
 							if(pTable->tEntry[i][T_index]->rule!=NULL)
 								printf("Multiple rules clashing in Entry[%s][%s]\n",nonterminals[i],tokens[T_index]);
-							pTable->tEntry[i][T_index]->type=0;//1 for syn
+							pTable->tEntry[i][T_index]->type=0;
 						    pTable->tEntry[i][T_index]->rule=temp_rule;	
 						break;	//if got a terminal,always break
 					}
@@ -687,9 +692,8 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 			printf("Stack Empty,but unexpected tokens left\n");
 			break;
 		}
-		if(strcmp(lookAhead->Token,"TK_ERROR")==0){
+		if(strcmp(lookAhead->Token,"TK_ERROR")==0){	//already popped
 				lookAhead = nextToken();
-				s=push(s,top_tree);		//need to push back the stack content
 				continue;
 		}
 			
@@ -712,8 +716,8 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 			if(strcmp(tokens[top_tree->index],lookAhead->Token)==0){	//token matched
 				top_tree->token_info=lookAhead;	//store the tokenInfo
 				lookAhead = nextToken();
+				continue;
 			}
-
 
 		/*********PANIC MODE************/
 
@@ -721,33 +725,7 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 				printf("Line %d:The token %s for lexeme %s  does not match with the expected token %s\n",lookAhead->lineNo,lookAhead->Token,lookAhead->lexeme,tokens[top_tree->index]);
 				*parseError = true;
 
-				TreeNode tnode = top(s);	//new top of stack since earlier popped
-
-				while(lookAhead!=NULL){
-
-					if(strcmp(lookAhead->Token,tokens[top_tree->index])==0){
-						s=push(s,top_tree);
-						break;
-					}
-					if(tnode->tNt==0 && strcmp(lookAhead->Token,tokens[tnode->index]) == 0){//if terminal
-						break;
-					}
-					check = lookup(terminals,lookAhead->Token,tokens);
-            		T_index = check->index;
-					if(tnode->tNt==1 && pTable->tEntry[tnode->index][T_index]->rule!= NULL){//if terminal
-						break;
-					}
-	
-
-					if(strcmp(lookAhead->Token,"TK_SEM")==0){
-						lookAhead = nextToken();
-						break;
-					}
-
-					lookAhead = nextToken();
-				}
-				
-
+				continue;	//popped already and lookahead same
 			}
 		}
 		else{//if top of stack is nonterminal,pop the stack and push the rule in reverse
@@ -781,25 +759,20 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 		/*********PANIC MODE************/
 
 			else{		 
-				printf("Line %d:The token of type %s for lexeme  does not match with the expected token %s\n",lookAhead->lineNo,lookAhead->lexeme,nonterminals[top_tree->index]);
+				printf("Line %d:The token of type %s for lexeme  does not match with the expected token of type <%s>\n",lookAhead->lineNo,lookAhead->Token,nonterminals[top_tree->index]);
 				
 					//keep iterating the inputs until you get input as syn on top_stack ie.type=1
 				check = lookup(terminals,lookAhead->Token,tokens);
 				T_index = check->index;
 
-				if(pTable->tEntry[top_tree->index][T_index]->type==1)	//since already popped
-					continue;
-				while(lookAhead != NULL && pTable->tEntry[top_tree->index][T_index]->type!=1){
-					/*
-					if(strcmp(tokens[lookAhead->index],"TK_SEM")==0){
-						lookAhead = nextToken();
-						break;
-					}
-					*/
+				while(lookAhead != NULL && pTable->tEntry[top_tree->index][T_index]->type!=1){	//go till syn set
 					*parseError=true;
 					lookAhead = nextToken();
+					if(lookAhead==NULL || strcmp(lookAhead->Token,"TK_ERROR")==0)
+						break;
+					check = lookup(terminals,lookAhead->Token,tokens);
+					T_index = check->index;
 				}
-				s=pop(s);
 			}
 		}
 	}
@@ -843,84 +816,96 @@ void printInOrder(TreeNode node,char *outfile){
 
 }	
 
-void printNode(TreeNode node,char *outfile){	//file already opened
+void printNode(TreeNode node,char *outfile){    //file already opened
 
-	FILE *f = fopen(outfile,"a");
+    FILE *f = fopen(outfile,"a");
 
-	//did not do value type now
+    //did not do value type now
 
-	bool isLeaf=false,isTerminal=false,isRoot=false;	
+    bool isLeaf=false,isTerminal=false,isRoot=false;    
 
-	int val_type = -1;
+    int val_type = -1;
 
-	if(node->children==NULL)		//if leaf node
-		isLeaf=true;
+    if(node->children==NULL)        //if leaf node
+        isLeaf=true;
 
-	if(node->tNt==0)		//if it contains terminal symbol
-		isTerminal=true;
-	
-	if(node->parent==NULL)		//if this node is the root
-		isRoot=true;
+    if(node->tNt==0)        //if it contains terminal symbol
+        isTerminal=true;
+    
+    if(node->parent==NULL)        //if this node is the root
+        isRoot=true;
 
-	TreeNode parent = node->parent;
-
-
-	if(isLeaf){	//for leaf node
-		if(isTerminal==false){
-			//leaf node is non terminal => error case
-		}	
-		else{
-			if(strcmp(tokens[node->index],"TK_NUM")==0)	// has NUM value field
-				val_type=1;
-			if(strcmp(tokens[node->index],"TK_RNUM")==0)	// has float value field
-				val_type=0;
-
-			if(isRoot){
+    TreeNode parent = node->parent;
 
 
-				if(val_type==1)//intval case
-					fprintf(f,"%30s\t %5d\t %21s\t %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
+    if(isLeaf){    //for leaf node
+        if(isTerminal==false){
+            //leaf node is non terminal => error case
+        }    
+        else{
+            if(strcmp(tokens[node->index],"TK_NUM")==0)    // has NUM value field
+                val_type=1;
+            if(strcmp(tokens[node->index],"TK_RNUM")==0)    // has float value field
+                val_type=0;
+
+            if(isRoot){
+               if(strcmp(tokens[node->index],"eps")==0)    
+               fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
+
+                else if(val_type==1)//intval case
+                    fprintf(f,"%30s\t %5d\t %21s\t nahi %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
 
 
-				else if(val_type==0)//floatvl case
-					fprintf(f,"%30s\t %5d\t %21s\t %5f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
+                else if(val_type==0)//floatvl case
+                    fprintf(f,"%30s\t %5d\t %21s\t  yahi %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
 
 
-				else	//other case
-				fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"-----","ROOT","yes","----");
-			}
+                else    //other case
+                fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"-----","ROOT","yes","----");
+            }
 
 
-			else//if not root
-				fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
-				//print it;
+            else{//if not root
+                if(strcmp(tokens[node->index],"eps")==0)    
+                   fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
+                else if(val_type==1)//intval case
+                    fprintf(f,"%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
 
-		}
 
-	}
+                else if(val_type==0)//floatvl case
+                    fprintf(f,"%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
 
-	else{	//will be a nonterminal only
 
-		if(isTerminal==true){
-			//not possible
-		}
+               else
+                fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
+                }//print it;
 
-		if(isRoot){
+        }
 
-				fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
+    }
 
-			//root node print
-		}
+    else{    //will be a nonterminal only
 
-		else
+        if(isTerminal==true){
+            //not possible
+        }
 
-				fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+        if(isRoot){
 
-			//nonterminal print	
+                fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
 
-	}
+            //root node print
+        }
 
-	fclose(f);
+        else
+
+                fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+
+            //nonterminal print    
+
+    }
+
+    fclose(f);
 }
 
 

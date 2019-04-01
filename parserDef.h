@@ -87,7 +87,8 @@ struct treenode{
     int index;      //terminal or non_terminals index
     TokenInfo token_info;   //will need linenos and other details while printing
     TreeNode parent;
-    //TokenInfo *token; //TokenInfo structure pointer if terminal
+    TreeNode addr,syn,inh;
+    // TokenInfo *token; //TokenInfo structure pointer if terminal
 };
 
 struct parsetree{

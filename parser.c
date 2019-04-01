@@ -598,6 +598,7 @@ TreeNode createtreeNode(int tNt,int index){
 	n->tNt=tNt;
 	n->token_info=NULL;
 	n->parent=NULL;
+    n->addr=n->syn=n->inh=NULL;
 	return n;
 }
 	

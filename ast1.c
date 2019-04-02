@@ -98,29 +98,9 @@ void ASThelper(TreeNode node){
 			free(node);
 			break;
 		case 32:
-			node=par->children;
-			par->addr = node->addr;
-		//	free(node->token_info);
-			free(node);
-			break;
 		case 33:
-			node=par->children;
-			par->addr = node->addr;
-		//	free(node->token_info);
-			free(node);
-			break;
 		case 34:
-			node=par->children;
-			par->addr = node->addr;
-		//	free(node->token_info);
-			free(node);
-			break;
 		case 35:
-			node=par->children;
-			par->addr = node->addr;
-		//	free(node->token_info);
-			free(node);
-			break;
 		case 36:
 			node=par->children;
 			par->addr = node->addr;
@@ -141,21 +121,12 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
 			free(node);
 			break;
 		case 48:
 			par->addr=node->addr;
 			break;
 		case 49:
-	// 		for(int i=4;i>=0;i--)
-	// 			if(i!=2)
-	// 				par->children = deleteN(par->children,i);
-	// 		node=par->children;
-	// 		par->addr = node->addr;
-	// //		free(node->token_info);
-	// 		free(node);
-	// 		break;
 		case 50:
 			for(int i=4;i>=0;i--)
 				if(i!=2)
@@ -227,14 +198,6 @@ void ASThelper(TreeNode node){
 		//	free(node);		//DOUBT
 			break;
 		case 85:
-			// for(int i=2;i>=0;i--)
-			// 	if(i!=1)
-			// 		par->children = deleteN(par->children,i);
-			// node=par->children;
-			// par->addr = node->addr;
-			// //free(node->token_info);
-			// free(node);
-			// break;
 		case 86:
 			for(int i=2;i>=0;i--)
 				if(i!=1)

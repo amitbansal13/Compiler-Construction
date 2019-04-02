@@ -817,3 +817,21 @@
                            end	    24	                TK_END	 ------	         mainFunction	 yes	                 ----
 
 
+                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+

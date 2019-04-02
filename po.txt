@@ -1,0 +1,849 @@
+rule:5	                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+rule:3	                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+rule:6	                         input	     4	              TK_INPUT	 ------	            input_par	 yes	                 ----
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	            input_par
+
+
+rule:6	                     parameter	     4	          TK_PARAMETER	 ------	            input_par	 yes	                 ----
+
+
+rule:6	                          list	     4	               TK_LIST	 ------	            input_par	 yes	                 ----
+
+
+rule:6	                             [	     4	                TK_SQL	 ------	            input_par	 yes	                 ----
+
+
+rule:12	                           int	     4	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+rule:10	                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+rule:9	                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+rule:6	                          ----	 -----	                ------	 -----	            input_par	  no	       parameter_list
+
+
+rule:9	                        d5cc34	     4	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+rule:16	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:9	                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+rule:6	                             ]	     4	                TK_SQR	 ------	            input_par	 yes	                 ----
+
+
+rule:7	                        output	     5	             TK_OUTPUT	 ------	           output_par	 yes	                 ----
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	           output_par
+
+
+rule:7	                     parameter	     5	          TK_PARAMETER	 ------	           output_par	 yes	                 ----
+
+
+rule:7	                          list	     5	               TK_LIST	 ------	           output_par	 yes	                 ----
+
+
+rule:7	                             [	     5	                TK_SQL	 ------	           output_par	 yes	                 ----
+
+
+rule:13	                          real	     5	               TK_REAL	 ------	    primitiveDatatype	 yes	                 ----
+
+
+rule:10	                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+rule:9	                          ----	 -----	                ------	 -----	       parameter_list	  no	             dataType
+
+
+rule:7	                          ----	 -----	                ------	 -----	           output_par	  no	       parameter_list
+
+
+rule:9	                            d3	     5	                 TK_ID	 ------	       parameter_list	 yes	                 ----
+
+
+rule:16	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:9	                          ----	 -----	                ------	 -----	       parameter_list	  no	       remaining_list
+
+
+rule:7	                             ]	     5	                TK_SQR	 ------	           output_par	 yes	                 ----
+
+
+rule:5	                             ;	     5	                TK_SEM	 ------	             function	 yes	                 ----
+
+
+rule:19	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	      typeDefinitions
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	                stmts
+
+
+rule:27	                          type	     6	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+rule:12	                           int	     6	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+rule:10	                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+rule:27	                             :	     6	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+rule:27	                        b5b567	     6	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+rule:29	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+rule:27	                             ;	     6	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	         declarations
+
+
+rule:26	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+rule:38	                        b5b567	     7	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:32	                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+rule:37	                          <---	     7	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:66	                             1	     7	                TK_NUM	      1	                 ROOT	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+rule:56	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+rule:37	                             ;	     7	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	           otherStmts
+
+
+rule:38	                            d3	     8	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:32	                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+rule:37	                          <---	     8	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:67	                          0.00	     8	               TK_RNUM	   0.00	                 ROOT	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+rule:56	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+rule:37	                             ;	     8	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:45	                         while	     9	              TK_WHILE	 ------	        iterativeStmt	 yes	                 ----
+
+
+rule:33	                          ----	 -----	                ------	 -----	                 stmt	  no	        iterativeStmt
+
+
+rule:45	                             (	     9	                 TK_OP	 ------	        iterativeStmt	 yes	                 ----
+
+
+rule:74	                        b5b567	     9	                 TK_ID	 ------	                  var	 yes	                 ----
+
+
+rule:72	                          ----	 -----	                ------	 -----	    booleanExpression	  no	                  var
+
+
+rule:45	                          ----	 -----	                ------	 -----	        iterativeStmt	  no	    booleanExpression
+
+
+rule:80	                            <=	     9	                 TK_LE	 ------	         relationalOp	 yes	                 ----
+
+
+rule:72	                          ----	 -----	                ------	 -----	    booleanExpression	  no	         relationalOp
+
+
+rule:74	                        d5cc34	     9	                 TK_ID	 ------	                  var	 yes	                 ----
+
+
+rule:72	                          ----	 -----	                ------	 -----	    booleanExpression	  no	                  var
+
+
+rule:45	                             )	     9	                 TK_CL	 ------	        iterativeStmt	 yes	                 ----
+
+
+rule:49	                          read	    10	               TK_READ	 ------	               ioStmt	 yes	                 ----
+
+
+rule:35	                          ----	 -----	                ------	 -----	                 stmt	  no	               ioStmt
+
+
+rule:49	                             (	    10	                 TK_OP	 ------	               ioStmt	 yes	                 ----
+
+
+rule:38	                          c3bd	    10	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:49	                          ----	 -----	                ------	 -----	               ioStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:49	                             )	    10	                 TK_CL	 ------	               ioStmt	 yes	                 ----
+
+
+rule:49	                             ;	    10	                TK_SEM	 ------	               ioStmt	 yes	                 ----
+
+
+rule:45	                          ----	 -----	                ------	 -----	        iterativeStmt	  no	                 stmt
+
+
+rule:38	                            d3	    11	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:32	                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+rule:37	                          <---	    11	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:68	                            d3	    11	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:69	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:68	                          ----	 -----	                ------	 -----	                  all	  no	                 temp
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+rule:64	                             +	    11	               TK_PLUS	 ------	 lowPrecedenceOperators	 yes	                 ----
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	 lowPrecedenceOperators
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+rule:68	                          c3bd	    11	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:69	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:68	                          ----	 -----	                ------	 -----	                  all	  no	                 temp
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:56	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	             expPrime
+
+
+rule:37	                             ;	    11	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:45	                          ----	 -----	                ------	 -----	        iterativeStmt	  no	           otherStmts
+
+
+rule:38	                        b5b567	    12	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:32	                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+rule:37	                          <---	    12	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:68	                        b5b567	    12	                 TK_ID	 ------	                  all	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:69	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:68	                          ----	 -----	                ------	 -----	                  all	  no	                 temp
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+rule:64	                             +	    12	               TK_PLUS	 ------	 lowPrecedenceOperators	 yes	                 ----
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	 lowPrecedenceOperators
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+rule:66	                             1	    12	                TK_NUM	      1	                 ROOT	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:56	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:55	                          ----	 -----	                ------	 -----	             expPrime	  no	             expPrime
+
+
+rule:37	                             ;	    12	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:31	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:45	                      endwhile	    13	           TK_ENDWHILE	 ------	        iterativeStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:31	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:85	                        return	    14	             TK_RETURN	 ------	           returnStmt	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	           returnStmt
+
+
+rule:86	                             [	    14	                TK_SQL	 ------	       optionalReturn	 yes	                 ----
+
+
+rule:85	                          ----	 -----	                ------	 -----	           returnStmt	  no	       optionalReturn
+
+
+rule:88	                            d3	    14	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+rule:86	                          ----	 -----	                ------	 -----	       optionalReturn	  no	               idList
+
+
+rule:90	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:88	                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+rule:86	                             ]	    14	                TK_SQR	 ------	       optionalReturn	 yes	                 ----
+
+
+rule:85	                             ;	    14	                TK_SEM	 ------	           returnStmt	 yes	                 ----
+
+
+rule:5	                           end	    15	                TK_END	 ------	             function	 yes	                 ----
+
+
+rule:1	                          ----	 -----	                ------	 -----	              program	  no	       otherFunctions
+
+
+rule:4	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:3	                          ----	 -----	                ------	 -----	       otherFunctions	  no	       otherFunctions
+
+
+rule:-1	                        ------	 -----	                 -----	 ------	                 ROOT	  no	                 ----
+
+
+rule:2	                         _main	    17	               TK_MAIN	 ------	         mainFunction	 yes	                 ----
+
+
+rule:1	                          ----	 -----	                ------	 -----	              program	  no	         mainFunction
+
+
+rule:19	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	      typeDefinitions
+
+
+rule:2	                          ----	 -----	                ------	 -----	         mainFunction	  no	                stmts
+
+
+rule:27	                          type	    18	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+rule:12	                           int	    18	                TK_INT	 ------	    primitiveDatatype	 yes	                 ----
+
+
+rule:10	                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+rule:27	                             :	    18	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+rule:27	                            b3	    18	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+rule:29	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+rule:27	                             ;	    18	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	         declarations
+
+
+rule:27	                          type	    19	               TK_TYPE	 ------	          declaration	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	          declaration
+
+
+rule:13	                          real	    19	               TK_REAL	 ------	    primitiveDatatype	 yes	                 ----
+
+
+rule:10	                          ----	 -----	                ------	 -----	             dataType	  no	    primitiveDatatype
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	             dataType
+
+
+rule:27	                             :	    19	              TK_COLON	 ------	          declaration	 yes	                 ----
+
+
+rule:27	                        c4bd56	    19	                 TK_ID	 ------	          declaration	 yes	                 ----
+
+
+rule:29	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:27	                          ----	 -----	                ------	 -----	          declaration	  no	        global_or_not
+
+
+rule:27	                             ;	    19	                TK_SEM	 ------	          declaration	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+rule:26	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:25	                          ----	 -----	                ------	 -----	         declarations	  no	         declarations
+
+
+rule:38	                            b3	    20	                 TK_ID	 ------	        singleOrRecId	 yes	                 ----
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	        singleOrRecId
+
+
+rule:39	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:38	                          ----	 -----	                ------	 -----	        singleOrRecId	  no	               new_24
+
+
+rule:32	                          ----	 -----	                ------	 -----	                 stmt	  no	       assignmentStmt
+
+
+rule:37	                          <---	    20	           TK_ASSIGNOP	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:66	                             7	    20	                TK_NUM	      7	                 ROOT	 yes	                 ----
+
+
+rule:61	                          ----	 -----	                ------	 -----	               factor	  no	                  all
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	               factor
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	                 term
+
+
+rule:59	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:57	                          ----	 -----	                ------	 -----	                 term	  no	            termPrime
+
+
+rule:37	                          ----	 -----	                ------	 -----	       assignmentStmt	  no	 arithmeticExpression
+
+
+rule:56	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:54	                          ----	 -----	                ------	 -----	 arithmeticExpression	  no	             expPrime
+
+
+rule:37	                             ;	    20	                TK_SEM	 ------	       assignmentStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	           otherStmts
+
+
+rule:42	                             [	    21	                TK_SQL	 ------	     outputParameters	 yes	                 ----
+
+
+rule:41	                          ----	 -----	                ------	 -----	          funCallStmt	  no	     outputParameters
+
+
+rule:88	                        c4bd56	    21	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+rule:42	                          ----	 -----	                ------	 -----	     outputParameters	  no	               idList
+
+
+rule:90	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:88	                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+rule:42	                             ]	    21	                TK_SQR	 ------	     outputParameters	 yes	                 ----
+
+
+rule:42	                          <---	    21	           TK_ASSIGNOP	 ------	     outputParameters	 yes	                 ----
+
+
+rule:36	                          ----	 -----	                ------	 -----	                 stmt	  no	          funCallStmt
+
+
+rule:41	                          call	    21	               TK_CALL	 ------	          funCallStmt	 yes	                 ----
+
+
+rule:41	                         _sumN	    21	              TK_FUNID	 ------	          funCallStmt	 yes	                 ----
+
+
+rule:41	                          with	    21	               TK_WITH	 ------	          funCallStmt	 yes	                 ----
+
+
+rule:41	                    parameters	    21	         TK_PARAMETERS	 ------	          funCallStmt	 yes	                 ----
+
+
+rule:44	                             [	    21	                TK_SQL	 ------	      inputParameters	 yes	                 ----
+
+
+rule:41	                          ----	 -----	                ------	 -----	          funCallStmt	  no	      inputParameters
+
+
+rule:88	                            b3	    21	                 TK_ID	 ------	               idList	 yes	                 ----
+
+
+rule:44	                          ----	 -----	                ------	 -----	      inputParameters	  no	               idList
+
+
+rule:90	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:88	                          ----	 -----	                ------	 -----	               idList	  no	             more_ids
+
+
+rule:44	                             ]	    21	                TK_SQR	 ------	      inputParameters	 yes	                 ----
+
+
+rule:41	                             ;	    21	                TK_SEM	 ------	          funCallStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:50	                         write	    22	              TK_WRITE	 ------	               ioStmt	 yes	                 ----
+
+
+rule:35	                          ----	 -----	                ------	 -----	                 stmt	  no	               ioStmt
+
+
+rule:50	                             (	    22	                 TK_OP	 ------	               ioStmt	 yes	                 ----
+
+
+rule:51	                        c4bd56	    22	                 TK_ID	 ------	               allVar	 yes	                 ----
+
+
+rule:50	                          ----	 -----	                ------	 -----	               ioStmt	  no	               allVar
+
+
+rule:69	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:51	                          ----	 -----	                ------	 -----	               allVar	  no	                 temp
+
+
+rule:50	                             )	    22	                 TK_CL	 ------	               ioStmt	 yes	                 ----
+
+
+rule:50	                             ;	    22	                TK_SEM	 ------	               ioStmt	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	                 stmt
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:31	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:30	                          ----	 -----	                ------	 -----	           otherStmts	  no	           otherStmts
+
+
+rule:85	                        return	    23	             TK_RETURN	 ------	           returnStmt	 yes	                 ----
+
+
+rule:17	                          ----	 -----	                ------	 -----	                stmts	  no	           returnStmt
+
+
+rule:87	                         -----	 -----	                ------	  ----	                 ROOT	 yes	                 ----
+
+
+rule:85	                          ----	 -----	                ------	 -----	           returnStmt	  no	       optionalReturn
+
+
+rule:85	                             ;	    23	                TK_SEM	 ------	           returnStmt	 yes	                 ----
+
+
+rule:2	                           end	    24	                TK_END	 ------	         mainFunction	 yes	                 ----
+
+
+rule:5	                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+rule:3	                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+rule:5	                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
+
+
+rule:3	                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	       parameter_list
+
+
+rule:-1	                        ------	 -----	                 -----	 ------	                 ROOT	  no	                 ----
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	       parameter_list
+
+
+rule:-1	                        ------	 -----	                 -----	 ------	                 ROOT	  no	                 ----
+
+
+rule:5	                          ----	 -----	                ------	 -----	             function	  no	       parameter_list
+
+
+rule:-1	                        ------	 -----	                 -----	 ------	                 ROOT	  no	                 ----
+
+

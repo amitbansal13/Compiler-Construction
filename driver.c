@@ -8,6 +8,7 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 #include "parserDef.h"
 #include "parser.h"
 #include <time.h>
+#include "ast.h"
 
 int main(int argc,char *argv[])
 {
@@ -68,6 +69,11 @@ int main(int argc,char *argv[])
 			removeComments();
 		else if (choice==2)
 			printAllTokens();
+		else if(choice ==5){	//to print grammar with rule nos noted
+			remove(outfile);
+			Grammar *g = makeGrammar(grammarFile);
+			printGrammar(g);
+		}
 		else if(choice ==3){
 			remove(outfile);
 			Grammar *g = makeGrammar(grammarFile);
@@ -86,6 +92,8 @@ int main(int argc,char *argv[])
 				pTable = initializePT();
 				createParseTable(g,fset,pTable);
 				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+				ptree->root = createAST(ptree->root);
+				printParseTree(ptree,outfile);
 				end_time = clock();
 				total_CPU_time  =  (double) (end_time - start_time);
 				total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;

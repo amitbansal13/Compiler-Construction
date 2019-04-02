@@ -166,6 +166,7 @@ void printGrammar(Grammar *g)		//prints the already made grammar
     int size=g->size;
     grammar** arr=g->arr,*temp,*temp1,*temp2;
     int i=0;
+	int rule_no;
     for(i=0;i<size;i++)
     {
         temp=arr[i];
@@ -175,6 +176,8 @@ void printGrammar(Grammar *g)		//prints the already made grammar
             printf("%s->",nonterminals[i]);
             while(temp1)
             {
+			rule_no=temp1->rule_no;
+            printf("%d:",rule_no);
                 printf("%s ",temp1->name);
                 temp1=temp1->next;
             }
@@ -797,9 +800,10 @@ void printInOrder(TreeNode node,char *outfile){
 	if(node==NULL)
 		return;
 
-	TreeNode temp_node = node->children;
+	//TreeNode temp_node = node->children;
+	TreeNode temp_node = node->addr;
 
-	if(temp_node!=NULL){	//if it has children
+	if(node->children!=NULL){	//if it has children
 			
 		//printing left child
 		printInOrder(temp_node,outfile);
@@ -824,6 +828,7 @@ void printInOrder(TreeNode node,char *outfile){
 void printNode(TreeNode node,char *outfile){    //file already opened
 
     FILE *f = fopen(outfile,"a");
+	fprintf(f,"rule:%d\t",node->rule_no);
 
     //did not do value type now
 
@@ -831,7 +836,8 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
     int val_type = -1;
 
-    if(node->children==NULL)        //if leaf node
+  //  if(node->children==NULL)        //if leaf node
+    if(node->addr==NULL)        //if leaf node
         isLeaf=true;
 
     if(node->tNt==0)        //if it contains terminal symbol

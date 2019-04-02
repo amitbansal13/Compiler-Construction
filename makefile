@@ -4,8 +4,8 @@
 #Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
 #Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
-stage1exe: driver.o lexer.o HashTable.o parser.o	stack.o	ast.o
-	gcc driver.o lexer.o HashTable.o parser.o  stack.o ast.o -o stage1exe
+stage1exe: driver.o lexer.o HashTable.o parser.o	stack.o	ast1.o
+	gcc driver.o lexer.o HashTable.o parser.o  stack.o ast1.o -o stage1exe
 
 parser.o: parser.c parser.h
 	gcc -g -c parser.c
@@ -22,8 +22,8 @@ HashTable.o:	HashTable.c	HashTable.h
 stack.o:	stack.c	stack.h
 	gcc -g -c stack.c
 
-ast.o:	ast.c
-	gcc -g -c ast.c
+ast1.o:	ast1.c
+	gcc -g -c ast1.c
 
 clean:
-	rm -rf *.o
+	rm -f *.o 

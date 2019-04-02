@@ -1,6 +1,0 @@
-rule:5	                         _sumN	     4	              TK_FUNID	 ------	             function	 yes	                 ----
-
-
-rule:3	                          ----	 -----	                ------	 -----	       otherFunctions	  no	             function
-
-

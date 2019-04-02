@@ -820,10 +820,10 @@ void printInOrder(TreeNode node,char *outfile){
 		}
 	}		
 	else
-		printNode(node,outfile);
+		printNode(temp_node,outfile);
 		//printing node;
 
-}	
+}
 
 void printNode(TreeNode node,char *outfile){    //file already opened
 
@@ -836,7 +836,7 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
     int val_type = -1;
 
-  //  if(node->children==NULL)        //if leaf node
+   // if(node->children==NULL)        //if leaf node
     if(node->addr==NULL)        //if leaf node
         isLeaf=true;
 

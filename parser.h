@@ -11,8 +11,8 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 
 void initializeTNT();//to initialize terminal and non terminals hash table
-grammar* newNode(char *temp);
-grammar* makeNewRule(FILE* fp,int d);
+grammar* newNode(char *temp,int line_no);
+grammar* makeNewRule(FILE* fp,int d,int line_no);
 Grammar* makeGrammar(char* fileName);
 void printGrammar(Grammar *g);
 bool isTerminal(char *text);
@@ -32,7 +32,7 @@ PT* initializePT();
 void createParseTable(Grammar *g,ffset fset,PT *pTable);
 void printParseTable(PT *pTable);
 TreeNode addChildren(TreeNode node,grammar *rule);
-TreeNode createtreeNode(int tNt,int index);
+TreeNode createtreeNode(int tNt,int index,int rule_no);
 ParseTree initializeParseTree(void);
 ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError);
 void printInOrder(TreeNode node,char *outfile);

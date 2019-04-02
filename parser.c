@@ -87,28 +87,29 @@ void initializeTNT()
 
 		//************GRAMMAR**************
 
-grammar* newNode(char *temp)			//new grammar node
+grammar* newNode(char *temp,int line_no)			//new grammar node
 //returns a new grammar node
 {
 	grammar* g=(grammar*)malloc(sizeof(grammar));
 	strcpy(g->name,temp);
 	g->more=NULL;
 	g->next=NULL;
+	g->rule_no=line_no;
 	return g;
 }
 
-grammar* makeNewRule(FILE* fp,int d)		//makes a new grammar rule and returns grammar*
+grammar* makeNewRule(FILE* fp,int d,int line_no)		//makes a new grammar rule and returns grammar*
 //makes a new Rule by scanning d space separated strings in a line
 {
 	int i=0;
 	char temp[30];
 	fscanf(fp,"%s",temp);
-	grammar* head=newNode(temp),*curr;
+	grammar* head=newNode(temp,line_no),*curr;
 	curr=head;
 	for(i=0;i<d-1;i++)
 	{
 		fscanf(fp,"%s",temp);
-		curr->next=newNode(temp);
+		curr->next=newNode(temp,line_no);
 		curr=curr->next;
 	}
 	return head;
@@ -123,7 +124,7 @@ Grammar* makeGrammar(char* fileName){			// making the Grammar data structures
 	}
 	
 	initializeTNT();
-	
+	int line_no=1;
 
 	Grammar *g=(Grammar *)malloc(sizeof(Grammar));
 	g->arr=(grammar**)malloc(sizeof(grammar*)*nonTerminalsSize);
@@ -145,14 +146,15 @@ Grammar* makeGrammar(char* fileName){			// making the Grammar data structures
 	//		arr[check->index]->more=makeNewRule(fp,d);
 		if(arr[check->index]==NULL){//if this is the first rule to be added 
 			arr[i]=(grammar*)malloc(sizeof(grammar));
-			arr[check->index]=makeNewRule(f,d);
+			arr[check->index]=makeNewRule(f,d,line_no);
 		}
 		else
 		{
-			head=makeNewRule(f,d);
+			head=makeNewRule(f,d,line_no);
 			head->more=arr[check->index]->more;
 			arr[check->index]->more=head;
 		}
+		line_no++;
 	}
 	fflush(f);
 	return g;
@@ -586,11 +588,11 @@ void printParseTable(PT *pTable){
 
 ParseTree initializeParseTree(void){
 	ParseTree pt = (ParseTree)malloc(sizeof(struct parsetree));
-	pt->root=createtreeNode(1,0);	//nonterminal , "program",index=0;
+	pt->root=createtreeNode(1,0,-1);	//nonterminal , "program",index=0;
 	return pt;
 }
 
-TreeNode createtreeNode(int tNt,int index){
+TreeNode createtreeNode(int tNt,int index,int rule_no){
 	TreeNode n = (TreeNode)malloc(sizeof(struct treenode));
 	n->next=NULL;
 	n->children=NULL;
@@ -598,7 +600,8 @@ TreeNode createtreeNode(int tNt,int index){
 	n->tNt=tNt;
 	n->token_info=NULL;
 	n->parent=NULL;
-    n->addr=n->syn=n->inh=NULL;
+	n->rule_no=rule_no;
+    n->addr=n->syn=n->inh=n;
 	return n;
 }
 	
@@ -606,16 +609,17 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
 	TreeNode newNode;
 	link check;
 	int T_index,nonT_index;
+	int rule_no = rule->rule_no;
 	if(rule!=NULL){
 		if(isTerminal(rule->name)){
 			check = lookup(terminals,rule->name,tokens);
             T_index = check->index;
-			newNode = createtreeNode(0,T_index);
+			newNode = createtreeNode(0,T_index,rule_no);
 		}	
 		else if(isNTerminal(rule->name)){
 			check = lookup(nonTerminals,rule->name,nonterminals);
             nonT_index = check->index;
-			newNode = createtreeNode(1,nonT_index);
+			newNode = createtreeNode(1,nonT_index,rule_no);
 		}
 		newNode->parent=node;
 		node->children=newNode;
@@ -626,12 +630,12 @@ TreeNode addChildren(TreeNode node,grammar *rule){		//add the rules as children 
 		if(isTerminal(temp->name)){
 			check = lookup(terminals,temp->name,tokens);
             T_index = check->index;
-			newNode = createtreeNode(0,T_index);
+			newNode = createtreeNode(0,T_index,rule_no);
 		}	
 		else if(isNTerminal(temp->name)){
 			check = lookup(nonTerminals,temp->name,nonterminals);
             nonT_index = check->index;
-			newNode = createtreeNode(1,nonT_index);
+			newNode = createtreeNode(1,nonT_index,rule_no);
 		}
 		newNode->parent=node;
 		prev->next=newNode;
@@ -659,7 +663,7 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 	
 	//Pushing Dollar node to stack
 
-	TreeNode Dollar  = createtreeNode(0,terminalsSize-1);
+	TreeNode Dollar  = createtreeNode(0,terminalsSize-1,-1);
 
 	s = push(s,Dollar);
 	

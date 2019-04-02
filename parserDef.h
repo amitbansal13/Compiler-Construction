@@ -26,6 +26,7 @@ typedef struct grammar{//contains one rule of grammar
 	char name[30];
 	struct grammar* next;
 	struct grammar* more;// if there are more rules consisting of the same non terminal
+	int rule_no;
 }grammar;
 
 typedef struct {//contatins array of linked list
@@ -88,6 +89,7 @@ struct treenode{
     TokenInfo token_info;   //will need linenos and other details while printing
     TreeNode parent;
     TreeNode addr,syn,inh;
+	int rule_no;
     // TokenInfo *token; //TokenInfo structure pointer if terminal
 };
 

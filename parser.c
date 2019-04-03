@@ -820,9 +820,14 @@ void printInOrder(TreeNode node,char *outfile){
 		}
 	}		
 	else
-		printNode(node,outfile);
+		printNode(temp_node,outfile);
 		//printing node;
+<<<<<<< HEAD
 }	
+=======
+
+}
+>>>>>>> e5eaf9c27e329352546514a7bb7e60ad3720b7e4
 
 void printNode(TreeNode node,char *outfile){    //file already opened
 
@@ -835,8 +840,13 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
     int val_type = -1;
 
+<<<<<<< HEAD
     if(node->children==NULL)        //if leaf node
   //  if(node->addr==NULL)        //if leaf node
+=======
+   // if(node->children==NULL)        //if leaf node
+    if(node->addr==NULL)        //if leaf node
+>>>>>>> e5eaf9c27e329352546514a7bb7e60ad3720b7e4
         isLeaf=true;
 
     if(node->tNt==0)        //if it contains terminal symbol

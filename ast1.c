@@ -1,32 +1,34 @@
 #include "parserDef.h"
 #include "ast.h"
 
-TreeNode createAST(TreeNode root)
+void createAST(TreeNode root,int flag)
 {
-	if(!root)return root;
+	if(!root)return ;
 	TreeNode children=root->children;
-	int flag=0;
+	int chld_no=1;
+	TreeNode next_child;
 	while(children)
 	{
-		createAST(children);
-
-		if(flag==0){
-			ASThelper(children);	//this children may be free here
-			children=root->children->next;
-		}
-
+		next_child = children->next;	//need this since children can get freed in next stmt
+		if(chld_no==1)
+			createAST(children,0);
 		else
-			children=children->next;
-		flag=1;
+			createAST(children,1);
+
+
+		children=next_child;
+		chld_no++;
 	}
-	return root;
+	if(flag==0 && root->rule_no!=-1)
+		ASThelper(root);	
+	return ;
 }
 
 void ASThelper(TreeNode node){
-	printf("helper called\n");
 	TreeNode par = node->parent;
 	switch(node->rule_no){
 
+		//*****************addr copy cases********************
 
 		case 1:
 		case 3:
@@ -38,18 +40,24 @@ void ASThelper(TreeNode node){
 		case 25:
 		case 30:
 		case 38:
+		case 51:
+		case 52:
+		case 53:
 		case 54:
 		case 55:
 		case 57:
 		case 58:
+		case 66:
+		case 67:
+		case 68:
 		case 72:
-			node=par->children;
+		case 88:
 			par->addr = node->addr;
 			break;
 		
 
 		//********************* NULL CASES**************88
-
+		//free that node and make parent addr and children as NULL
 		case 4:
 		case 8:
 		case 16:
@@ -63,9 +71,10 @@ void ASThelper(TreeNode node){
 		case 56:
 		case 59:
 		case 69:
-			node=par->children;
-			//free(node->token_info);
+		case 87:
+		case 90:
 			free(node);
+			par->children=NULL;
 			par->addr =NULL;
 			break;
 
@@ -77,7 +86,7 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 
@@ -94,7 +103,7 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
@@ -104,43 +113,39 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
 		case 10:
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		 case 11:
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
 		case 12 ... 13:
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);//*****************DOUBT*************************
-			//free(node);	//wont free since its terminal
 			break;
 
 		case 14:
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
-			//free(node);
 			break;
 
 		case 15:
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 
@@ -172,7 +177,7 @@ void ASThelper(TreeNode node){
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
@@ -183,7 +188,7 @@ void ASThelper(TreeNode node){
 		case 36:
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 
@@ -198,8 +203,6 @@ void ASThelper(TreeNode node){
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-		//	free(node->token_info);
-			//free(node);//***HERE too
 			break;
 
 
@@ -218,6 +221,8 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
+			setParentChild(par,node->children);
+			free(node);
 			break;
 
 
@@ -227,6 +232,7 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
+			setParentChild(par,node->children);
 			free(node);
 			break;
 
@@ -267,22 +273,8 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-	//		free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
-			break;
-
-		case 51:
-		case 68:
-			par->children = deleteN(par->children,0);
-			node=par->children;
-			par->addr = node->addr;
-		//	free(node->token_info);
-			free(node);//***HERE too
-			break;
-
-		case 52 ... 53:
-		case 66 ... 67:
-			par->addr = node->addr;
 			break;
 
 		case 60:
@@ -291,26 +283,24 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
 		case 61:
 			par->addr=node->addr;
+			setParentChild(par,node->children);
 			free(node);
+			break;
 		case 62 ... 65:
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
-			//free(node);
 			break;
 		
 		case 70:
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
-			//free(node);
 			break;
 		
 		case 71:
@@ -328,15 +318,13 @@ void ASThelper(TreeNode node){
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
 		case 74 ... 84:
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
-		//	free(node);		//DOUBT
 			break;
 		
 		case 85:
@@ -346,34 +334,17 @@ void ASThelper(TreeNode node){
 					par->children = deleteN(par->children,i);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
 		
-		case 87:
-		case 90:
-			node=par->children;
-			//free(node->token_info);
-			free(node);
-			par->addr =NULL;
-			break;
-		
-		case 88:
 		case 89:
 			par->children = deleteN(par->children,0);
 			node=par->children;
 			par->addr = node->addr;
-			//free(node->token_info);
+			setParentChild(par,node->children);
 			free(node);
 			break;
-
-
-		
-
-		
-		
-		
-		
 	}
 }
 
@@ -385,17 +356,32 @@ TreeNode deleteN(TreeNode head,int index){	//indexing from 0
 	TreeNode temp = head;
 	if(index==0){
 		temp=head->next;
-		//free(head->token_info);
 		free(head);
 		return temp;
 	}
 	TreeNode prev = head;
 	while(index--){
+		if(temp==NULL){
+			printf("nothing to delete1\n");
+			return head;
+		}
 		prev=temp;
 		temp=temp->next;	
 	}
+		if(temp==NULL){
+			printf("nothing to delete2\n");
+			return head;
+		}
 	prev->next=temp->next;
-//	free(temp->token_info);
 	free(temp);
 	return head;
+}
+
+void setParentChild(TreeNode parent,TreeNode childList){
+	parent->children=childList;
+	TreeNode temp = childList;
+	while(temp!=NULL){
+		temp->parent=parent;
+		temp=temp->next;
+	}
 }

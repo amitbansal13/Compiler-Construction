@@ -797,13 +797,13 @@ void printParseTree(ParseTree ptree,char *outfile){
 }
 
 void printInOrder(TreeNode node,char *outfile){
+	//printf("Printing node %d\n",node->rule_no);
 	if(node==NULL)
 		return;
 
-	//TreeNode temp_node = node->children;
-	TreeNode temp_node = node->addr;
+	TreeNode temp_node = node->children;
 
-	if(node->children!=NULL){	//if it has children
+	if(temp_node!=NULL){	//if it has children
 			
 		//printing left child
 		printInOrder(temp_node,outfile);
@@ -820,19 +820,14 @@ void printInOrder(TreeNode node,char *outfile){
 		}
 	}		
 	else
-		printNode(temp_node,outfile);
-		//printing node;
-<<<<<<< HEAD
-}	
-=======
-
+		printNode(node,outfile);
 }
->>>>>>> e5eaf9c27e329352546514a7bb7e60ad3720b7e4
 
 void printNode(TreeNode node,char *outfile){    //file already opened
 
     FILE *f = fopen(outfile,"a");
-	fprintf(f,"rule:%d\t",node->rule_no);
+	//fprintf(f,"tNt:%d\t",node->tNt);
+	//fprintf(f,"rule:%d\t",node->rule_no);
 
     //did not do value type now
 
@@ -840,13 +835,7 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
     int val_type = -1;
 
-<<<<<<< HEAD
     if(node->children==NULL)        //if leaf node
-  //  if(node->addr==NULL)        //if leaf node
-=======
-   // if(node->children==NULL)        //if leaf node
-    if(node->addr==NULL)        //if leaf node
->>>>>>> e5eaf9c27e329352546514a7bb7e60ad3720b7e4
         isLeaf=true;
 
     if(node->tNt==0)        //if it contains terminal symbol

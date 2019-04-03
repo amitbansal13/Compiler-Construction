@@ -92,7 +92,7 @@ int main(int argc,char *argv[])
 				pTable = initializePT();
 				createParseTable(g,fset,pTable);
 				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
-				ptree->root = createAST(ptree->root);
+				createAST(ptree->root,0);
 				printParseTree(ptree,outfile);
 				end_time = clock();
 				total_CPU_time  =  (double) (end_time - start_time);

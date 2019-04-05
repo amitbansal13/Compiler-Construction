@@ -35,8 +35,8 @@ TreeNode addChildren(TreeNode node,grammar *rule);
 TreeNode createtreeNode(int tNt,int index,int rule_no);
 ParseTree initializeParseTree(void);
 ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError);
-void printInOrder(TreeNode node,char *outfile);
-void printParseTree(ParseTree ptree,char *outfile);
+int printInOrder(TreeNode node,char *outfile);
+int printParseTree(ParseTree ptree,char *outfile);
 void printNode(TreeNode node,char *outfile);
 
 

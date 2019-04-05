@@ -92,12 +92,16 @@ int main(int argc,char *argv[])
 				pTable = initializePT();
 				createParseTable(g,fset,pTable);
 				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+				int ptree_nodes = printParseTree(ptree,outfile);
 				createAST(ptree->root,0);
-				printParseTree(ptree,outfile);
+				int ast_nodes = printParseTree(ptree,outfile);
 				end_time = clock();
 				total_CPU_time  =  (double) (end_time - start_time);
 				total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;
 				printf("\n\nTotal CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
+				printf("ptreeNodes = %d\n,astNodes=%d\n",ptree_nodes,ast_nodes);
+				float compressionRatio = ((float)(ptree_nodes-ast_nodes)/(float)ptree_nodes)*100;
+				printf("CompressionRatio=%f\n",compressionRatio);
 			}
 	}
 	return 0;

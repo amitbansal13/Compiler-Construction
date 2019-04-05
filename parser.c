@@ -787,26 +787,28 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 	return tree;
 }
 
-void printParseTree(ParseTree ptree,char *outfile){
+int printParseTree(ParseTree ptree,char *outfile){
 	if(ptree==NULL){
 		printf("Tree not initialized\n");	
-		return;
+		return 0;
 	}
-	printInOrder(ptree->root,outfile);
+	int no_nodes = printInOrder(ptree->root,outfile);
 	printf("ParseTree Printed in file %s\n",outfile);
+	return no_nodes;
 }
 
-void printInOrder(TreeNode node,char *outfile){
+int printInOrder(TreeNode node,char *outfile){
 	//printf("Printing node %d\n",node->rule_no);
+	int no_nodes= 0;
 	if(node==NULL)
-		return;
+		return 0;
 
 	TreeNode temp_node = node->children;
 
 	if(temp_node!=NULL){	//if it has children
 			
 		//printing left child
-		printInOrder(temp_node,outfile);
+		no_nodes+= printInOrder(temp_node,outfile);
 		
 		//printing node;
 		
@@ -815,12 +817,13 @@ void printInOrder(TreeNode node,char *outfile){
 		temp_node=temp_node->next;
 
 		while(temp_node!=NULL){
-			printInOrder(temp_node,outfile);
+			no_nodes+=printInOrder(temp_node,outfile);
 			temp_node=temp_node->next;
 		}
 	}		
 	else
 		printNode(node,outfile);
+	return no_nodes+1;
 }
 
 void printNode(TreeNode node,char *outfile){    //file already opened

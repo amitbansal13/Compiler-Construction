@@ -15,7 +15,7 @@ struct id
 	int type; //num=0 or real_num=1
 	int width;
 	ID next;
-	char *tname;//what is this used for?
+	char *tname;
 };
 
 
@@ -32,7 +32,6 @@ typedef struct func* Func;
 struct func
 {
 	char* name;
-	int childNo;//doubt what does this mean
 	int offset;
 	int noInput;//number of input pars
 	int noOutput;//number of output pars
@@ -64,7 +63,7 @@ struct rec//NAMES OF this struct have to be changed a bit
 	int noField;
 	int* fieldtype;
 	char** fieldid;
-	recordType next;
+	Rec next;
 };
 
 typedef struct rectable* recTable;

@@ -15,8 +15,8 @@ ID lookupID(idTable t,char arr[]);
 
 
 funcTable createFunc(int tableSize);
-Func newFunc( char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width,int childNo);
-funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width,int childNo);
+Func newFunc( char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width);
+funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width);
 Func lookupFunc(funcTable t,char arr[]);
 
 

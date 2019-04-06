@@ -1,9 +1,9 @@
 #include "symbolTableDef.h"
-
+#include "parser.h"
 
 /////////////////// IDENTIFIER TABLE
 
-int calculateHash(char arr[],int a,int tableSize){
+/*int calculateHash(char arr[],int a,int tableSize){
 	long int key=0,i=0,prod=1;
 	while(arr[i])
 	{
@@ -14,7 +14,7 @@ int calculateHash(char arr[],int a,int tableSize){
 		i++;
 	}
 	return key%tableSize;
-}
+}*/
 
 idTable createID(int tableSize){
 	idTable t=(idTable)malloc(sizeof(struct idtable));
@@ -121,7 +121,7 @@ recTable createRec(int tableSize){
 Rec newRec(char* name, int type, int width, int noField, int* fieldtype, char** fieldid){
 	Rec r=(Rec)malloc(sizeof(struct rec));
 	r->name=strdup(name);
-	r->type=type;
+	r->typeIndex=type;
 	r->width=width;
 	r->noField=noField;
 	r->fieldtype=fieldtype;
@@ -173,7 +173,7 @@ void printRecTable(recTable t)
 		Rec temp=table[i];
 		while(temp)
 		{
-			printf("%s %d %d %d\n",temp->name,temp->type,temp->width,temp->noField);
+			printf("%s %d %d %d\n",temp->name,temp->typeIndex,temp->width,temp->noField);
 			temp=temp->next;
 		}
 	}
@@ -204,3 +204,325 @@ void printFuncTable(funcTable t)
 	}
 }
 
+TreeNode getStmtChildren(TreeNode temp, int lim){
+	int hops;
+	TreeNode childNext = temp->children;
+
+	for(hops=0;hops<lim;hops++){
+		childNext = childNext->next;
+	}
+	return childNext->children;
+}
+TreeNode getNextNode(TreeNode temp, int lim){
+	int hops;
+	TreeNode childNext = temp;
+
+	for(hops=0;hops<lim;hops++){
+		childNext = childNext->next;
+	}
+	return childNext;
+
+}
+
+int retType(TreeNode t,recTable table)
+{
+	int index=t->index;
+	if(strcmp(tokens[index],"TK_INT")==0)return 0;
+	else if(strcmp(tokens[index],"TK_REAL")==0)return 1;
+	Rec temp=lookupRec(table,t->token_info->lexeme);
+	if(temp==NULL)
+	return -1;
+	return temp->typeIndex;
+}
+int getWidth(TreeNode t, recTable table)
+{
+	int index=t->index;
+	if(strcmp(keywords_tokens[index],"TK_INT")==0)return 2;
+	else if(strcmp(keywords_tokens[index],"TK_REAL")==0)return 4;
+	Rec temp=lookupRec(table,t->token_info->lexeme);
+	if(temp==NULL)
+		return -1;
+	return temp->width;
+}
+
+void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree)
+{
+	TreeNode traverse = pTree->root;
+	TreeNode childList = traverse->children;
+
+	char* idname;
+	int* typeOfField;
+	char** idField;
+	int RaiseError = 0;
+	int width;
+	int count;
+	int tindex=1; //to store the index of each record type
+	
+	while(childList->next!=NULL){
+
+		//typedefinitions
+		TreeNode temp = childList;
+		
+		TreeNode typeChild = getStmtChildren(temp, 3)->children;//pointer to children of typedefinitions
+
+		
+		while(typeChild!=NULL){
+			count = 10;
+			tindex++;
+			width = 0;
+			TreeNode tempChild = typeChild;
+			idname = strdup(tempChild->children->token_info->lexeme);
+			
+			typeOfField = malloc(sizeof(int)*count);
+			idField = malloc(sizeof(char*)*count);
+
+			TreeNode iter1 = tempChild->children->next;//iter1 points to 1st fieldDef
+			
+			int index = 1;
+			while(iter1!=NULL){
+
+				if(index >= 3){
+					TreeNode iter2 = tempChild->children->next;
+					while(iter2->next!=iter1){
+
+						if(strcmp(iter1->children->next->token_info->lexeme,iter2->children->next->token_info->lexeme)==0)
+						{
+							printf("Repetition of field name in line No %u \n",iter1->children->next->token_info->lineNo);
+							RaiseError=-1;
+						}
+
+						iter2 = iter2->next;
+					}	
+				}
+				
+				if(index-1 < count)
+				{
+					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);
+					typeOfField[index-1]=(tokens[iter1->children->index]=="TK_INT")?0:1;
+
+					if(typeOfField[index-1]==0)
+						width += 4;
+					else
+						width += 8;	
+				}
+				else {
+					count+=10;
+					idField = realloc(idField,sizeof(char*)*count);
+					typeOfField = realloc(typeOfField, sizeof(int)*count);
+
+					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);
+					typeOfField[index-1]=(tokens[iter1->children->index]=="TK_INT")?0:1;
+
+					if(typeOfField[index-1]==0)
+						width += 4;
+					else
+						width += 8;
+				}
+
+				iter1 = iter1->next;
+				index+=1;
+			}
+			
+			if(lookupRec(rec, idname)==NULL)
+				insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); //noField
+			else
+			{
+				printf("Error. Line No: %u  Same record defined before\n",tempChild->children->token_info->lineNo);
+				RaiseError=-1;
+			}
+
+			typeChild = typeChild->next;
+		}
+		childList = childList->next;
+	}
+
+
+	//MAIN FUNCTION TYPERECORDS
+	TreeNode main = childList;
+	TreeNode typeDef = main->children->children;
+	
+	while(typeDef!=NULL){
+			count = 10;
+			tindex++;
+			width = 0;
+			TreeNode tempChild = typeDef;
+			idname = strdup(tempChild->children->token_info->lexeme);
+			
+			typeOfField = malloc(sizeof(int)*count);
+			idField = malloc(sizeof(char*)*count);
+
+			TreeNode iter1 = tempChild->children->next;//iter1 points to 1st fieldDef
+			
+			int index = 1;
+			while(iter1!=NULL){
+				//required??
+				if(index >= 3){
+					TreeNode iter2 = tempChild->children->next;
+					while(iter2->next!=iter1){
+
+						if(strcmp(iter1->children->next->token_info->lexeme,iter2->children->next->token_info->lexeme)==0)
+						{
+							printf("Repetition of field name in line No %u \n",iter1->children->next->token_info->lineNo);
+							RaiseError=-1;
+						}
+
+						iter2 = iter2->next;
+					}	
+				}
+				
+				if(index-1 < count)
+				{
+					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);
+					typeOfField[index-1]=(tokens[iter1->children->index]=="TK_INT")?0:1;
+
+					if(typeOfField[index-1]==0)
+						width += 4;
+					else
+						width += 8;	
+				}
+				else {
+					count+=10;
+					idField = realloc(idField,sizeof(char*)*count);
+					typeOfField = realloc(typeOfField, sizeof(int)*count);
+
+					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);
+					typeOfField[index-1]=(tokens[iter1->children->index]=="TK_INT")?0:1;
+
+					if(typeOfField[index-1]==0)
+						width += 4;
+					else
+						width += 8;
+				}
+
+				iter1 = iter1->next;
+				index+=1;
+			}
+			
+			if(lookupRec(rec, idname)==NULL)
+				insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); //noField
+			else
+			{
+				printf("Error. Line No: %u  Same record defined before\n",tempChild->children->token_info->lineNo);
+				RaiseError=-1;
+			}
+
+			typeDef = typeDef->next;
+		}
+
+		//VARIABLE DECLARATIONS IN OTHER FUNCTIONS
+		childList = traverse->children;
+		int noParam = 0; //number of parameters
+		while(childList->next!=NULL)
+		{
+			noParam = 10;
+			TreeNode tempfunc = childList;//points to the first function node
+			if(lookupFunc(func,tempfunc->children->token_info->lexeme)==NULL)
+			{
+				int offsetBegin = 0;
+				int NoInpPar = (tempfunc->children->next->childrenNo)/2; //childrenNo is the  number of children of that node
+				int NoOutPar = (tempfunc->children->next->next->childrenNo)/2;
+				int* inPar = (int*) malloc(sizeof(int)*NoInpPar); //inout parameter types
+				int* outPar = (int*) malloc(sizeof(int)*NoOutPar); //output parameter types
+				idTable idLocal = createID(41);
+
+				//traverse inpar list and insert ids into symbol table
+				TreeNode inTraverse = tempfunc->children->next->children;
+				for(int ip = 0; ip<2*NoInpPar;ip+=2){
+
+					inPar[ip/2] = retType(inTraverse,rec);
+					if(inPar[ip/2]==-1)
+					{
+						printf("Error. Line No: %u - No such type for %s \n",inTraverse->token_info->lineNo,inTraverse->token_info->lexeme);
+						RaiseError=-1;
+					}
+					else if(lookupID(identifier, inTraverse->next->token_info->lexeme)!=NULL)
+					{
+						printf("Re-Declaration Error. Line No: %u  Variable <%s> is already declared globally\n",inTraverse->next->token_info->lineNo,inTraverse->next->token_info->lexeme);
+					}
+					else if(lookupID(idLocal, inTraverse->next->token_info->lexeme)==NULL)
+					{
+						int size = getWidth(inTraverse,rec);
+						insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
+						offsetBegin+=size;
+					}
+					else
+					{
+						printf("Re-definition error. Line No: %u Identical input parameter already defined \n",inTraverse->next->token_info->lineNo);
+						RaiseError = -1;
+					}
+
+					inTraverse = inTraverse->next->next;
+				}
+
+				//traverse output param list and add to symbol table[if not added]
+				TreeNode outTraverse = tempfunc->children->next->next->children;
+				for(int ip = 0; ip<2*NoOutPar;ip+=2){
+
+					outPar[ip/2] = retType(outTraverse,rec);
+					if(inPar[ip/2]==-1)
+					{
+						printf("Error. Line No: %u - No such type for %s \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
+						RaiseError=-1;
+					}
+					else if(lookupID(idLocal, outTraverse->next->token_info->lexeme)==NULL)
+					{
+						int size = getWidth(outTraverse,rec);
+						insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size, outTraverse->token_info->lexeme);
+						offsetBegin+=size;
+					}
+					else
+					{
+						printf("Re-definition error. Line No: %u Identical input parameter already defined \n",outTraverse->next->token_info->lineNo);
+						RaiseError = -1;
+					}
+
+					outTraverse = outTraverse->next->next;
+				}
+
+				//STMT DECLARATION
+
+				TreeNode declare = getNextNode(tempfunc->children,3)->children->next->children; //pointing to 1st declaration node
+				
+				while(declare!=NULL){
+
+					if(declare->childrenNo==3) continue; //check
+					if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
+					{
+							printf("Error. Line No: %u Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
+							RaiseError=-1;
+					}
+					idTable tabTemp = idLocal;
+					if(lookupID(tabTemp, declare->children->next->token_info->lexeme)==NULL)
+					{
+						int dtype =  retType(declare->children,rec);
+						if(dtype==-1)
+						{
+							printf("Error. Line No: %u No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
+							RaiseError=-1;
+						}
+						else
+						{
+							int size = getWidth(declare->children,rec);
+							insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+							offsetBegin+=size;
+						}
+								
+					}
+						else
+						{
+							printf("Re-declaration Error. Line No: %u Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
+							RaiseError=-1;
+						}
+					declare = declare->next;
+					}
+					insertFunc(func,tempfunc->children->token_info->lexeme,0, NoInpPar, NoOutPar, inPar, outPar,idLocal,offsetBegin); //check
+				}
+				else{
+					printf("Error. Line No: %u Overloaded functions not allowed. <%s> already defined\n", childList->children->token_info->lineNo,childList->children->token_info->lexeme);
+					RaiseError=-1;
+				}
+				childList = childList->next;
+			}
+		}
+
+		

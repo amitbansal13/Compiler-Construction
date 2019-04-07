@@ -1,7 +1,7 @@
 #include "symbolTableDef.h"
 #include "parser.h"
 
-int calculateHash(char arr[],int a,int tableSize){
+int hash(char arr[],int a,int tableSize){
 	long int key=0,i=0,prod=1;
 	while(arr[i])
 	{
@@ -38,7 +38,7 @@ ID newID( char* name, int offset, int type, int width, char *tname){
 	return id;
 }
 idTable insertID(idTable t,char* name, int offset, int type, int width, char *tname){
-	int i=calculateHash(name,t->a,t->tableSize);
+	int i=hash(name,t->a,t->tableSize);
 	ID temp=newID(name,offset,type,width,tname);
 	temp->next=t->table[i];
 	t->table[i]=temp;
@@ -47,7 +47,7 @@ idTable insertID(idTable t,char* name, int offset, int type, int width, char *tn
 
 ID lookupID(idTable t,char arr[]){
 	ID res=NULL;
-	int i=calculateHash(arr,t->a,t->tableSize);
+	int i=hash(arr,t->a,t->tableSize);
 	ID temp=t->table[i];
 	while(temp)
 	{
@@ -85,7 +85,7 @@ Func newFunc( char* name, int offset,int noInput, int noOutput, int* inputType, 
 	return f;
 }
 funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width){
-	int i=calculateHash(name,t->a,t->tableSize);
+	int i=hash(name,t->a,t->tableSize);
 	Func temp=newFunc(name,offset,noInput, noOutput, inputType, outputType,localtable,width);
 	temp->next=t->table[i];
 	t->table[i]=temp;
@@ -94,7 +94,7 @@ funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutpu
 
 Func lookupFunc(funcTable t,char arr[]){
 	Func res=NULL;
-	int i=calculateHash(arr,t->a,t->tableSize);
+	int i=hash(arr,t->a,t->tableSize);
 	Func temp=t->table[i];
 	while(temp)
 	{
@@ -130,7 +130,7 @@ Rec newRec(char* name, int type, int width, int noField, int* fieldtype, char** 
 	return r;
 }
 recTable insertRec(recTable t,char* name, int type, int width, int noField, int* fieldtype, char** fieldid){
-	int i=calculateHash(name,t->a,t->tableSize);
+	int i=hash(name,t->a,t->tableSize);
 	Rec temp=newRec(name,  type,width, noField, fieldtype, fieldid);
 	temp->next=t->table[i];
 	t->table[i]=temp;
@@ -139,7 +139,7 @@ recTable insertRec(recTable t,char* name, int type, int width, int noField, int*
 
 Rec lookupRec(recTable t,char arr[]){
 	Rec res=NULL;
-	int i=calculateHash(arr,t->a,t->tableSize);
+	int i=hash(arr,t->a,t->tableSize);
 	Rec temp=t->table[i];
 	while(temp)
 	{

@@ -8,7 +8,7 @@
 /////////////////// IDENTIFIER TABLE
 
 
-int calculateHash(char arr[],int a,int tableSize);
+int hash(char arr[],int a,int tableSize);
 idTable createID(int tableSize);
 ID newID( char* name, int offset, int type, int width, char *tname);
 idTable insertID(idTable t,char* name, int offset, int type, int width, char *tname);

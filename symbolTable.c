@@ -3,7 +3,7 @@
 
 /////////////////// IDENTIFIER TABLE
 
-/*int calculateHash(char arr[],int a,int tableSize){
+int calculateHash(char arr[],int a,int tableSize){
 	long int key=0,i=0,prod=1;
 	while(arr[i])
 	{
@@ -14,7 +14,7 @@
 		i++;
 	}
 	return key%tableSize;
-}*/
+}
 
 idTable createID(int tableSize){
 	idTable t=(idTable)malloc(sizeof(struct idtable));

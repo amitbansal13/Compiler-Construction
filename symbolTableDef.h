@@ -1,3 +1,7 @@
+#ifndef SYMBOLTABLEDEF_H
+#define SYMBOLTABLEDEF_H
+
+
 #include "symbolTable.h"
 #include "parser.h"
 
@@ -32,3 +36,6 @@ void printRecTable(recTable t);
 
 
 void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
+
+
+#endif

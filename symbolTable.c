@@ -224,7 +224,7 @@ TreeNode getNextNode(TreeNode temp, int lim){
 
 }
 
-int retType(TreeNode t,recTable table)
+int getType(TreeNode t,recTable table)
 {
 	int index=t->index;
 	if(strcmp(tokens[index],"TK_INT")==0)return 0;
@@ -245,11 +245,21 @@ int getWidth(TreeNode t, recTable table)
 	return temp->width;
 }
 
+int getChildrenNo(TreeNode node){
+	TreeNode child = node->children;
+	int count=0;
+	while(child!=NULL){
+		count++;
+		child=child->next;
+	}
+	return count;
+}
+
 void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree)
 {
 	TreeNode traverse = pTree->root;
 	TreeNode childList = traverse->children;
-
+	int gOffset=0;
 	char* idname;
 	int* typeOfField;
 	char** idField;
@@ -258,6 +268,8 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 	int count;
 	int tindex=1; //to store the index of each record type
 	
+	TreeNode tempStartChild = childList;
+
 	while(childList->next!=NULL){
 
 		//typedefinitions
@@ -409,6 +421,57 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 			typeDef = typeDef->next;
 		}
 
+			//checking for global declarations in other functions
+	TreeNode temp2=NULL;
+	idTable temp = identifier;
+	while(tempStartChild->next !=NULL)
+	{
+		TreeNode temp1 = tempStartChild;
+		TreeNode decChild = getStmtChildren(temp1,3)->children->next;
+		while(decChild != NULL)
+		{
+			if(decChild->children != NULL)
+				continue;
+			ID id1 = lookupID(temp, decChild->children->children->next->token_info->lexeme);
+			if(id1 == NULL)
+			{
+					int type = getType(decChild->children->children, rec);
+					if(type == -1)
+					{
+						printf("Line = %d -> type not found for global variable: %s  \n", decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme);
+						return;
+					}
+					int width = getWidth(decChild->children->children, rec);
+					identifier = insertID(temp, decChild->children->children->next->token_info->lexeme, gOffset, type, width,decChild->children->children->token_info->lexeme);
+					gOffset += width;
+			}
+			else
+			{
+				printf("Line = %d -> multipe declaration for global variable %s \n",decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme );
+			}
+			temp2 = decChild;
+			decChild = decChild->children->next;
+		}
+		//checking for global declarations 	in main function
+		decChild = temp2;
+
+		while(decChild->children->next != NULL)
+		{
+			int type2 = getType(decChild->children->children, rec);
+			if(type2 == -1)
+			{
+				printf("Line = %d -> type not found for global variable: %s  \n", decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme);
+						return;
+			}
+			else
+			{
+				int width2 = getWidth(decChild->children->children, rec);
+				identifier = insertID(temp, decChild->children->children->next->token_info->lexeme, gOffset,type2, width2 ,decChild->children->children->token_info->lexeme);
+			}
+
+		}
+	}
+
 		//VARIABLE DECLARATIONS IN OTHER FUNCTIONS
 		childList = traverse->children;
 		int noParam = 0; //number of parameters
@@ -419,8 +482,8 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 			if(lookupFunc(func,tempfunc->children->token_info->lexeme)==NULL)
 			{
 				int offsetBegin = 0;
-				int NoInpPar = (tempfunc->children->next->childrenNo)/2; //childrenNo is the  number of children of that node
-				int NoOutPar = (tempfunc->children->next->next->childrenNo)/2;
+				int NoInpPar = getChildrenNo(tempfunc->children->next)/2; //childrenNo is the  number of children of that node
+				int NoOutPar = getChildrenNo(tempfunc->children->next->next)/2;
 				int* inPar = (int*) malloc(sizeof(int)*NoInpPar); //inout parameter types
 				int* outPar = (int*) malloc(sizeof(int)*NoOutPar); //output parameter types
 				idTable idLocal = createID(41);
@@ -429,7 +492,7 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 				TreeNode inTraverse = tempfunc->children->next->children;
 				for(int ip = 0; ip<2*NoInpPar;ip+=2){
 
-					inPar[ip/2] = retType(inTraverse,rec);
+					inPar[ip/2] = getType(inTraverse,rec);
 					if(inPar[ip/2]==-1)
 					{
 						printf("Error. Line No: %u - No such type for %s \n",inTraverse->token_info->lineNo,inTraverse->token_info->lexeme);
@@ -458,7 +521,7 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 				TreeNode outTraverse = tempfunc->children->next->next->children;
 				for(int ip = 0; ip<2*NoOutPar;ip+=2){
 
-					outPar[ip/2] = retType(outTraverse,rec);
+					outPar[ip/2] = getType(outTraverse,rec);
 					if(inPar[ip/2]==-1)
 					{
 						printf("Error. Line No: %u - No such type for %s \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
@@ -485,7 +548,7 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 				
 				while(declare!=NULL){
 
-					if(declare->childrenNo==3) continue; //check
+					if(getChildrenNo(declare)==3) continue; //check
 					if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 					{
 							printf("Error. Line No: %u Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
@@ -494,7 +557,7 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 					idTable tabTemp = idLocal;
 					if(lookupID(tabTemp, declare->children->next->token_info->lexeme)==NULL)
 					{
-						int dtype =  retType(declare->children,rec);
+						int dtype =  getType(declare->children,rec);
 						if(dtype==-1)
 						{
 							printf("Error. Line No: %u No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);

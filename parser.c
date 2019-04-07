@@ -797,8 +797,10 @@ int printParseTree(ParseTree ptree,char *outfile){
 int printInOrder(TreeNode node,char *outfile){
 	//printf("Printing node %d\n",node->rule_no);
 	int no_nodes= 0;
-	if(node==NULL)
+	if(node==NULL){
+		printf("node null \n");
 		return 0;
+	}
 
 	TreeNode temp_node = node->children;
 
@@ -824,8 +826,9 @@ int printInOrder(TreeNode node,char *outfile){
 }
 
 void printNode(TreeNode node,char *outfile){    //file already opened
+	//printf("print node called\n");
 
-    FILE *f = fopen(outfile,"a");
+ //   FILE *f = fopen(outfile,"a");
 	//fprintf(f,"tNt:%d\t",node->tNt);
 	//fprintf(f,"rule:%d\t",node->rule_no);
 
@@ -848,8 +851,9 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
 
     if(isLeaf){    //for leaf node
-        if(isTerminal==false){
+        if(isTerminal==false){//can be there in ast
             //leaf node is non terminal => error case
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
         }    
         else{
             if(strcmp(tokens[node->index],"TK_NUM")==0)    // has NUM value field
@@ -859,34 +863,34 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
             if(isRoot){
                if(strcmp(tokens[node->index],"eps")==0)    
-               fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
+               printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
 
                 else if(val_type==1)//intval case
-                    fprintf(f,"%30s\t %5d\t %21s\t nahi %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
+                    printf("%30s\t %5d\t %21s\t nahi %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
 
 
                 else if(val_type==0)//floatvl case
-                    fprintf(f,"%30s\t %5d\t %21s\t  yahi %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
+                    printf("%30s\t %5d\t %21s\t  yahi %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
 
 
                 else    //other case
-                fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"-----","ROOT","yes","----");
+                printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"-----","ROOT","yes","----");
             }
 
 
             else{//if not root
                 if(strcmp(tokens[node->index],"eps")==0)    
-                   fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
+                   printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
                 else if(val_type==1)//intval case
-                    fprintf(f,"%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
+                    printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
 
 
                 else if(val_type==0)//floatvl case
-                    fprintf(f,"%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
+                    printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
 
 
                else
-                fprintf(f,"%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
+                printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
                 }//print it;
 
         }
@@ -901,20 +905,21 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
         if(isRoot){
 
-                fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
 
             //root node print
         }
 
         else
 
-                fprintf(f,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+               // fprintf(0,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
 
             //nonterminal print    
 
     }
 
-    fclose(f);
+ //   fclose(f);
 }
 
 

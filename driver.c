@@ -6,6 +6,9 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 #include "lexer.h"
 #include "parserDef.h"
+#include "symbolTableDef.h"
+#include "symbolTable.h"
+
 #include "parser.h"
 #include <time.h>
 #include "ast.h"
@@ -93,7 +96,8 @@ int main(int argc,char *argv[])
 				createParseTable(g,fset,pTable);
 				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
 				int ptree_nodes = printParseTree(ptree,outfile);
-				createAST(ptree->root,0);
+				printf("\n\n\nprinting AST*********\n\n\n");
+				createAST(ptree->root);
 				int ast_nodes = printParseTree(ptree,outfile);
 				end_time = clock();
 				total_CPU_time  =  (double) (end_time - start_time);
@@ -102,6 +106,11 @@ int main(int argc,char *argv[])
 				printf("ptreeNodes = %d\n,astNodes=%d\n",ptree_nodes,ast_nodes);
 				float compressionRatio = ((float)(ptree_nodes-ast_nodes)/(float)ptree_nodes)*100;
 				printf("CompressionRatio=%f\n",compressionRatio);
+				funcTable f=createFunc(59);
+				idTable id=createID(59);
+				recTable r=createRec(59);
+				symbolTablePopulate(f,r,id,ptree);
+				printIdTable(id);
 			}
 	}
 	return 0;

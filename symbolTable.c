@@ -1,8 +1,6 @@
 #include "symbolTableDef.h"
 #include "parser.h"
 
-/////////////////// IDENTIFIER TABLE
-
 int calculateHash(char arr[],int a,int tableSize){
 	long int key=0,i=0,prod=1;
 	while(arr[i])
@@ -15,6 +13,8 @@ int calculateHash(char arr[],int a,int tableSize){
 	}
 	return key%tableSize;
 }
+
+/////////////////// IDENTIFIER TABLE
 
 idTable createID(int tableSize){
 	idTable t=(idTable)malloc(sizeof(struct idtable));

@@ -588,6 +588,54 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 				}
 				childList = childList->next;
 			}
+
+
+		// Main Function Declarations
+		if(lookupFunc(func,childList->children->token_info->lexeme)==NULL)
+		{
+			int offsetBegin = 0;
+			idTable idLocal = createID(41);
+			TreeNode declare = getNextNode(childList->children,3)->children->next->children; //pointing to 1st declaration node
+				
+			while(declare!=NULL){
+				if(getChildrenNo(declare)==3) continue; //check
+				
+				if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
+				{
+						printf("Error. Line No: %u Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
+						RaiseError=-1;
+				}
+				idTable tabTemp = idLocal;
+				if(lookupID(tabTemp, declare->children->next->token_info->lexeme)==NULL)
+				{
+					int dtype =  getType(declare->children,rec);
+					if(dtype==-1)
+					{
+						printf("Error. Line No: %u No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
+						RaiseError=-1;
+					}
+					else
+					{
+						int size = getWidth(declare->children,rec);
+						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+						offsetBegin+=size;
+					}
+							
+				}
+					else
+					{
+						printf("Re-declaration Error. Line No: %u Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
+						RaiseError=-1;
+					}
+				declare = declare->next;
+				}
+			insertFunc(func,"_main",0, 0,0, NULL,NULL,idLocal,offsetBegin); //check
 		}
+		else{
+			printf("Main function defined twice.\n");
+			RaiseError=-1;
+		}
+
+}
 
 		

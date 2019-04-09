@@ -110,7 +110,12 @@ int main(int argc,char *argv[])
 				idTable id=createID(59);
 				recTable r=createRec(59);
 				symbolTablePopulate(f,r,id,ptree);
+				printf("ID TABLE\n\n");
 				printIdTable(id);
+				printf("FUNCTION TABLE\n\n");
+				printFuncTable(f);
+				printf("Record table\n\n");
+				printRecTable(r);
 			}
 	}
 	return 0;

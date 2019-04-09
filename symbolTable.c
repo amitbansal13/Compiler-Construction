@@ -411,60 +411,6 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 			typeDef = typeDef->next;
 		}
 
-		// //checking for global declarations in other functions
-		// TreeNode temp2=NULL;
-		// childList=pTree->root->children;
-		// while(childList->next !=NULL)
-		// {
-		// 	TreeNode temp1 = childList;
-		// 	TreeNode decChild = getStmt(temp1,3)->children->next;
-		// 	while(decChild != NULL)
-		// 	{
-		// 		if(getChildrenNo(decChild)==2)
-		// 		{
-		// 			decChild=decChild->next;
-		// 			continue;
-		// 		}
-		// 		ID id1 = lookupID(identifier, decChild->children->next->token_info->lexeme);
-		// 		if(id1 == NULL)
-		// 		{
-		// 				int type = getType(decChild->children, rec);
-		// 				if(type == -1)
-		// 				{
-		// 					printf("Line = %d -> type not found for global variable: %s  \n", decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme);
-		// 					return;
-		// 				}
-		// 				int width = getWidth(decChild->children->children, rec);
-		// 				identifier = insertID(identifier, decChild->children->children->next->token_info->lexeme, gOffset, type, width,decChild->children->children->token_info->lexeme);
-		// 				gOffset += width;
-		// 		}
-		// 		else
-		// 		{
-		// 			printf("Line = %d -> multipe declaration for global variable %s \n",decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme );
-		// 		}
-		// 		temp2 = decChild;
-		// 		decChild = decChild->next;
-		// 	}
-			
-		// 	//checking for global declarations 	in main function
-		// 	decChild = temp2;
-
-		// 	while(decChild->children->next != NULL)
-		// 	{
-		// 		int type2 = getType(decChild->children->children, rec);
-		// 		if(type2 == -1)
-		// 		{
-		// 			printf("Line = %d -> type not found for global variable: %s  \n", decChild->children->children->next->token_info->lineNo, decChild->children->children->next->token_info->lexeme);
-		// 					return;
-		// 		}
-		// 		else
-		// 		{
-		// 			int width2 = getWidth(decChild->children->children, rec);
-		// 			identifier = insertID(identifier, decChild->children->children->next->token_info->lexeme, gOffset,type2, width2 ,decChild->children->children->token_info->lexeme);
-		// 		}
-
-		// 	}
-		// }
 
 		//checking for global declarations in other functions
 		childList=root->children;
@@ -475,6 +421,7 @@ void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, Parse
 			while(declaration)
 			{
 				if(getChildrenNo(declaration)==2){
+					printf("%s\n",declaration->children->next->token_info->lexeme);
 					declaration=declaration->next;
 					continue;
 				}

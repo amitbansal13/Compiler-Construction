@@ -114,7 +114,7 @@ int main(int argc,char *argv[])
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
 				// printRecTable(r);
-				printIdTable(id);
+				printGlobalTable(id);
 				printFuncTable(f);
 			}
 		else if (choice==5)
@@ -137,7 +137,7 @@ int main(int argc,char *argv[])
 				symbolTablePopulate(f,r,id,ptree);
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
-				printIdTable(id);
+				printGlobalTable(id);
 				printFuncTable(f);
 			}
 	}

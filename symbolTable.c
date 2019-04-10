@@ -1,8 +1,8 @@
 #include "symbolTableDef.h"
 #include "parser.h"
 
-#define WIDTH_OF_INT 4
-#define WIDTH_OF_REAL 8
+#define WIDTH_OF_INT 2
+#define WIDTH_OF_REAL 4
 
 int hash(char arr[],int a,int tableSize){
 	long int key=0,i=0,prod=1;
@@ -153,7 +153,7 @@ Rec lookupRec(recTable t,char arr[]){
 }
 
 
-void printIdTable(idTable t)
+void printGlobalTable(idTable t)
 {
 	int n=t->tableSize;
 	ID* table=t->table;
@@ -163,7 +163,7 @@ void printIdTable(idTable t)
 		while(temp)
 		{
 			if(temp->name)
-			printf("%20s %20s %20s %20d\n",temp->name,temp->tname,"global",temp->offset);
+			printf("%20s %20s %20s %20s\n",temp->name,temp->tname,"global","-");
 			temp=temp->next;
 		}
 	}

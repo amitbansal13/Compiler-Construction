@@ -13,7 +13,7 @@ idTable createID(int tableSize);
 ID newID( char* name, int offset, int type, int width, char *tname);
 idTable insertID(idTable t,char* name, int offset, int type, int width, char *tname);
 ID lookupID(idTable t,char arr[]);
-void printIdTable(idTable t);
+void printGlobalTable(idTable t);
 
 //////////////////FUNCTION TABLE
 

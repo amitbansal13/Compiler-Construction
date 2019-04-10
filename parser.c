@@ -835,7 +835,7 @@ void printNode(TreeNode node,char *outfile){    //file already opened
     //did not do value type now
 
     bool isLeaf=false,isTerminal=false,isRoot=false;    
-
+	bool isParent_terminal=false;
     int val_type = -1;
 
     if(node->children==NULL)        //if leaf node
@@ -847,50 +847,56 @@ void printNode(TreeNode node,char *outfile){    //file already opened
     if(node->parent==NULL)        //if this node is the root
         isRoot=true;
 
+        if(isRoot){
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
+            //root node print
+			return;
+        }
+
+	else{
+		if(node->parent->tNt==0)
+			isParent_terminal = true; 
+	}
+
     TreeNode parent = node->parent;
+	
 
 
     if(isLeaf){    //for leaf node
         if(isTerminal==false){//can be there in ast
-            //leaf node is non terminal => error case
-                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+				if(isParent_terminal == false)
+                	printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+				else
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",tokens[parent->index],"no",nonterminals[node->index]);
         }    
-        else{
+        else{	//terminal leaf node
             if(strcmp(tokens[node->index],"TK_NUM")==0)    // has NUM value field
                 val_type=1;
             if(strcmp(tokens[node->index],"TK_RNUM")==0)    // has float value field
                 val_type=0;
 
-            if(isRoot){
-               if(strcmp(tokens[node->index],"eps")==0)    
-               printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
-
-                else if(val_type==1)//intval case
-                    printf("%30s\t %5d\t %21s\t nahi %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
-
-
-                else if(val_type==0)//floatvl case
-                    printf("%30s\t %5d\t %21s\t  yahi %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
-
-
-                else    //other case
-                printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"-----","ROOT","yes","----");
-            }
-
-
-            else{//if not root
+            if(isRoot==false){//if not root
                 if(strcmp(tokens[node->index],"eps")==0)    
                    printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
                 else if(val_type==1)//intval case
-                    printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,"ROOT","yes","----");
+					if(isParent_terminal==false)
+                    	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,nonterminals[parent->index],"yes","----");
+					else
+                    	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,tokens[parent->index],"yes","----");
 
 
                 else if(val_type==0)//floatvl case
-                    printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,"ROOT","yes","----");
+					if(isParent_terminal==false)
+                    	printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,nonterminals[parent->index],"yes","----");
+					else
+                    	printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,tokens[parent->index],"yes","----");
 
 
                else
-                printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
+					if(isParent_terminal==false)
+                		printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
+					else
+                		printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",tokens[parent->index],"yes","----");
                 }//print it;
 
         }
@@ -898,25 +904,43 @@ void printNode(TreeNode node,char *outfile){    //file already opened
     }
 
     else{    //will be a nonterminal only
-
+			//can also be terminal like TK_LE
         if(isTerminal==true){
-            //not possible
+                if(strcmp(tokens[node->index],"eps")==0)    
+                   printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","-----","-----","------","----","ROOT","yes","----");
+                else if(val_type==1)//intval case
+					if(isParent_terminal==false)
+                    	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,nonterminals[parent->index],"yes","----");
+					else
+                    	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,tokens[parent->index],"yes","----");
+
+
+                else if(val_type==0)//floatvl case
+					if(isParent_terminal==false)
+                    	printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,nonterminals[parent->index],"yes","----");
+					else
+                    	printf("%30s\t %5d\t %21s\t   %.2f\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.floatVal,tokens[parent->index],"yes","----");
+
+
+               else
+					if(isParent_terminal==false)
+                		printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",nonterminals[parent->index],"yes","----");
+					else
+                		printf("%30s\t %5d\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,"------",tokens[parent->index],"yes","----");
         }
 
-        if(isRoot){
 
-                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","------","-----","-----","------","ROOT","no","----");
+        else{//if(nonterminal)
 
-            //root node print
-        }
-
-        else
-
-                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+				if(isParent_terminal==false)
+                	printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
+				else
+                	printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",tokens[parent->index],"no",nonterminals[node->index]);
                // fprintf(0,"%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n\n\n","----","-----","------","-----",nonterminals[parent->index],"no",nonterminals[node->index]);
 
             //nonterminal print    
 
+	}
     }
 
  //   fclose(f);

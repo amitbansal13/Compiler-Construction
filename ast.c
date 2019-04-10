@@ -11,18 +11,39 @@
 
 void createAST(TreeNode root){
 	TreeNode children=root->children;
+	int child_no=0;
 	while(children)
 	{
 		if(children->tNt==1)//if non terminal,first recurse these
 			createAST(children);
+
+		if(children->rule_no==54 && child_no==0)//after term is calculated in arithmeticExp->term expPrime
+			children->next->inh=children->addr;
+		if(children->rule_no==55 && child_no==1)//after term is calculated in expPrime->lowPrecedence term expPrime
+		{
+			root->children->next->next->inh = root->children->addr;
+			root->children->addr->children=root->inh;
+			root->children->addr->children->next=root->children->next->addr;
+
+	    }
+		if(children->rule_no==57 && child_no==0)//after factor is calculated in term->factor termPrime
+			root->children->next->inh = root->children->addr;
+		
+		if(children->rule_no==58 && child_no==1)//after factor is calculated in termPrime->highPrecedence factor termPrime
+		{
+			root->children->next->next->inh = root->children->addr;
+			root->children->addr->children = root->inh;
+			root->children->addr->children->next = root->children->next->addr;
+		}
 		children=children->next;
+		child_no++;
 	}
 		ASThelper(root->children);	
 	return ;
 }
 
 void ASThelper(TreeNode node){
-	//printf("helper rule %d\n",node->rule_no);
+	printf("helper rule %d\n",node->rule_no);
 	TreeNode par = node->parent;
 	TreeNode node0=node;
 	TreeNode end=NULL,node1=NULL,node2=NULL,node3=NULL,node4=NULL,node5=NULL,node6=NULL,node7=NULL;
@@ -219,7 +240,6 @@ void ASThelper(TreeNode node){
 		case 28:	//par->addr=node1->addr,free(node0)
 			par->addr=node1->addr;
 			free(node0);
-			par->children=NULL;
 			break;
 
 		case 30:	//par->children=concat(node0.addr,node1.children),free(node1),free(node0);
@@ -282,16 +302,16 @@ void ASThelper(TreeNode node){
 
 			//IMPORTANT************************************************************8
 			//need to change 45,46 because of booleanE(TK_CALL comes bcoz of that)
-
+			//changed
 
 
 
 
 		case 45:	//par->children=concat(node2.addr,node4.addr,node5.children),free(node2,node4,node5)
-			//node2->addr->next=node4->addr;
-			//node4->addr->next=node5->children;
-			node4->addr->next=NULL;
-			setParentChild(par,node4->addr);
+			node2->addr->next=node4->addr;
+			node4->addr->next=node5->children;
+			//node4->addr->next=NULL;
+			setParentChild(par,node2->addr);
 			free(node6);
 			free(node5);
 			free(node4);
@@ -302,7 +322,7 @@ void ASThelper(TreeNode node){
 			break;
 		
 		case 46:	//par->children=concat(node2.addr,node5.addr,node6.children,node7.addr),free(node2,node5,node6)
-	//		node2->addr->next=node5->addr;
+			node2->addr->next=node5->addr;
 			node5->addr->next=node6->children;
 			end = getEndNode(node6->children);
 			if(end==NULL)
@@ -310,7 +330,7 @@ void ASThelper(TreeNode node){
 			else 
 				end->next=node7->addr;
 			node7->addr->next=NULL;
-			setParentChild(par,node5->addr);
+			setParentChild(par,node2->addr);
 			free(node6);
 			free(node5);
 			free(node4);
@@ -343,7 +363,7 @@ void ASThelper(TreeNode node){
 			free(node3);
 			free(node1);
             break;
-		/*	correct and commented for debug
+			//correct and commented for debug
 		case 54://par.addr=node1.syn
 			par->addr=node1->syn;
 			break;
@@ -367,10 +387,12 @@ void ASThelper(TreeNode node){
 		case 59://par.syn=par.inh
 			par->syn=par->inh;
 			break;
-		*/
+		
+		/*
 		case 54 ... 59:	//debugging
 			par->children=NULL;
 			break;
+		*/
 
 		case 60:	//par->addr=node1.addr,free(node1)
 			par->addr=node1->addr;
@@ -385,10 +407,11 @@ void ASThelper(TreeNode node){
 			par->children=NULL;
 			free(node0);
 			break;
-		/*
+		
 		case 67://par.addr = node3.addr,node3.addr.children=makenode(node1.addr,node5.addr),free(node3,node1,node5);
 			par->addr=node3->addr;
 			node1->addr->next=node5->addr;
+			node5->addr->next=NULL;
 			node3->addr->children=node1->addr;
 			par->children=NULL;
 			free(node6);
@@ -403,7 +426,8 @@ void ASThelper(TreeNode node){
 		case 68://par.addr = node1.addr,node1.addr.children=makenode(node0.addr,node2.addr),free(node0,node1,node2);
 			par->addr=node1->addr;
 			node0->addr->next=node2->addr;
-			node1->addr->children=node0->addr;
+			node2->addr->next=NULL;
+			setParentChild(node1->addr,node0->addr);
 			par->children=NULL;
 			free(node2);
 			free(node1);
@@ -413,17 +437,18 @@ void ASThelper(TreeNode node){
 		case 69://par.addr = node0.addr,node0.addr.children=node2->addr,free(node1,node2,node3);
 			par->addr=node0->addr;
 			node0->addr->children=node2->addr;
+			node2->addr->next=NULL;
 			par->children=NULL;
 			free(node3);
 			free(node2);
 			free(node1);
 			break;
-		*/
-
+		
+		/*
 		case 67 ... 69:
 			par->children=NULL;
 			break;
-
+		*/
 		case 78:	//par->children=node1.children,free(node1)
 		case 79:
 			setParentChild(par,node1->children);

@@ -113,7 +113,7 @@ int main(int argc,char *argv[])
 				symbolTablePopulate(f,r,id,ptree);
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
-				printRecTable(r);
+				// printRecTable(r);
 				printIdTable(id);
 				printFuncTable(f);
 			}
@@ -137,7 +137,6 @@ int main(int argc,char *argv[])
 				symbolTablePopulate(f,r,id,ptree);
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
-				printRecTable(r);
 				printIdTable(id);
 				printFuncTable(f);
 			}

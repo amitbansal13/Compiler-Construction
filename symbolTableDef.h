@@ -35,7 +35,7 @@ void printRecTable(recTable t);
 
 
 
-void symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
+int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
 
 #endif

@@ -428,7 +428,6 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 		while(declaration)
 		{
 			if(getChildrenNo(declaration)==2){
-				printf("%s\n",declaration->children->next->token_info->lexeme);
 				declaration=declaration->next;
 				continue;
 			}

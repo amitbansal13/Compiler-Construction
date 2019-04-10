@@ -43,7 +43,7 @@ void createAST(TreeNode root){
 }
 
 void ASThelper(TreeNode node){
-	printf("helper rule %d\n",node->rule_no);
+	//printf("helper rule %d\n",node->rule_no);
 	TreeNode par = node->parent;
 	TreeNode node0=node;
 	TreeNode end=NULL,node1=NULL,node2=NULL,node3=NULL,node4=NULL,node5=NULL,node6=NULL,node7=NULL;

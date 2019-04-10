@@ -916,6 +916,7 @@ TokenInfo nextToken(){
 						case 'a' ... 'z':
 							temp[tInd++] = c;
 							state = 17;
+							c=getNextChar();
 							break;
 					case '(':
 					case ')':

@@ -115,6 +115,28 @@ int main(int argc,char *argv[])
 				printIdTable(id);
 				printFuncTable(f);
 			}
+		else if (choice==6)
+			{
+				start_time = clock();
+				Grammar *g = makeGrammar(grammarFile);
+				fset = computeFirstnFollow(g);
+				pTable = initializePT();
+				createParseTable(g,fset,pTable);
+				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+				createAST(ptree->root);
+				end_time = clock();
+				total_CPU_time  =  (double) (end_time - start_time);
+				total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;
+				printf("\n\nTotal CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
+				funcTable f=createFunc(59);
+				idTable id=createID(59);
+				recTable r=createRec(59);
+				symbolTablePopulate(f,r,id,ptree);
+				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
+				printRecTable(r);
+				printIdTable(id);
+				printFuncTable(f);
+			}
 	}
 	return 0;
 }

@@ -11,7 +11,7 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 //DOLLAR AND eps in tokens ie terminals
 
-char *tokens[]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID","TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL","TK_COMMA", "TK_SEM","TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP","TK_CL","TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_PLUS","TK_MINUS","TK_MUL","TK_DIV","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE","TK_AND","TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE","eps","DOLLAR"};  
+char *tokens[]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID","TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL","TK_COMMA", "TK_SEM","TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP","TK_CL","TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_PLUS","TK_MINUS","TK_MUL","TK_DIV","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE","TK_AND","TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE","eps","DOLLAR","TK_ERROR"};  
 char *nonterminals[]={
 	"program",
 	"mainFunction",
@@ -510,7 +510,7 @@ void createParseTable(Grammar *g,ffset fset,PT *pTable){
 				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
 	
 						for(int j=0;j<terminalsSize;j++){
-							if(checkSet(fset[i].follow,tokens[j]) == true){
+							if(checkSet(fset[i].follow,tokens[j]) == true || j == terminalsSize-1){//TK_ERROR case also replace with eps
 								if(pTable->tEntry[i][j]->rule!=NULL)
 									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
 								pTable->tEntry[i][j]->type=0;	
@@ -697,11 +697,23 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 			printf("Stack Empty,but unexpected tokens left\n");
 			break;
 		}
-		if(strcmp(lookAhead->Token,"TK_ERROR")==0){	//already popped
+		if(strcmp(lookAhead->Token,"TK_ERROR")==0 ){	//already popped and top_stack is terminal
+				top_tree->token_info=lookAhead;	//store the tokenInfo
 				lookAhead = nextToken();
 				continue;
 		}
 			
+		/*
+		if(strcmp(lookAhead->Token,"TK_ERROR")==0 && top_tree->tNt==1 ){	//already popped and top_stack is nonterminal with eps rule
+	//			lookAhead = nextToken();
+		//		top_tree->token_info=lookAhead;	//store the tokenInfo
+				rule = pTable->tEntry[top_tree->index][terminalsSize-1]->rule;
+				if(rule!=NULL){
+					top_tree = addChildren(top_tree,rule);//eps rule
+					continue;
+				}
+		}
+		*/
 
 		//printf("Parsing :%s\n",lookAhead->Token);
 	

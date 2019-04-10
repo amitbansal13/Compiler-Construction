@@ -58,7 +58,7 @@ typedef struct rec* Rec;
 struct rec//NAMES OF this struct have to be changed a bit
 {
 	char* name;
-	int type;
+	int typeIndex;
 	int width;
 	int noField;
 	int* fieldtype;

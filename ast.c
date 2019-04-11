@@ -230,7 +230,7 @@ void ASThelper(TreeNode node){
 			free(node1);
 			break;
 
-		case 27:	//par->children=concat(node1.addr,node3.addr,node4->addr),free(node1,node4)
+		case 27:	//par->children=concat(node1.addr,node3.addr,node4->children),free(node1,node4)
 			node1->addr->next=node3->addr;
 			node3->addr->next=node4->children;
 			free(node4);free(node1);free(node0);free(node2);free(node5);
@@ -239,6 +239,7 @@ void ASThelper(TreeNode node){
 
 		case 28:	//par->addr=node1->addr,free(node0)
 			par->addr=node1->addr;
+			par->children=node1->addr;
 			free(node0);
 			break;
 
@@ -266,7 +267,7 @@ void ASThelper(TreeNode node){
 		case 40:	//par->addr=node1->addr,free(node0)
 			par->addr=node1->addr;
 			free(node0);
-			par->children=NULL;
+			par->children=node1->addr;
 			break;
 
 		case 41://par->children=concat(node0.addr,node2.addr,node5.addr)

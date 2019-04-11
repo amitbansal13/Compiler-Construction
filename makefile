@@ -5,7 +5,7 @@
 #Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 stage1exe: driver.o lexer.o HashTable.o parser.o	stack.o	ast.o symbolTable.o semanticAnalyser.o typeChecking.o
-	gcc driver.o lexer.o HashTable.o parser.o  stack.o ast.o symbolTable.o semanticAnalyser.o typeChecking.o -o stage1exe
+	gcc driver.o lexer.o HashTable.o parser.o  stack.o ast.o symbolTable.o semanticAnalyser.o typeChecking.o -o compiler
 
 semanticAnalyser.o:	semanticAnalyser.c
 	gcc -g -c semanticAnalyser.c

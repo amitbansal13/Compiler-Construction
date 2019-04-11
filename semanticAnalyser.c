@@ -120,20 +120,40 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
         return 0;
 	}
 
-	if(strcmp("iterativeStmt",stmt_type)==0);
+	if(strcmp("iterativeStmt",stmt_type)==0){
+		TreeNode temp = stmtNode->children->next;
+		while(temp!=NULL){
+			TreeNode child = temp;
+			int res = funcStmtCheck(funcNode,child,funcT, funEntry,alloc, output_par);
+			if(res==-1){
+				err = -1;
+			}
+			temp = temp->next;
+		}
+		if(whileSemanticCheck(stmtNode)==-1){
+			printf("Line No: %u No updation of variables participating in the iterations of the while loop\n", stmtNode->children->token_info->lineNo);
+			err=-1;		
+		}
+		return err;
+	}
 
 	if(strcmp("conditionalStmt",stmt_type)==0){
-		/*
-		for(i=1;i<getChildrenNo(stmtNode)-1;i++){
-                if(funcStmtCheck(getStmt(children[i], functable, fentry,assigned, outputpar)==-1)
-                    error=-1;
-            }
-            for(i=1;i<stmt->children[stmt->noChild-1]->noChild;i++){
-                if(checkFuncCallStmtsUtil(stmt->children[stmt->noChild-1]->children[i], functable, fentry, assigned, outputpar)==-1)
-                    error=-1;
-            }
-            return error;
-		*/
+		
+		TreeNode childList=stmtNode->children->next;
+		while(childList->next)
+		{
+			if(funcStmtCheck(funcNode,childList,funcT,funEntry,alloc,output_par)==-1)
+				err=-1;
+			childList=childList->next;
+		}
+		childList=childList->children->next;
+		while(childList)
+		{
+			if(funcStmtCheck(funcNode,childList,funcT,funEntry,alloc,output_par)==-1)
+				err=-1;
+			childList=childList->next;
+		}
+		return err;
 	}
 	if(strcmp("ioStmt",stmt_type)==0){
 		if(alloc==NULL) return 0;
@@ -227,4 +247,144 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT){
 				return false;
          }
 		return true;
+}
+
+Seq getSequence(TreeNode root){
+	if(root->index==27 && root->tNt==1){//SingleOrRecID
+		Seq i = malloc(sizeof(struct sequence));
+		i->tableEntry = root->children->tableEntry;
+		i->next = NULL;
+		if(getChildrenNo(root)==2){
+			i->fieldid = strdup(root->children->next->token_info->lexeme);
+		}
+		return i;
+	}
+	else if(root->index==3 && root->tNt==0)//TK_ID
+	{
+		Seq i = malloc(sizeof(struct sequence));
+		i->tableEntry = root->tableEntry;
+		i->next = NULL;
+		return i;
+	}
+	Seq begin=NULL,end=NULL;
+	TreeNode childList=root->children;
+	while(childList)
+	{
+		if(begin==NULL)
+		{
+			begin=getSequence(childList);
+			end=begin;
+		}
+		else{
+			while(end->next)end=end->next;
+			end->next=getSequence(childList);
+		}
+		childList=childList->next;
+	}
+	return begin;
+
+}
+
+int checkSequence(Seq begin,TreeNode root)
+{
+	int index;
+	TreeNode childList= root->children;
+	Seq temp;
+	char *stmt_type = nonterminals[root->index];
+	if(strcmp("funCallStmt",stmt_type)==0){
+		while(childList)
+		{
+			temp=begin;
+			while(temp)
+			{
+				if(childList->tableEntry==temp->tableEntry)
+					return 1;
+				temp=temp->next;
+			}
+			childList=childList->next;	
+		}
+		return 0;
+	}
+	
+	if(strcmp("assignmentStmt",stmt_type)==0){
+		temp=begin;
+		if(getChildrenNo(root->children)==1){
+			while(temp!=NULL){
+				if(root->children->children->tableEntry == temp->tableEntry){
+					return 1;	
+				}
+				temp = temp->next;
+			}
+			return 0;			
+		}
+		else{
+			while(temp!=NULL){
+				if(root->children->children->tableEntry == temp->tableEntry){
+					if(strcmp(childList->children->next->token_info->lexeme,temp->fieldid)==0){
+						return 1;
+					}					
+				}
+				temp = temp->next;
+			}
+			return 0;		
+		}
+	}
+	if(strcmp("ioStmt",stmt_type)==0){
+		if(strcmp(tokens[root->index],"TK_READ")==0)
+		{
+			temp=begin;
+			while(temp)
+			{
+				if(temp->tableEntry==root->children->next->children->tableEntry)
+				{
+					int childNo=getChildrenNo(root->children->next);
+					if(childNo==1)
+						return 1;
+					if(childNo==2 && strcmp(root->children->next->children->next->token_info->lexeme,temp->fieldid)==0)
+						return 1;
+				}
+				temp=temp->next;
+			}
+		}
+		return 0;
+	}
+	if(strcmp("iterativeStmt",stmt_type)==0){
+		TreeNode traverse = root->children->next;
+		while(traverse!=NULL){
+			TreeNode t = traverse;
+			if(checkSequence(begin,t)==1){
+				return 1;
+			}
+			traverse = traverse->next;
+		}
+		return 0;		
+	}
+
+	if(strcmp("conditionalStmt",stmt_type)==0){
+		TreeNode childList=root->children->next;
+		while(childList->next)
+		{
+			if(checkSequence(begin,childList)==1)return 1;
+
+			childList=childList->next;
+		}
+		childList=childList->children;
+		while(childList)
+		{
+			if(checkSequence(begin,childList)==1)return 1;
+		}
+		return 0;
+	}
+
+	return 0;
+}
+int whileSemanticCheck(TreeNode node){
+	Seq list=getSequence(node->children);
+	TreeNode temp=node->children->next;
+	while(temp)
+	{
+		if(checkSequence(list,temp)==1)return 0;
+		temp=temp->next;
+	}
+	return -1;
 }

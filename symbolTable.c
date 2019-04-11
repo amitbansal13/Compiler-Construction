@@ -168,6 +168,36 @@ void printGlobalTable(idTable t)
 		}
 	}
 }
+char* getRecordType(recTable t,char *idname)//to get a string representing record type in format intxintxint
+{
+	Rec r=lookupRec(t,idname);
+	int n=r->noField;
+	int *fieldtype=r->fieldtype;
+	char *arr=(char*)malloc(1000*sizeof(char));
+	int l=0;
+	for(int i=0;i<n-1;i++)
+	{
+		if(fieldtype[i]==0)
+		{
+			arr[l++]='i';arr[l++]='n';arr[l++]='t';
+		}
+		else{
+			arr[l++]='r';arr[l++]='e';arr[l++]='a';arr[l++]='l';	
+		}
+		arr[l++]=' '; 
+		arr[l++]='x';
+		arr[l++]=' ';
+	}
+	if(fieldtype[n-1]==0)
+	{
+		arr[l++]='i';arr[l++]='n';arr[l++]='t';
+	}
+	else{
+		arr[l++]='r';arr[l++]='e';arr[l++]='a';arr[l++]='l';	
+	}
+	arr[l]='\0';
+	return arr;
+}
 void printRecTable(recTable t)
 {
 	int n=t->tableSize;
@@ -250,6 +280,7 @@ int getChildrenNo(TreeNode node){
 	}
 	return count;
 }
+
 int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree)
 {
 	TreeNode root = pTree->root;
@@ -441,7 +472,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					return -1;
 				}
 				int width=getWidth(declaration->children,rec);
-				insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				if(type<=1)
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				else{
+					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				}
 				gOffset+=width;
 			}
 			else{
@@ -470,8 +506,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				return -1;
 			}
 			int width=getWidth(declaration->children,rec);
-			insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-			gOffset+=width;
+			if(type<=1)
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				else{
+					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				}
 		}
 		else{
 			printf("Line = %d -> multipe declaration for global variable %s \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
@@ -514,7 +554,16 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else if(lookupID(idLocal, inTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(inTraverse,rec);
-					insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
+					if(inPar[ip/2]<=1)//if it is of int or real type
+					{
+						insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
+					}
+					else{
+
+						char *recordType=getRecordType(rec,inTraverse->token_info->lexeme);
+						insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size,recordType);
+
+					}
 					offsetBegin+=size;
 				}
 				else
@@ -540,7 +589,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else if(lookupID(idLocal, outTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(outTraverse,rec);
+					if(outPar[ip/2]<=1)//if it is of int or real type
 					insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size, outTraverse->token_info->lexeme);
+					else{
+						char *recordType=getRecordType(rec,outTraverse->token_info->lexeme);
+						insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size,recordType);	
+					}
 					offsetBegin+=size;
 				}
 				else
@@ -582,7 +636,13 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					else
 					{
 						int size = getWidth(declare->children,rec);
-						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+						if(dtype<=1){
+							insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+						}
+						else{
+							char *recordType=getRecordType(rec,declare->children->token_info->lexeme);
+							insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size,recordType);
+						}
 						offsetBegin+=size;
 					}
 							
@@ -635,7 +695,13 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else
 				{
 					int size = getWidth(declare->children,rec);
-					insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+					if(dtype<=1){
+						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
+					}
+					else{
+						char *recordType=getRecordType(rec,declare->children->token_info->lexeme);
+						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size,recordType);
+					}
 					offsetBegin+=size;
 				}
 						

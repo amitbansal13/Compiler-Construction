@@ -42,4 +42,6 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global);
 int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
+int checkType(TreeNode head,recTable r);
+
 #endif

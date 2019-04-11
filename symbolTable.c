@@ -472,7 +472,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					return -1;
 				}
 				int width=getWidth(declaration->children,rec);
-				insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				if(type<=1)
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				else{
+					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				}
 				gOffset+=width;
 			}
 			else{
@@ -501,8 +506,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				return -1;
 			}
 			int width=getWidth(declaration->children,rec);
-			insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-			gOffset+=width;
+			if(type<=1)
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				else{
+					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				}
 		}
 		else{
 			printf("Line = %d -> multipe declaration for global variable %s \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );

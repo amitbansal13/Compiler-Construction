@@ -93,5 +93,20 @@ int funcStmtsCheck(TreeNode funcNode,idTable globalT,funcTable funcT){
 
 //checks individual stmt node
 int funcStmtCheck(TreeNode stmtNode,funcTable funcT,Func funEntry,int *alloc,TreeNode output_par){
-	return 0;
+
+	char *stmt_type = nonterminals[stmtNode->index];
+
+	int error = 0;
+
+	if(strcmp("assignmentStmt",stmt_type)==0);
+
+	if(strcmp("iterativeStmt",stmt_type)==0);
+
+	if(strcmp("conditionalStmt",stmt_type)==0);
+
+	if(strcmp("ioStmt",stmt_type)==0);
+
+	if(strcmp("funCallStmt",stmt_type)==0);
+
+	return error;
 }	

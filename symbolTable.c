@@ -152,24 +152,10 @@ Rec lookupRec(recTable t,char arr[]){
 	return res;
 }
 
-
-void printGlobalTable(idTable t)
+char* printType(recTable t,char *idname)//return a string containing the type of idname 
 {
-	int n=t->tableSize;
-	ID* table=t->table;
-	for(int i=0;i<n;i++)
-	{
-		ID temp=table[i];
-		while(temp)
-		{
-			if(temp->name)
-			printf("%20s %20s %20s %20s\n",temp->name,temp->tname,"global","-");
-			temp=temp->next;
-		}
-	}
-}
-char* getRecordType(recTable t,char *idname)//to get a string representing record type in format intxintxint
-{
+	if(strcmp("int",idname)==0)return idname;
+	if(strcmp("real",idname)==0)return idname;
 	Rec r=lookupRec(t,idname);
 	int n=r->noField;
 	int *fieldtype=r->fieldtype;
@@ -198,6 +184,23 @@ char* getRecordType(recTable t,char *idname)//to get a string representing recor
 	arr[l]='\0';
 	return arr;
 }
+
+void printGlobalTable(idTable t,recTable rec)
+{
+	int n=t->tableSize;
+	ID* table=t->table;
+	for(int i=0;i<n;i++)
+	{
+		ID temp=table[i];
+		while(temp)
+		{
+			if(temp->name)
+			printf("%20s %20s %20s %20s\n",temp->name,printType(rec,temp->tname),"global","-");
+			temp=temp->next;
+		}
+	}
+}
+
 void printRecTable(recTable t)
 {
 	int n=t->tableSize;
@@ -215,7 +218,7 @@ void printRecTable(recTable t)
 }
 
 
-void printFuncTable(funcTable t)
+void printFuncTable(funcTable t,recTable rec)
 {
 	int n=t->tableSize;
 	Func* table=t->table;
@@ -231,7 +234,7 @@ void printFuncTable(funcTable t)
 				while(temp1)
 				{
 					if(temp1->name)
-					printf("%20s %20s %20s %20d\n",temp1->name,temp1->tname,temp->name,temp1->offset);
+					printf("%20s %20s %20s %20d\n",temp1->name,printType(rec,temp1->tname),temp->name,temp1->offset);
 					temp1=temp1->next;
 				}
 			}
@@ -472,12 +475,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					return -1;
 				}
 				int width=getWidth(declaration->children,rec);
-				if(type<=1)
-					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-				else{
-					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
-					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
-				}
+				// if(type<=1)
+				insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				// else{
+				// 	char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+				// 	insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				// }
 				gOffset+=width;
 			}
 			else{
@@ -506,12 +509,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				return -1;
 			}
 			int width=getWidth(declaration->children,rec);
-			if(type<=1)
-					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-				else{
-					char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
-					insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
-				}
+			// if(type<=1)
+			insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
+				// else{
+				// 	char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
+				// 	insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
+				// }
 		}
 		else{
 			printf("Line = %d -> multipe declaration for global variable %s \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
@@ -554,16 +557,16 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else if(lookupID(idLocal, inTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(inTraverse,rec);
-					if(inPar[ip/2]<=1)//if it is of int or real type
-					{
-						insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
-					}
-					else{
+					// if(inPar[ip/2]<=1)//if it is of int or real type
+					// {
+					insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
+					// }
+					// else{
 
-						char *recordType=getRecordType(rec,inTraverse->token_info->lexeme);
-						insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size,recordType);
+					// 	char *recordType=getRecordType(rec,inTraverse->token_info->lexeme);
+					// 	insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size,recordType);
 
-					}
+					// }
 					offsetBegin+=size;
 				}
 				else
@@ -589,12 +592,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else if(lookupID(idLocal, outTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(outTraverse,rec);
-					if(outPar[ip/2]<=1)//if it is of int or real type
+					// if(outPar[ip/2]<=1)//if it is of int or real type
 					insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size, outTraverse->token_info->lexeme);
-					else{
-						char *recordType=getRecordType(rec,outTraverse->token_info->lexeme);
-						insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size,recordType);	
-					}
+					// else{
+					// 	char *recordType=getRecordType(rec,outTraverse->token_info->lexeme);
+					// 	insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size,recordType);	
+					// }
 					offsetBegin+=size;
 				}
 				else
@@ -636,13 +639,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					else
 					{
 						int size = getWidth(declare->children,rec);
-						if(dtype<=1){
-							insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
-						}
-						else{
-							char *recordType=getRecordType(rec,declare->children->token_info->lexeme);
-							insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size,recordType);
-						}
+						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
 						offsetBegin+=size;
 					}
 							
@@ -695,13 +692,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				else
 				{
 					int size = getWidth(declare->children,rec);
-					if(dtype<=1){
-						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
-					}
-					else{
-						char *recordType=getRecordType(rec,declare->children->token_info->lexeme);
-						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size,recordType);
-					}
+					insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
 					offsetBegin+=size;
 				}
 						
@@ -746,7 +737,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 				printf("Record type %s not defined\n",node->children->token_info->lexeme);
 				return -1;
 			}
-			Rec r = lookupRec(rec,node->children->token_info->lexeme);//check this once
+			Rec r = lookupRec(rec,temp->tname);//check this once
 			if(r==NULL) {
 				// printf("Record -  %s is not defined\n", node->children->token_info->lexeme);
 				return -1;
@@ -758,7 +749,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 			}
 
 			if(ind==r->noField){
-				printf("Field %s not present in the record %s\n",node->children->next->token_info->lexeme, node->children->token_info->lexeme);
+				printf("Field %s not present in the record %s\n",node->children->next->token_info->lexeme, temp->tname);
 				return -1;
 			}
 			node->children->tableEntry=temp;
@@ -772,7 +763,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 		if(temp==NULL)temp=lookupID(global,idname);
 		if(temp==NULL)
 		{
-			printf("Line No: %d identifier <%s> not declared\n",node->children->token_info->lineNo,idname);
+			printf("Line No: %d identifier <%s> not declared\n",node->token_info->lineNo,idname);
 			return -1;
 		}
 		node->tableEntry=temp;

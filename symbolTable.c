@@ -722,7 +722,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 
 	int ind,err=0;
 	//check if node is SingleOrRecID
-	if(node->index==27)
+	if(node->index==27 && node->tNt ==1)
 	{
 		//contains TK_ID
 		if(getChildrenNo(node)==1){
@@ -756,7 +756,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 			return 0;
 		}
 	}
-	if(node->index==3)//TK_ID
+	if(node->index==3 && node->tNt==0)//TK_ID
 	{
 		char *idname=node->token_info->lexeme;
 		ID temp=lookupID(local,idname);
@@ -787,7 +787,6 @@ int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, Pars
 	TreeNode temp = NULL;
 	//traverse all the functions defined in program except the main function
 	while(childList->next!=NULL){
-
 		idTable local = getLocalTable(func, childList->children->token_info->lexeme);
 		if(declarationHelper(childList, local, rec, identifier)==-1){
 			err=-1;

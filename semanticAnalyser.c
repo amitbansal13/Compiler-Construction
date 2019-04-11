@@ -123,6 +123,7 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 	if(strcmp("iterativeStmt",stmt_type)==0);
 
 	if(strcmp("conditionalStmt",stmt_type)==0){
+		/*
 		for(i=1;i<getChildrenNo(stmtNode)-1;i++){
                 if(funcStmtCheck(getStmt(children[i], functable, fentry,assigned, outputpar)==-1)
                     error=-1;
@@ -132,6 +133,7 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
                     error=-1;
             }
             return error;
+		*/
 	}
 	if(strcmp("ioStmt",stmt_type)==0){
 		if(alloc==NULL) return 0;

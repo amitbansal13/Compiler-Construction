@@ -110,8 +110,8 @@ int main(int argc,char *argv[])
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
 				// printRecTable(r);
-				printGlobalTable(id);
-				printFuncTable(f);
+				printGlobalTable(id,r);
+				printFuncTable(f,r);
 			}
 		else if (choice==4)
 			{
@@ -158,9 +158,9 @@ int main(int argc,char *argv[])
 				symbolTablePopulate(f,r,id,ptree);
 				printf("\n\n SymbolTable created successfully\n\n");
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
-				printGlobalTable(id);
-				printFuncTable(f);
-	//			declarationErrorCheck(f,r,id,ptree);
+				printGlobalTable(id,r);
+				printFuncTable(f,r);
+				declarationErrorCheck(f,r,id,ptree);
 				// funSemanticCheck(ptree->root,id,f);
 			}
 	}

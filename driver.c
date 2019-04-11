@@ -161,7 +161,9 @@ int main(int argc,char *argv[])
 				printGlobalTable(id,r);
 				printFuncTable(f,r);
 				declarationErrorCheck(f,r,id,ptree);
+				// checkType()
 				// funSemanticCheck(ptree->root,id,f);
+				// checkType(ptree->root,r);
 			}
 	}
 	return 0;

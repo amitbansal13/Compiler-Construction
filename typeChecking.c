@@ -178,7 +178,7 @@ int checkType(TreeNode head, recTable table1)
 
 					if(firstType!=secondType)
 					{
-						printf("Type Mismatch Error. Line No: %u Different dataypes\n",head->token_info->lineNo);
+						printf("Type Mismatch Error. Line No: %u Different operand dataypes\n",head->token_info->lineNo);
 						return -2;
 					}		
 					if(firstType==-1)
@@ -206,7 +206,7 @@ int checkType(TreeNode head, recTable table1)
 					}
 					if(firstType!=secondType)
 					{
-						printf("Type Mismatch Error. Line No: %u  Different dataypes \n",head->token_info->lineNo);
+						printf("Type Mismatch Error. Line No: %u  Different operand dataypes \n",head->token_info->lineNo);
 						return -2;
 					}
 					if(firstType > 1 && secondType > 1)
@@ -239,7 +239,7 @@ int checkType(TreeNode head, recTable table1)
 
 					if(firstType != secondType)
 					{
-						printf("Type Mismatch Error. Line No: %u Different dataypes \n",head->token_info->lineNo);
+						printf("Type Mismatch Error. Line No: %u Different operand dataypes \n",head->token_info->lineNo);
 						return -2;
 					}
 

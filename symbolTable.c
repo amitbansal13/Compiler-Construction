@@ -1,6 +1,6 @@
 #include "symbolTableDef.h"
 #include "parser.h"
-
+#include "parserDef.h"
 #define WIDTH_OF_INT 2
 #define WIDTH_OF_REAL 4
 
@@ -87,7 +87,7 @@ Func newFunc( char* name, int offset,int noInput, int noOutput, int* inputType, 
 	f->next=NULL;
 	return f;
 }
-funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width){
+funcTable insertFunc(funcTable t,char* name,int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width){
 	int i=hash(name,t->a,t->tableSize);
 	Func temp=newFunc(name,offset,noInput, noOutput, inputType, outputType,localtable,width);
 	temp->next=t->table[i];
@@ -723,3 +723,93 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 }
 
 		
+idTable getLocalTable(funcTable fun, char funid[]){
+	return lookupFunc(fun, funid)->localTable;
+}
+
+int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global){
+
+	int ind,err=0;
+	//check if node is SingleOrRecID
+	if(node->index==27)
+	{
+		//contains TK_ID
+		if(getChildrenNo(node)==1){
+			return declarationHelper(node->children,local,rec, global);
+		}
+		else
+		{
+			ID temp=lookupID(local,node->children->token_info->lexeme);
+			if(temp==NULL)temp=lookupID(global,node->children->token_info->lexeme);
+			if (temp==NULL)
+			{
+				printf("Record type %s not defined\n",node->children->token_info->lexeme);
+				return -1;
+			}
+			Rec r = lookupRec(rec,node->children->token_info->lexeme);//check this once
+			if(r==NULL) {
+				// printf("Record -  %s is not defined\n", node->children->token_info->lexeme);
+				return -1;
+			}
+			for(ind=0;ind<r->noField;ind++)
+			{
+				if(strcmp(node->children->next->token_info->lexeme,r->fieldid[ind])==0)
+					break;
+			}
+
+			if(ind==r->noField){
+				printf("Field %s not present in the record %s\n",node->children->next->token_info->lexeme, node->children->token_info->lexeme);
+				return -1;
+			}
+			node->children->tableEntry=temp;
+			return 0;
+		}
+	}
+	if(node->index==3)//TK_ID
+	{
+		char *idname=node->token_info->lexeme;
+		ID temp=lookupID(local,idname);
+		if(temp==NULL)temp=lookupID(global,idname);
+		if(temp==NULL)
+		{
+			printf("Line No: %d identifier <%s> not declared\n",node->children->token_info->lineNo,idname);
+			return -1;
+		}
+		node->tableEntry=temp;
+	}
+	TreeNode childList=node->children;
+	while(childList)
+	{
+		if(declarationHelper(childList,local,rec,global)==-1)err=-1;
+		childList=childList->next;
+	}
+	return err;			
+}
+
+
+//return -1 if error  else 0
+int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, ParseTree pTree){
+	
+
+	int err = 0;
+	TreeNode childList = pTree->root->children;//points to the first function node
+	TreeNode temp = NULL;
+	//traverse all the functions defined in program except the main function
+	while(childList->next!=NULL){
+
+		idTable local = getLocalTable(func, childList->children->token_info->lexeme);
+		if(declarationHelper(childList, local, rec, identifier)==-1){
+			err=-1;
+			// break; //Doubt??
+		}
+		childList = childList->next;
+	}
+	
+	//traversing the main function
+	idTable local = getLocalTable(func, "_main");
+	if(declarationHelper(childList, local, rec, identifier)==-1)
+		err =-1;
+
+	return err;	
+
+}

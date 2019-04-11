@@ -31,15 +31,16 @@ int funSemanticCheck(TreeNode root,idTable globalT,funcTable funcT){
 			if(temp->token_info==NULL)
 				return -1;
 
-			//***********type matching problem****return->TK_ID doesnt knw its type int,real etc
-
-			/*
-			if(type!=funEntry->outputType[i]){
-				 printf("lineNo %d returned type of %s does not match expected type\n",temp->token_info->lineNo, temp->token_info->Token);
-				printf("type=%d,outtype=%d\n",type,funEntry->outputType[i]);
-                error=-1;
-            }
-			*/
+			ID id = lookupID(globalT,temp->token_info->lexeme);//look into global table
+			if(id==NULL)
+				id = lookupID(funIdTable,temp->token_info->lexeme);//look into local table
+			
+			if(id==NULL)
+				printf("lineNo %d return varaible %s not initialized \n",temp->token_info->lineNo, temp->token_info->lexeme);
+			
+			else if(id->type!=funEntry->outputType[i])
+				printf("lineNo %d returned type of %s does not match expected type\n",temp->token_info->lineNo, temp->token_info->lexeme);
+				
 			temp=temp->next;i++;
 		}
 		if(funcStmtsCheck(funcNode,globalT,funcT)==-1)
@@ -65,6 +66,7 @@ int funcStmtsCheck(TreeNode funcNode,idTable globalT,funcTable funcT){
 	int error = 0;
 	Func funEntry;
 	int *out_alloc=NULL;
+	int no_out=0;
 	stmts = getStmt(funcNode,no_children-1);
 	if(no_children==1){//mainNode
 		output_par=NULL;
@@ -72,30 +74,42 @@ int funcStmtsCheck(TreeNode funcNode,idTable globalT,funcTable funcT){
 	}
 	else{
 		output_par = getStmt(funcNode,2);
-		int no_out = getChildrenNo(output_par);
+		no_out = getChildrenNo(output_par);
 		out_alloc = malloc( sizeof(int)* no_out/2);
         memset(out_alloc, 0 , sizeof(int)* no_out/2);
 		char *funid=funcNode->children->token_info->lexeme;
 		funEntry = lookupFunc(funcT,funid);
 	}
-
+	//
 	//got stmts node and also output_par node(if available),and also got funEntry 
 	TreeNode stmt = getStmt(stmts,2);
 	while(stmt!=NULL){
-		if(funcStmtCheck(stmt, funcT,funEntry,out_alloc,output_par)==-1)
+		if(funcStmtCheck(funcNode,stmt, funcT,funEntry,out_alloc,output_par)==-1)
    		 	error=-1;
 		stmt = stmt->next;
 	}
 
+	if(output_par!=NULL){
+		for(int i=0;i<no_out/2;i++){
+			if(out_alloc[i]==0){
+				char *lexeme = tokens[getStmt(output_par,2*i+1)->index];
+				//printf("%s output parameter not assigned any value before returning it in function %s\n",lexeme, nonterminals[funcNode->index] );
+                error=-1;
+			}
+		}
+	}
+	if(out_alloc!=NULL)
+		free(out_alloc);
 	return error;
 }
 		
 
 //checks individual stmt node
-int funcStmtCheck(TreeNode stmtNode,funcTable funcT,Func funEntry,int *alloc,TreeNode output_par){
+int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEntry,int *alloc,TreeNode output_par){
 
 	char *stmt_type = nonterminals[stmtNode->index];
-
+	TreeNode funcCalled,outputPars;
+	TreeNode temp_func;
 	int error = 0;
 
 	if(strcmp("assignmentStmt",stmt_type)==0);
@@ -105,8 +119,36 @@ int funcStmtCheck(TreeNode stmtNode,funcTable funcT,Func funEntry,int *alloc,Tre
 	if(strcmp("conditionalStmt",stmt_type)==0);
 
 	if(strcmp("ioStmt",stmt_type)==0);
+	 
+	if(strcmp("funCallStmt",stmt_type)==0){
 
-	if(strcmp("funCallStmt",stmt_type)==0);
+		funcCalled = getStmt(stmtNode,1);	
+		Func fcalled = lookupFunc(funcT,funcCalled->token_info->lexeme);
+		if(fcalled == NULL){	//called function is not defined
+			printf("func %s Called not declared \n",funcCalled->token_info->lexeme);
+			error = -1;
+			return error;
+		}
+		temp_func = funcNode;
+		while(temp_func->next!=NULL){//avoid checking main function
+			if(strcmp(tokens[temp_func->children->index],funcCalled->token_info->lexeme)==0)
+				break;
+			temp_func = temp_func->next;
+		}
+		if(temp_func->next!=NULL){
+			printf("LineNo %d A funtion <%s> cannot be called before its declaration\n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+                error=-1;
+		}
+		if(temp_func==funcNode){
+			 printf("LineNo %d: A function <%s>  cannot be recursively\n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+                error=-1;
+		}
+		outputPars = stmtNode->children;
+		//if(getChildrenNo(outputPars)!=)
+		
+	}
 
 	return error;
 }	
+
+

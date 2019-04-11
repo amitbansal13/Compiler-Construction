@@ -39,5 +39,7 @@ int getType(TreeNode t,recTable table);
 int getChildrenNo(TreeNode node);
 int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
+int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global);
+int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
 #endif

@@ -55,7 +55,7 @@ struct functable
 
 typedef struct rec* Rec;
 
-struct rec//NAMES OF this struct have to be changed a bit
+struct rec
 {
 	char* name;
 	int typeIndex;

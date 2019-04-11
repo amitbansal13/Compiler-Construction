@@ -160,7 +160,8 @@ int main(int argc,char *argv[])
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
 				printGlobalTable(id);
 				printFuncTable(f);
-				funSemanticCheck(ptree->root,id,f);
+	//			declarationErrorCheck(f,r,id,ptree);
+				// funSemanticCheck(ptree->root,id,f);
 			}
 	}
 	return 0;

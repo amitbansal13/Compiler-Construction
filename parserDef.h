@@ -11,6 +11,7 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 #include "lexer.h"
 #include<stdbool.h>
+#include "symbolTable.h"
 extern char *tokens[];
 extern char *nonterminals[];
 extern Table terminals;
@@ -90,6 +91,7 @@ struct treenode{
     TreeNode parent;
     TreeNode addr,syn,inh;
 	int rule_no;
+	ID tableEntry;
     // TokenInfo *token; //TokenInfo structure pointer if terminal
 };
 

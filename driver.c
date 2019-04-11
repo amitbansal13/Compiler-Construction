@@ -8,6 +8,7 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 #include "parserDef.h"
 #include "symbolTableDef.h"
 #include "symbolTable.h"
+#include "semanticAnalyser.h"
 
 #include "parser.h"
 #include <time.h>
@@ -70,10 +71,8 @@ int main(int argc,char *argv[])
 		if(choice==0)
 			break;
 		if(choice==1)
-			removeComments();
-		else if (choice==2)
 			printAllTokens();
-		else if(choice ==3){
+		else if(choice ==2){
 			remove(outfile);
 			Grammar *g = makeGrammar(grammarFile);
 			fset = computeFirstnFollow(g);
@@ -81,8 +80,39 @@ int main(int argc,char *argv[])
 			createParseTable(g,fset,pTable);
 			ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
 			if(parseError==false)
-				printParseTree(ptree,outfile);
+				printParseTree(ptree,outfile,1);
 		}
+		else if (choice==3)
+			{
+				start_time = clock();
+				Grammar *g = makeGrammar(grammarFile);
+				fset = computeFirstnFollow(g);
+				pTable = initializePT();
+				createParseTable(g,fset,pTable);
+				ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+				if(parseError==true){
+					printf("Code has errors.\nSo exited\n");
+					continue;
+				}
+				int ptree_nodes = printParseTree(ptree,outfile,0);
+				printf("\n\n\nprinting AST in Inorder Traversal*********\n\n\n");
+				createAST(ptree->root);
+				int ast_nodes = printParseTree(ptree,outfile,1);
+				printf("\n\n AST created successfully\n\n");
+				end_time = clock();
+				total_CPU_time  =  (double) (end_time - start_time);
+				total_CPU_time_in_seconds =   total_CPU_time / CLOCKS_PER_SEC;
+				printf("\n\nTotal CPU time = %lf\nTotal CPU time(secs) = %lf\n",total_CPU_time,total_CPU_time_in_seconds);
+				funcTable f=createFunc(59);
+				idTable id=createID(59);
+				recTable r=createRec(59);
+				symbolTablePopulate(f,r,id,ptree);
+				printf("\n\n SymbolTable created successfully\n\n");
+				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
+				// printRecTable(r);
+				printGlobalTable(id);
+				printFuncTable(f);
+			}
 		else if (choice==4)
 			{
 				start_time = clock();
@@ -95,12 +125,10 @@ int main(int argc,char *argv[])
 					printf("Code has errors.\nSo exited\n");
 					continue;
 				}
-				printf("\n\n\nprinting PARSE TREE*********\n\n\n");
-				int ptree_nodes = printParseTree(ptree,outfile);
-				printf("\n\n PARSE TREE created successfully\n\n");
-				printf("\n\n\nprinting AST*********\n\n\n");
+				int ptree_nodes = printParseTree(ptree,outfile,0);
+				printf("\n\n\nprinting AST in Inorder Traversal*********\n\n\n");
 				createAST(ptree->root);
-				int ast_nodes = printParseTree(ptree,outfile);
+				int ast_nodes = printParseTree(ptree,outfile,0);
 				printf("\n\n AST created successfully\n\n");
 				end_time = clock();
 				total_CPU_time  =  (double) (end_time - start_time);
@@ -109,15 +137,6 @@ int main(int argc,char *argv[])
 				printf("ptreeNodes = %d\n,astNodes=%d\n",ptree_nodes,ast_nodes);
 				float compressionRatio = ((float)(ptree_nodes-ast_nodes)/(float)ptree_nodes)*100;
 				printf("CompressionRatio=%f\n",compressionRatio);
-				funcTable f=createFunc(59);
-				idTable id=createID(59);
-				recTable r=createRec(59);
-				symbolTablePopulate(f,r,id,ptree);
-				printf("\n\n SymbolTable created successfully\n\n");
-				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
-				// printRecTable(r);
-				printGlobalTable(id);
-				printFuncTable(f);
 			}
 		else if (choice==5)
 			{
@@ -141,6 +160,7 @@ int main(int argc,char *argv[])
 				printf("%20s %20s %20s %20s\n","Lexeme","type","scope","offset"); 
 				printGlobalTable(id);
 				printFuncTable(f);
+				funSemanticCheck(ptree->root,id,f);
 			}
 	}
 	return 0;

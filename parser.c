@@ -785,17 +785,17 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 	return tree;
 }
 
-int printParseTree(ParseTree ptree,char *outfile){
+int printParseTree(ParseTree ptree,char *outfile,int option){
 	if(ptree==NULL){
 		printf("Tree not initialized\n");	
 		return 0;
 	}
-	int no_nodes = printInOrder(ptree->root,outfile);
+	int no_nodes = printInOrder(ptree->root,outfile,option);
 	//printf("ParseTree Printed in file %s\n",outfile);
 	return no_nodes;
 }
 
-int printInOrder(TreeNode node,char *outfile){
+int printInOrder(TreeNode node,char *outfile,int option){
 	//printf("Printing node %d\n",node->rule_no);
 	int no_nodes= 0;
 	if(node==NULL){
@@ -808,25 +808,25 @@ int printInOrder(TreeNode node,char *outfile){
 	if(temp_node!=NULL){	//if it has children
 			
 		//printing left child
-		no_nodes+= printInOrder(temp_node,outfile);
+		no_nodes+= printInOrder(temp_node,outfile,option);
 		
 		//printing node;
 		
-		printNode(node,outfile);
+		printNode(node,outfile,option);
 		//printing right childs in order
 		temp_node=temp_node->next;
 
 		while(temp_node!=NULL){
-			no_nodes+=printInOrder(temp_node,outfile);
+			no_nodes+=printInOrder(temp_node,outfile,option);
 			temp_node=temp_node->next;
 		}
 	}		
 	else
-		printNode(node,outfile);
+		printNode(node,outfile,option);
 	return no_nodes+1;
 }
 
-void printNode(TreeNode node,char *outfile){    //file already opened
+void printNode(TreeNode node,char *outfile,int option){    //file already opened
 	//printf("print node called\n");
 
  //   FILE *f = fopen(outfile,"a");
@@ -835,6 +835,8 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
     //did not do value type now
 
+	if(option == 0)
+		return;
     bool isLeaf=false,isTerminal=false,isRoot=false;    
 	bool isParent_terminal=false;
     int val_type = -1;

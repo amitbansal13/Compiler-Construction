@@ -240,7 +240,7 @@ void printFuncTable(funcTable t)
 	}
 }
 
-TreeNode getStmt(TreeNode temp, int lim){
+TreeNode getStmt(TreeNode temp, int lim){	//get limNumber children
 	int hops;
 	TreeNode childNext = temp->children;
 
@@ -271,7 +271,7 @@ int getWidth(TreeNode t, recTable table)
 	return temp->width;
 }
 
-int getChildrenNo(TreeNode node){
+int getChildrenNo(TreeNode node){//returns no of children of node
 	TreeNode child = node->children;
 	int count=0;
 	while(child!=NULL){

@@ -34,7 +34,9 @@ Rec lookupRec(recTable t,char arr[]);
 void printRecTable(recTable t);
 
 
-
+TreeNode getStmt(TreeNode temp, int lim);
+int getType(TreeNode t,recTable table);
+int getChildrenNo(TreeNode node);
 int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
 

@@ -10,8 +10,9 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 #include "stack.h"
 
 //DOLLAR AND eps in tokens ie terminals
-
-char *tokens[]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID","TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL","TK_COMMA", "TK_SEM","TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP","TK_CL","TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_PLUS","TK_MINUS","TK_MUL","TK_DIV","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE","TK_AND","TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE","eps","DOLLAR","TK_ERROR"};  
+//make sure last one is dollar for proper functioning
+char *tokens[]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID","TK_WITH","TK_PARAMETERS","TK_END","TK_WHILE","TK_TYPE","TK_MAIN","TK_GLOBAL","TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR","TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL","TK_COMMA", "TK_SEM","TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP","TK_CL","TK_IF","TK_THEN","TK_ENDIF","TK_READ","TK_WRITE","TK_RETURN","TK_PLUS","TK_MINUS","TK_MUL","TK_DIV","TK_CALL", "TK_RECORD","TK_ENDRECORD","TK_ELSE","TK_AND","TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE","eps","DOLLAR"};  
+	
 char *nonterminals[]={
 	"program",
 	"mainFunction",
@@ -510,7 +511,7 @@ void createParseTable(Grammar *g,ffset fset,PT *pTable){
 				//if eps,replace with this rule if any terminal in follow set of this nonterminsl
 	
 						for(int j=0;j<terminalsSize;j++){
-							if(checkSet(fset[i].follow,tokens[j]) == true || j == terminalsSize-1){//TK_ERROR case also replace with eps
+							if(checkSet(fset[i].follow,tokens[j]) == true){//TK_ERROR case also replace with eps
 								if(pTable->tEntry[i][j]->rule!=NULL)
 									printf("Multiple rules clashing in Entry[%d][%d]\n",i,j);
 								pTable->tEntry[i][j]->type=0;	
@@ -703,18 +704,6 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 				continue;
 		}
 			
-		/*
-		if(strcmp(lookAhead->Token,"TK_ERROR")==0 && top_tree->tNt==1 ){	//already popped and top_stack is nonterminal with eps rule
-	//			lookAhead = nextToken();
-		//		top_tree->token_info=lookAhead;	//store the tokenInfo
-				rule = pTable->tEntry[top_tree->index][terminalsSize-1]->rule;
-				if(rule!=NULL){
-					top_tree = addChildren(top_tree,rule);//eps rule
-					continue;
-				}
-		}
-		*/
-
 		//printf("Parsing :%s\n",lookAhead->Token);
 	
 
@@ -802,7 +791,7 @@ int printParseTree(ParseTree ptree,char *outfile){
 		return 0;
 	}
 	int no_nodes = printInOrder(ptree->root,outfile);
-	printf("ParseTree Printed in file %s\n",outfile);
+	//printf("ParseTree Printed in file %s\n",outfile);
 	return no_nodes;
 }
 
@@ -860,19 +849,15 @@ void printNode(TreeNode node,char *outfile){    //file already opened
         isRoot=true;
 
         if(isRoot){
-                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n","------","-----","-----","------","ROOT","no","----");
+                printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n","------","-----","-----","------","ROOT","no",nonterminals[node->index]);
             //root node print
 			return;
         }
 
-	else{
-		if(node->parent->tNt==0)
-			isParent_terminal = true; 
-	}
+	if(node->parent->tNt==0)
+		isParent_terminal = true; 
 
     TreeNode parent = node->parent;
-	
-
 
     if(isLeaf){    //for leaf node
         if(isTerminal==false){//can be there in ast
@@ -889,7 +874,7 @@ void printNode(TreeNode node,char *outfile){    //file already opened
 
             if(isRoot==false){//if not root
                 if(strcmp(tokens[node->index],"eps")==0)    
-                   printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n","-----","-----","------","----","ROOT","yes","----");
+                   printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n","-----","-----","------","----",nonterminals[parent->index],"yes","eps");
                 else if(val_type==1)//intval case
 					if(isParent_terminal==false)
                     	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,nonterminals[parent->index],"yes","----");
@@ -918,9 +903,7 @@ void printNode(TreeNode node,char *outfile){    //file already opened
     else{    //will be a nonterminal only
 			//can also be terminal like TK_LE
         if(isTerminal==true){
-                if(strcmp(tokens[node->index],"eps")==0)    
-                   printf("%30s\t %5s\t %21s\t %5s\t %20s\t %3s\t %20s\n","-----","-----","------","----","ROOT","yes","----");
-                else if(val_type==1)//intval case
+                if(val_type==1)//intval case
 					if(isParent_terminal==false)
                     	printf("%30s\t %5d\t %21s\t  %5d\t %20s\t %3s\t %20s\n",node->token_info->lexeme,node->token_info->lineNo,node->token_info->Token,node->token_info->tkVal.intVal,nonterminals[parent->index],"yes","----");
 					else

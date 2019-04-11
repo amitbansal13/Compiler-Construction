@@ -95,7 +95,9 @@ int main(int argc,char *argv[])
 					printf("Code has errors.\nSo exited\n");
 					continue;
 				}
+				printf("\n\n\nprinting PARSE TREE*********\n\n\n");
 				int ptree_nodes = printParseTree(ptree,outfile);
+				printf("\n\n PARSE TREE created successfully\n\n");
 				printf("\n\n\nprinting AST*********\n\n\n");
 				createAST(ptree->root);
 				int ast_nodes = printParseTree(ptree,outfile);

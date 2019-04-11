@@ -6,7 +6,7 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
 #ifndef PARSER_H
 #define PARSER_H
-#define terminalsSize 56 //Number of Terminals including epsilon
+#define terminalsSize 55 //Number of Terminals including epsilon
 #define nonTerminalsSize 47//actual no of terminals in our code
 
 #include "lexer.h"

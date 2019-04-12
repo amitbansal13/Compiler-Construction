@@ -341,19 +341,19 @@ Seq getWhileVars(TreeNode root){
 	if(root->index==27 && root->tNt==1){//SingleOrRecID
 		Seq i = malloc(sizeof(struct sequence));
 		TreeNode tkid_node = root->children;
-		i->id_name = strdup(tkid_node->tableEntry->name);
+		i->id_name = tkid_node->tableEntry->name;
 		i->fieldid=NULL;
 		i->next = NULL;
 		if(getChildrenNo(root)==2){		//if it has fieldid
 			TreeNode fieldid_node = root->children->next;//got the fieldid_node
-			i->fieldid = strdup(fieldid_node->token_info->lexeme);	//copy the fieldid
+			i->fieldid = fieldid_node->token_info->lexeme;	//copy the fieldid
 		}
 		return i;	//returns the sequence
 	}
 	else if(root->index==3 && root->tNt==0)//TK_ID
 	{
 		Seq i = malloc(sizeof(struct sequence));
-		i->id_name = strdup(root->tableEntry->tname);
+		i->id_name = root->tableEntry->tname;
 		i->fieldid=NULL;
 		i->next = NULL;
 		return i;

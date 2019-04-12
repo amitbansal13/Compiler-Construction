@@ -19,5 +19,6 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT);
 int whileSemanticCheck(TreeNode node);
 int checkSequence(Seq begin,TreeNode root);
 Seq getSequence(TreeNode root);
+bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *alloc);
 
 #endif

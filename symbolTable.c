@@ -618,7 +618,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 
 				if(getChildrenNo(declare)==3){
 					declare=declare->next;
-					continue; //check
+					continue; 
 				}
 				if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 				{
@@ -651,7 +651,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					}
 				declare = declare->next;
 			}
-				insertFunc(func,tempfunc->children->token_info->lexeme,0, NoInpPar, NoOutPar, inPar, outPar,idLocal,offsetBegin); //check
+				insertFunc(func,tempfunc->children->token_info->lexeme,0, NoInpPar, NoOutPar, inPar, outPar,idLocal,offsetBegin); 
 		}
 		else{
 			printf("Error. Line No: %u Overloaded functions not allowed. <%s> already defined\n", childList->children->token_info->lineNo,childList->children->token_info->lexeme);
@@ -671,7 +671,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 		while(declare!=NULL){
 			if(getChildrenNo(declare)==3){
 				declare=declare->next;
-			 	continue; //check
+			 	continue; 
 			}
 			if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 			{
@@ -704,7 +704,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 			declare = declare->next;
 			}
-		insertFunc(func,"_main",0, 0,0, NULL,NULL,idLocal,offsetBegin); //check
+		insertFunc(func,"_main",0, 0,0, NULL,NULL,idLocal,offsetBegin); 
 	}
 	else{
 		printf("Main function defined twice.\n");
@@ -720,43 +720,49 @@ idTable getLocalTable(funcTable fun, char funid[]){
 
 int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global){
 
-	int ind,err=0;
+	int i,err=0;
 	//check if node is SingleOrRecID
 	if(node->index==27 && node->tNt ==1)
 	{
-		//contains TK_ID
-		if(getChildrenNo(node)==1){
-			return declarationHelper(node->children,local,rec, global);
-		}
-		else
+		int childNo=getChildrenNo(node);
+		if(childNo!=1)//contains TK_RECORDID
 		{
 			ID temp=lookupID(local,node->children->token_info->lexeme);
-			if(temp==NULL)temp=lookupID(global,node->children->token_info->lexeme);
+			if(temp==NULL)//if not in local table lookup in global table
+				temp=lookupID(global,node->children->token_info->lexeme);
 			if (temp==NULL)
 			{
 				printf("Record type %s not defined\n",node->children->token_info->lexeme);
 				return -1;
 			}
-			Rec r = lookupRec(rec,temp->tname);//check this once
-			if(r==NULL) {
-				// printf("Record -  %s is not defined\n", node->children->token_info->lexeme);
-				return -1;
-			}
-			for(ind=0;ind<r->noField;ind++)
+			Rec r = lookupRec(rec,temp->tname);
+			if(r==NULL)
+				return -1;//error type not found
+			
+			int flag=1,n=r->noField;
+			char *fieldid=node->children->next->token_info->lexeme;
+			
+			for(i=0;i<n;i++)
 			{
-				if(strcmp(node->children->next->token_info->lexeme,r->fieldid[ind])==0)
+				if(strcmp(fieldid,r->fieldid[i])==0)
+				{
+					flag=0;
 					break;
+				}
 			}
 
-			if(ind==r->noField){
-				printf("Field %s not present in the record %s\n",node->children->next->token_info->lexeme, temp->tname);
+			if(flag==1)
+			{
+				printf("Field %s not present in the record %s\n",fieldid, temp->tname);
 				return -1;
 			}
 			node->children->tableEntry=temp;
 			return 0;
 		}
+		else////contains TK_ID
+			return declarationHelper(node->children,local,rec, global);
 	}
-	if(node->index==3 && node->tNt==0)//TK_ID
+	if(node->index==3 && node->tNt==0)//for TK_ID
 	{
 		char *idname=node->token_info->lexeme;
 		ID temp=lookupID(local,idname);
@@ -790,7 +796,6 @@ int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, Pars
 		idTable local = getLocalTable(func, childList->children->token_info->lexeme);
 		if(declarationHelper(childList, local, rec, identifier)==-1){
 			err=-1;
-			// break; //Doubt??
 		}
 		childList = childList->next;
 	}

@@ -291,20 +291,6 @@ int checkSequence(Seq begin,TreeNode root)
 	TreeNode childList= root->children;
 	Seq temp;
 	char *stmt_type = nonterminals[root->index];
-	if(strcmp("funCallStmt",stmt_type)==0){
-		while(childList)
-		{
-			temp=begin;
-			while(temp)
-			{
-				if(childList->tableEntry==temp->tableEntry)
-					return 1;
-				temp=temp->next;
-			}
-			childList=childList->next;	
-		}
-		return 0;
-	}
 	
 	if(strcmp("assignmentStmt",stmt_type)==0){
 		temp=begin;
@@ -320,7 +306,8 @@ int checkSequence(Seq begin,TreeNode root)
 		else{
 			while(temp!=NULL){
 				if(root->children->children->tableEntry == temp->tableEntry){
-					if(strcmp(childList->children->next->token_info->lexeme,temp->fieldid)==0){
+					char* fieldid=childList->children->next->token_info->lexeme;
+					if(strcmp(fieldid,temp->fieldid)==0){
 						return 1;
 					}					
 				}
@@ -329,6 +316,52 @@ int checkSequence(Seq begin,TreeNode root)
 			return 0;		
 		}
 	}
+	
+	if(strcmp("iterativeStmt",stmt_type)==0){
+		TreeNode childList = root->children->next;
+		while(childList!=NULL){
+			TreeNode t = childList;
+			if(checkSequence(begin,t)==1){
+				return 1;
+			}
+			childList = childList->next;
+		}
+		return 0;		
+	}
+
+	if(strcmp("conditionalStmt",stmt_type)==0){
+		TreeNode childList=root->children->next;
+		while(childList->next)
+		{
+			if(checkSequence(begin,childList)==1)
+				return 1;
+
+			childList=childList->next;
+		}
+		childList=childList->children;
+		while(childList)
+		{
+			if(checkSequence(begin,childList)==1)
+				return 1;
+		}
+		return 0;
+	}
+
+	if(strcmp("funCallStmt",stmt_type)==0){
+		while(childList)
+		{
+			temp=begin;
+			while(temp)
+			{
+				if(childList->tableEntry==temp->tableEntry)
+					return 1;
+				temp=temp->next;
+			}
+			childList=childList->next;	
+		}
+		return 0;
+	}
+
 	if(strcmp("ioStmt",stmt_type)==0){
 		if(strcmp(tokens[root->index],"TK_READ")==0)
 		{
@@ -348,33 +381,7 @@ int checkSequence(Seq begin,TreeNode root)
 		}
 		return 0;
 	}
-	if(strcmp("iterativeStmt",stmt_type)==0){
-		TreeNode traverse = root->children->next;
-		while(traverse!=NULL){
-			TreeNode t = traverse;
-			if(checkSequence(begin,t)==1){
-				return 1;
-			}
-			traverse = traverse->next;
-		}
-		return 0;		
-	}
-
-	if(strcmp("conditionalStmt",stmt_type)==0){
-		TreeNode childList=root->children->next;
-		while(childList->next)
-		{
-			if(checkSequence(begin,childList)==1)return 1;
-
-			childList=childList->next;
-		}
-		childList=childList->children;
-		while(childList)
-		{
-			if(checkSequence(begin,childList)==1)return 1;
-		}
-		return 0;
-	}
+	
 
 	return 0;
 }

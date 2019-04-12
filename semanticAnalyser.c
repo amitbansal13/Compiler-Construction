@@ -188,7 +188,7 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 		while(temp!=NULL){
             if(temp->tableEntry==NULL || temp->tableEntry->type!=ftcalled->outputType[i])
              {
-                 printf("Line No: %d type of output paramter in function <%s> doesnt match the returned type\n",temp->token_info->lineNo,funcCalled->token_info->lexeme);
+                 printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",temp->token_info->lineNo,funcCalled->token_info->Token,funcCalled->token_info->lexeme,ftcalled->outputType[i]);
                  err=-1;
              }
              else if(alloc!=NULL)
@@ -198,7 +198,7 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 
 		inPars = getStmt(stmtNode,2);
 		if(getChildrenNo(inPars)!= ftcalled->noInput){
-	        printf("Line No: %d Number of parameters required for function <%s> doesnt match number of returned paramters \n", funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+	        printf("Line %d : The number of input parameters at function call <%s> is incorrect.\n", funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
             err=-1;
 		}
 		temp=inPars->children;
@@ -222,11 +222,11 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT){
          TreeNode temp_func = funcNode->next;
 		 if(temp_func==NULL){//mainFunction calls some other function
 			if(ftcalled==NULL){
-            	printf("Line no:%d func %s Called not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+            	printf("Line no:%d func %s Clled not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 				return false;
 			}
 			else if(strcmp(funcCalled->token_info->lexeme,"_main")==0){
-            	printf("Line no:%d func %s Called not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+            	printf("Line no:%d func %s Clled not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 				return false;
 			}
 
@@ -239,7 +239,7 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT){
              temp_func = temp_func->next;
          }
          if(ftcalled == NULL || temp_func->next!=NULL){      //calling function before declaration
-             printf("Line no:%d func %s Called not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+             printf("Line no:%d func %s Clled not declared \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 			return false;
          }
          if(temp_func==funcNode){    //recursive call

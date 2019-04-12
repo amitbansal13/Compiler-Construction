@@ -92,6 +92,10 @@ int main(int argc,char *argv[])
 		pTable = initializePT();
 		createParseTable(g,fset,pTable);
 		ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
+		if(parseError==true){
+			printf("Code has syntax errors\n");
+			continue;
+		}
 		if(choice ==2){
 			if(parseError==false)
 				printParseTree(ptree,1);
@@ -115,7 +119,7 @@ int main(int argc,char *argv[])
 		{
 			//To be modified to show size of memory allocated
 			int size = sizeof(struct treenode);
-			printf ("Parse tree Number of nodes = %d\tAllocated Memory = %d Bytes\nAST Number of nodes = %d\tAllocated Memory = %d Bytes\n",ptree_nodes,ptree_nodes*size,ast_nodes,ast_nodes*size);
+			printf ("Parse tree Number of nodes = %d\tAllocated Memory = %d Bytes\nAST Number of nodes = %d\t\tAllocated Memory = %d Bytes\n\n",ptree_nodes,ptree_nodes*size,ast_nodes,ast_nodes*size);
 			float compressionRatio = ((float)(ptree_nodes-ast_nodes)/(float)ptree_nodes)*100;
 			printf("CompressionRatio=%f\n",compressionRatio);
 			continue;

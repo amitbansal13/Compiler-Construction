@@ -791,6 +791,8 @@ int printParseTree(ParseTree ptree,int option){
 		printf("Tree not initialized\n");	
 		return 0;
 	}
+	if(option==1)
+    	printf("%30s\t %5s\t %21s\t%s\t %20s\t %3s%20s\n\n","lexeme","lineNo","TokenName","Value","ParentNode","isLeafNode","NodeSymbol");
 	int no_nodes = printInOrder(ptree->root,option);
 	//printf("ParseTree Printed in file %s\n");
 	return no_nodes;
@@ -813,7 +815,8 @@ int printInOrder(TreeNode node,int option){
 		
 		//printing node;
 		
-		printNode(node,option);
+		if(option==1)
+			printNode(node);
 		//printing right childs in order
 		temp_node=temp_node->next;
 
@@ -822,12 +825,12 @@ int printInOrder(TreeNode node,int option){
 			temp_node=temp_node->next;
 		}
 	}		
-	else
-		printNode(node,option);
+	else if(option==1)
+		printNode(node);
 	return no_nodes+1;
 }
 
-void printNode(TreeNode node,int option){    //file already opened
+void printNode(TreeNode node){    //file already opened
 	//printf("print node called\n");
 
  //   FILE *f = fopen(outfile,"a");
@@ -836,8 +839,6 @@ void printNode(TreeNode node,int option){    //file already opened
 
     //did not do value type now
 
-	if(option == 0)
-		return;
     bool isLeaf=false,isTerminal=false,isRoot=false;    
 	bool isParent_terminal=false;
     int val_type = -1;

@@ -37,7 +37,7 @@ ParseTree initializeParseTree(void);
 ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError);
 int printInOrder(TreeNode node,int option);
 int printParseTree(ParseTree ptree,int option);
-void printNode(TreeNode node,int option);
+void printNode(TreeNode node);
 
 
 

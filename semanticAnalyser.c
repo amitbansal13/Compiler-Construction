@@ -393,7 +393,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 		if(getChildrenNo(singleOrRecId)==1){	//only TK_ID present
 			//iterate for all the seq elements
 			while(temp!=NULL){
-				if(strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){//if entry matched,then return,since it is being assigned values
+				if(singleOrRecId->children->tableEntry && strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){//if entry matched,then return,since it is being assigned values
 					return 1;	
 				}
 				temp = temp->next;
@@ -402,7 +402,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 		}
 		else{	//it has TK_ID as well as TK_FIELDID
 			while(temp!=NULL){
-				if(strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){
+				if(singleOrRecId->children->tableEntry && strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){
 					TreeNode fieldid_node = singleOrRecId->children->next;
 					char* fieldid=fieldid_node->token_info->lexeme;
 					if(strcmp(fieldid,temp->fieldid)==0){
@@ -456,7 +456,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 			temp=begin;
 			while(temp)
 			{
-				if(strcmp(output_id->tableEntry->name,temp->id_name)==0)	//it has only TK_ID entry
+				if(output_id->tableEntry && strcmp(output_id->tableEntry->name,temp->id_name)==0)	//it has only TK_ID entry
 					return 1;
 				temp=temp->next;
 			}
@@ -473,7 +473,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 			temp=begin;
 			while(temp)
 			{
-				if(strcmp(temp->id_name,singleOrRecId->children->tableEntry->name)==0)	//if TK_ID matches
+				if(singleOrRecId->children->tableEntry && strcmp(temp->id_name,singleOrRecId->children->tableEntry->name)==0)	//if TK_ID matches
 				{
 					int childNo=getChildrenNo(singleOrRecId);
 					if(childNo==1)//TKID only present

@@ -7,8 +7,8 @@
 typedef struct sequence* Seq;
 struct sequence
 {
-	char* fieldid;
 	char* id_name;
+	char* fieldid;
 	Seq next; 
 };
 

@@ -785,16 +785,16 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 
 
 //return -1 if error  else 0
-int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, ParseTree pTree){
-	
+int declarationErrorCheck(TreeNode root,funcTable func, recTable rec, idTable global){
 
 	int err = 0;
-	TreeNode childList = pTree->root->children;//points to the first function node
+	TreeNode childList = root->children;//points to the first function node
 	TreeNode temp = NULL;
 	//traverse all the functions defined in program except the main function
-	while(childList->next!=NULL){
-		idTable local = getLocalTable(func, childList->children->token_info->lexeme);
-		if(declarationHelper(childList, local, rec, identifier)==-1){
+	while(childList->next){
+		char *funID=childList->children->token_info->lexeme;
+		idTable local = getLocalTable(func, funID);
+		if(declarationHelper(childList, local, rec, global)==-1){
 			err=-1;
 		}
 		childList = childList->next;
@@ -802,9 +802,9 @@ int declarationErrorCheck(funcTable func, recTable rec, idTable identifier, Pars
 	
 	//traversing the main function
 	idTable local = getLocalTable(func, "_main");
-	if(declarationHelper(childList, local, rec, identifier)==-1)
+	if(declarationHelper(childList, local, rec, global)==-1)
 		err =-1;
-
+	
 	return err;	
 
 }

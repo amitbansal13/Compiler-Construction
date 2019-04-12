@@ -175,7 +175,7 @@ int main(int argc,char *argv[])
 		}
 		if(choice==9)
 		{
-			declarationErrorCheck(functionTable,recordTable,globalTable,ptree);
+			declarationErrorCheck(ptree->root,functionTable,recordTable,globalTable);
 			checkType(ptree->root, recordTable);
 			funSemanticCheck(ptree->root,globalTable,functionTable);
 			end_time = clock();

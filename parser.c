@@ -791,6 +791,8 @@ int printParseTree(ParseTree ptree,int option){
 		printf("Tree not initialized\n");	
 		return 0;
 	}
+	if(option==1)
+    	printf("%30s\t %5s\t %21s\t%s\t %20s\t %3s%20s\n\n","lexeme","lineNo","TokenName","Value","ParentNode","isLeafNode","NodeSymbol");
 	int no_nodes = printInOrder(ptree->root,option);
 	//printf("ParseTree Printed in file %s\n");
 	return no_nodes;

@@ -39,8 +39,8 @@ int getType(TreeNode t,recTable table);
 int getChildrenNo(TreeNode node);
 int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
 
-int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global);
-int declarationErrorCheck(TreeNode root,funcTable func, recTable rec, idTable identifier);
+int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global);
+int typeExtractor(TreeNode root,funcTable func, recTable rec, idTable identifier);
 
 int checkType(TreeNode head,recTable r);
 char* printType(recTable t,char *idname);//return a string containing the type of idname 

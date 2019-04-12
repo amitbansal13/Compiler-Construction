@@ -179,7 +179,7 @@ int main(int argc,char *argv[])
 		}
 		if(choice==9)
 		{
-			declarationErrorCheck(ptree->root,functionTable,recordTable,globalTable);
+			typeExtractor(ptree->root,functionTable,recordTable,globalTable);
 			checkType(ptree->root, recordTable);
 			funSemanticCheck(ptree->root,globalTable,functionTable);
 			end_time = clock();

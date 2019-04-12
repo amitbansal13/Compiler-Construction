@@ -718,14 +718,14 @@ idTable getLocalTable(funcTable fun, char funid[]){
 	return lookupFunc(fun, funid)->localTable;
 }
 
-int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global){
+int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global){
 
 	int i,err=0;
 	//check if node is SingleOrRecID
 	if(node->index==27 && node->tNt ==1)
 	{
 		int childNo=getChildrenNo(node);
-		if(childNo!=1)//contains TK_RECORDID
+		if(childNo!=1)//contains TK_FIELDID
 		{
 			ID temp=lookupID(local,node->children->token_info->lexeme);
 			if(temp==NULL)//if not in local table lookup in global table
@@ -740,7 +740,7 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 				return -1;//error type not found
 			
 			int flag=1,n=r->noField;
-			char *fieldid=node->children->next->token_info->lexeme;
+			char *fieldid=node->children->next->token_info->lexeme;//extracting fieldid from SingleOrRecID
 			
 			for(i=0;i<n;i++)
 			{
@@ -750,17 +750,16 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 					break;
 				}
 			}
-
 			if(flag==1)
 			{
 				printf("Field %s not present in the record %s\n",fieldid, temp->tname);
 				return -1;
 			}
-			node->children->tableEntry=temp;
+			node->children->tableEntry=temp;//associate ID with every TK_FIELDID node to be used for checking types and declarations
 			return 0;
 		}
-		else////contains TK_ID
-			return declarationHelper(node->children,local,rec, global);
+		else////contains TK_ID only
+			return typeExtractHelper(node->children,local,rec, global);
 	}
 	if(node->index==3 && node->tNt==0)//for TK_ID
 	{
@@ -772,12 +771,14 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 			printf("Line %d : identifier <%s> not declared\n",node->token_info->lineNo,idname);
 			return -1;
 		}
-		node->tableEntry=temp;
+		node->tableEntry=temp;//associate ID with every TK_ID node to be used for checking types and declarations
 	}
+	
 	TreeNode childList=node->children;
-	while(childList)
+	while(childList)//iterate for every children of the node in case it is not
+		//SingleOrRecID or TK_ID as they might have TK_ID or TK_FIELDID
 	{
-		if(declarationHelper(childList,local,rec,global)==-1)err=-1;
+		if(typeExtractHelper(childList,local,rec,global)==-1)err=-1;
 		childList=childList->next;
 	}
 	return err;			
@@ -785,16 +786,16 @@ int declarationHelper(TreeNode node, idTable local, recTable rec, idTable global
 
 
 //return -1 if error  else 0
-int declarationErrorCheck(TreeNode root,funcTable func, recTable rec, idTable global){
+int typeExtractor(TreeNode root,funcTable func, recTable rec, idTable global){
 
 	int err = 0;
 	TreeNode childList = root->children;//points to the first function node
 	TreeNode temp = NULL;
 	//traverse all the functions defined in program except the main function
 	while(childList->next){
-		char *funID=childList->children->token_info->lexeme;
+		char *funID=childList->children->token_info->lexeme;//function id
 		idTable local = getLocalTable(func, funID);
-		if(declarationHelper(childList, local, rec, global)==-1){
+		if(typeExtractHelper(childList, local, rec, global)==-1){
 			err=-1;
 		}
 		childList = childList->next;
@@ -802,7 +803,7 @@ int declarationErrorCheck(TreeNode root,funcTable func, recTable rec, idTable gl
 	
 	//traversing the main function
 	idTable local = getLocalTable(func, "_main");
-	if(declarationHelper(childList, local, rec, global)==-1)
+	if(typeExtractHelper(childList, local, rec, global)==-1)
 		err =-1;
 	
 	return err;	

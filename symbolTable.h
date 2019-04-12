@@ -10,12 +10,12 @@ typedef struct id* ID;
 
 struct id
 {
-	char* name;
+	char* name;//name of var
 	int offset;
 	int type; //num=0 or real_num=1
 	int width;
 	ID next;
-	char *tname;
+	char *tname;	//type name
 };
 
 

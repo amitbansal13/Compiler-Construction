@@ -341,7 +341,8 @@ Seq getWhileVars(TreeNode root){
 	if(root->index==27 && root->tNt==1){//SingleOrRecID
 		Seq i = malloc(sizeof(struct sequence));
 		TreeNode tkid_node = root->children;
-		i->tableEntry = tkid_node->tableEntry;
+		i->id_name = strdup(tkid_node->tableEntry->name);
+		i->fieldid=NULL;
 		i->next = NULL;
 		if(getChildrenNo(root)==2){		//if it has fieldid
 			TreeNode fieldid_node = root->children->next;//got the fieldid_node
@@ -352,7 +353,8 @@ Seq getWhileVars(TreeNode root){
 	else if(root->index==3 && root->tNt==0)//TK_ID
 	{
 		Seq i = malloc(sizeof(struct sequence));
-		i->tableEntry = root->tableEntry;
+		i->id_name = strdup(root->tableEntry->tname);
+		i->fieldid=NULL;
 		i->next = NULL;
 		return i;
 	}
@@ -391,7 +393,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 		if(getChildrenNo(singleOrRecId)==1){	//only TK_ID present
 			//iterate for all the seq elements
 			while(temp!=NULL){
-				if(singleOrRecId->children->tableEntry == temp->tableEntry){//if entry matched,then return,since it is being assigned values
+				if(strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){//if entry matched,then return,since it is being assigned values
 					return 1;	
 				}
 				temp = temp->next;
@@ -400,7 +402,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 		}
 		else{	//it has TK_ID as well as TK_FIELDID
 			while(temp!=NULL){
-				if(singleOrRecId->children->tableEntry == temp->tableEntry){
+				if(strcmp(singleOrRecId->children->tableEntry->name,temp->id_name)==0){
 					TreeNode fieldid_node = singleOrRecId->children->next;
 					char* fieldid=fieldid_node->token_info->lexeme;
 					if(strcmp(fieldid,temp->fieldid)==0){
@@ -454,7 +456,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 			temp=begin;
 			while(temp)
 			{
-				if(output_id->tableEntry==temp->tableEntry)	//it has only TK_ID entry
+				if(strcmp(output_id->tableEntry->name,temp->id_name)==0)	//it has only TK_ID entry
 					return 1;
 				temp=temp->next;
 			}
@@ -471,7 +473,7 @@ int checkVarChanges(Seq begin,TreeNode stmtNode)
 			temp=begin;
 			while(temp)
 			{
-				if(temp->tableEntry==singleOrRecId->children->tableEntry)	//if TK_ID matches
+				if(strcmp(temp->id_name,singleOrRecId->children->tableEntry->name)==0)	//if TK_ID matches
 				{
 					int childNo=getChildrenNo(singleOrRecId);
 					if(childNo==1)//TKID only present

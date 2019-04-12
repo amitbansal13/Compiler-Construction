@@ -7,7 +7,7 @@
 
 int funSemanticCheck(TreeNode root,idTable globalT,funcTable funcT){
 	TreeNode funcNode = root->children;
-	TreeNode temp;
+	TreeNode id_node;
 	int err = 0;
 
 	while(funcNode->next!=NULL){//iterating all functions except main
@@ -20,34 +20,42 @@ int funSemanticCheck(TreeNode root,idTable globalT,funcTable funcT){
 		TreeNode retNode = getStmt(stmtsNode,no_children-1);
 		int no_ret = getChildrenNo(retNode);//no of returns
 
-		//printf("no_ret = %d,noOut = %d\n",no_ret,funEntry->noOutput);
-
-		//first checking number of parametes returned error
+		//first checking if number of parametes returned matches or not
 
 		if(no_ret!=funEntry->noOutput){
 			printf("err:In function %s, number of parameters returned does not match number of output parameters in function definition ",funcNode->children->token_info->lexeme );
             err=-1;
         }
 
-		temp = retNode->children;
+		//no of returns as required
+
+		TreeNode id_node = retNode->children;
 		int i=0;
 		int type;
 		
-		while(temp!=NULL){
-			if(temp->token_info==NULL)
+		//iterating all the returned id nodes
+
+		while(id_node!=NULL){
+			if(id_node->token_info==NULL)
 				return -1;
 
-			ID id = lookupID(globalT,temp->token_info->lexeme);//look into global table
+			ID id = lookupID(globalT,id_node->token_info->lexeme);//look into global table
 			if(id==NULL)
-				id = lookupID(funIdTable,temp->token_info->lexeme);//look into local table
+				id = lookupID(funIdTable,id_node->token_info->lexeme);//look into local table
 			
 			if(id==NULL)
-				printf("line %d : return variable %s not initialized \n",temp->token_info->lineNo, temp->token_info->lexeme);
+				printf("line %d : return variable %s not initialized \n",id_node->token_info->lineNo, id_node->token_info->lexeme);
 			
+			//id type does not matches expected
 			else if(id->type!=funEntry->outputType[i])
-				printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%s> of the formal output parameter\n",temp->token_info->lineNo,id->type==1?"real":"int",temp->token_info->lexeme,funEntry->outputType[i]==1?"real":"int");
+				if(id->type<=1)	//int/real types
+					printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%s> of the formal output parameter\n",id_node->token_info->lineNo,id->type==1?"real":"int",id_node->token_info->lexeme,funEntry->outputType[i]==1?"real":"int");
 				
-			temp=temp->next;i++;
+				else
+					printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%s> of the formal output parameter\n",id_node->token_info->lineNo,"record",id_node->token_info->lexeme,funEntry->outputType[i]==1?"real":"int");
+					
+				
+			id_node=id_node->next;i++;
 		}
 
 		//now check for its statements after return param check is over
@@ -127,28 +135,32 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 	//assignmentStmt
 
 	if(strcmp("assignmentStmt",stmt_type)==0){
-		if(alloc==NULL) return 0;
-            for(int i=1;i<getChildrenNo(output_par);i+=2)
-                if(stmtNode->children->children->tableEntry==getStmt(output_par,i)->tableEntry){
-                    alloc[i/2]=1;
-                    break;
-        	    }
+		if(alloc==NULL)
+		    return 0;
+		TreeNode assign_id = stmtNode->children->children;	//tkid which was assigned some value
+		TreeNode out_id;
+        for(int i=1;i<getChildrenNo(output_par);i+=2){
+			out_id = getStmt(output_par,i);		
+            if(assign_id->tableEntry==out_id->tableEntry){
+                alloc[i/2]=1;
+                break;
+       	    }
+		}
         return 0;
 	}
 
 	//iterativeStmt
 
 	if(strcmp("iterativeStmt",stmt_type)==0){
-		TreeNode temp = stmtNode->children->next;
-		while(temp!=NULL){
-			TreeNode child = temp;
-			int res = funcStmtCheck(funcNode,child,funcT, funEntry,alloc, output_par);
-			if(res==-1){
+		TreeNode child_stmt = stmtNode->children->next;
+		//iterate the same function for all the stmt nodes
+		while(child_stmt!=NULL){
+			if(funcStmtCheck(funcNode,child_stmt,funcT, funEntry,alloc, output_par))
 				err = -1;
-			}
-			temp = temp->next;
+			child_stmt = child_stmt->next;
 		}
-		if(whileSemanticCheck(stmtNode)==-1){
+		//check if loop variables change
+		if(whileSemanticCheck(stmtNode)==-1){//stmtNode passed since semantic check on entire iterativeStmt
 			printf("Line %u : No updation of variables participating in the iterations of the while loop\n", stmtNode->children->token_info->lineNo);
 			err=-1;		
 		}
@@ -159,19 +171,28 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 
 	if(strcmp("conditionalStmt",stmt_type)==0){
 		
-		TreeNode childList=stmtNode->children->next;
-		while(childList->next)
+		TreeNode child_stmt=stmtNode->children->next;
+
+		//getting all stmt node
+
+		while(child_stmt->next)
 		{
-			if(funcStmtCheck(funcNode,childList,funcT,funEntry,alloc,output_par)==-1)
+			//recurse the function  since all are stmt
+			if(funcStmtCheck(funcNode,child_stmt,funcT,funEntry,alloc,output_par)==-1)
 				err=-1;
-			childList=childList->next;
+			child_stmt=child_stmt->next;
 		}
-		childList=childList->children->next;
-		while(childList)
+
+		//traversing all the else statements
+
+		//elsePart is child_stmt
+		TreeNode else_stmt = child_stmt->children;
+		while(else_stmt)
 		{
-			if(funcStmtCheck(funcNode,childList,funcT,funEntry,alloc,output_par)==-1)
+			//recursing for all those statements
+			if(funcStmtCheck(funcNode,else_stmt,funcT,funEntry,alloc,output_par)==-1)
 				err=-1;
-			childList=childList->next;
+			else_stmt=else_stmt->next;
 		}
 		return err;
 	}
@@ -179,12 +200,19 @@ int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEn
 	//ioStmt
 
 	if(strcmp("ioStmt",stmt_type)==0){
-		if(alloc==NULL) return 0;
-            for(int k=1;k<getChildrenNo(output_par);k+=2)
-                if(stmtNode->children->next->children->tableEntry==getStmt(output_par,k)->tableEntry){
-                    alloc[k/2]=1;
-                    break;
-        	    }
+		if(alloc==NULL) 
+			return 0;
+		int no_out_pars = getChildrenNo(output_par);
+		TreeNode singleOrRecId = stmtNode->children->next;
+		TreeNode out_id;
+        for(int i=1;i<no_out_pars;i+=2){
+			//see if that varible is read/write....if so we allocate memory for that
+			out_id = getStmt(output_par,i);
+            if(singleOrRecId->children->tableEntry==out_id->tableEntry){//matching the ids and allocating if found
+                alloc[i/2]=1;
+                break;
+            }
+		}
         return 0;
 	}
 
@@ -215,32 +243,33 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT){
 		 TreeNode funcCalled = getStmt(stmtNode,1);
          Func ftcalled = lookupFunc(funcT,funcCalled->token_info->lexeme);
          TreeNode temp_func = funcNode->next;
-		 if(temp_func==NULL){//mainFunction calls some other function
-			if(ftcalled==NULL){
-            	printf("Line %d : function %s is undefined \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
-				return false;
-			}
-			else if(strcmp(funcCalled->token_info->lexeme,"_main")==0){
-            	printf("Line %d : function %s is undefined \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
-				return false;
-			}
 
-			else
+		 if(temp_func==NULL){//mainFunction calls some other function
+			if(ftcalled==NULL || strcmp(funcCalled->token_info->lexeme,"_main")==0){
+            	printf("Line %d : function %s is undefined \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+				return false;
+			}
+			else	//since this would be the last function
 				return true;
+
 		}				
+
          while(temp_func && temp_func->next!=NULL){//avoid checking main function
              if(strcmp(temp_func->children->token_info->lexeme,funcCalled->token_info->lexeme)==0)
                  break;
              temp_func = temp_func->next;
          }
+
          if(ftcalled == NULL || temp_func->next!=NULL){      //calling function before declaration
              printf("Line %d : The function %s is undefined \n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 			return false;
          }
+
          if(temp_func==funcNode){    //recursive call
               printf("Line %d : A function <%s>  cannot be recursively\n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 				return false;
          }
+
 		return true;
 }
 
@@ -255,18 +284,29 @@ bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *allo
         err=-1;
 	}
 	
-	TreeNode temp=outputPars->children;
+	TreeNode out_id=outputPars->children;
 	int i=0;
-	while(temp!=NULL){
-        if(temp->tableEntry==NULL || temp->tableEntry->type!=ftcalled->outputType[i])
+
+	if(err==-1)
+		out_id=NULL;	//to skip the next while loop since if output_pars number dont match,dont compare the values
+
+	while(out_id!=NULL){
+        if(out_id->tableEntry==NULL || out_id->tableEntry->type!=ftcalled->outputType[i])
          {
-             printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",temp->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme,ftcalled->outputType[i]);
+			if(ftcalled->inputType[i]<=1)
+	             printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",out_id->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme,ftcalled->outputType[i]);
+			else
+   		          printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",out_id->token_info->lineNo,"record",funcCalled->token_info->lexeme,ftcalled->outputType[i]);
              err=-1;
          }
-         else if(alloc!=NULL)
+
+         else if(alloc!=NULL)	//if type matches,we allocated
                  alloc[i]=1;
-		temp=temp->next;i++;
+		out_id=out_id->next;i++;
      }
+
+
+
 
 	//now check input params
 
@@ -274,32 +314,40 @@ bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *allo
 	if(getChildrenNo(inPars)!= ftcalled->noInput){
         printf("Line %d : The number of input parameters at function call <%s> is incorrect.\n", funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
         err=-1;
+		return false;	//if numbers dont match return immediately avoid checking the individual values
 	}
-	temp=inPars->children;
+	TreeNode in_id=inPars->children;
 	i=0;
-	while(temp!=NULL){
-        if(temp->tableEntry==NULL || temp->tableEntry->type!=ftcalled->inputType[i])
+	while(in_id!=NULL){
+        if(in_id->tableEntry==NULL || in_id->tableEntry->type!=ftcalled->inputType[i])
          {
-             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type\n",temp->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme);
+			if(ftcalled->inputType[i]<=1)
+             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type\n",in_id->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme);
+			else
+             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type\n",in_id->token_info->lineNo,"record",funcCalled->token_info->lexeme);
              err=-1;
          }
-		temp=temp->next;i++;
+		in_id=in_id->next;i++;
 	}
 	if(err==0)
-		return false;
-	else
 		return true;
+	else
+		return false;
 }
 
-Seq getSequence(TreeNode root){
+//returns list of all the elements in while conditions
+Seq getWhileVars(TreeNode root){
+	//can be singleOrRecId or TK_ID
 	if(root->index==27 && root->tNt==1){//SingleOrRecID
 		Seq i = malloc(sizeof(struct sequence));
-		i->tableEntry = root->children->tableEntry;
+		TreeNode tkid_node = root->children;
+		i->tableEntry = tkid_node->tableEntry;
 		i->next = NULL;
-		if(getChildrenNo(root)==2){
-			i->fieldid = strdup(root->children->next->token_info->lexeme);
+		if(getChildrenNo(root)==2){		//if it has fieldid
+			TreeNode fieldid_node = root->children->next;//got the fieldid_node
+			i->fieldid = strdup(fieldid_node->token_info->lexeme);	//copy the fieldid
 		}
-		return i;
+		return i;	//returns the sequence
 	}
 	else if(root->index==3 && root->tNt==0)//TK_ID
 	{
@@ -314,12 +362,15 @@ Seq getSequence(TreeNode root){
 	{
 		if(begin==NULL)
 		{
-			begin=getSequence(childList);
+			//get the first element of sequence
+			begin=getWhileVars(childList);
 			end=begin;
 		}
 		else{
-			while(end->next)end=end->next;
-			end->next=getSequence(childList);
+			//append the next sequence
+			while(end->next)
+				end=end->next;
+			end->next=getWhileVars(childList);
 		}
 		childList=childList->next;
 	}
@@ -327,28 +378,31 @@ Seq getSequence(TreeNode root){
 
 }
 
-int checkSequence(Seq begin,TreeNode root)
+int checkVarChanges(Seq begin,TreeNode stmtNode)
 {
 	int index;
-	TreeNode childList= root->children;
+	TreeNode childList= stmtNode->children;
 	Seq temp;
-	char *stmt_type = nonterminals[root->index];
+	char *stmt_type = nonterminals[stmtNode->index];
 	
 	if(strcmp("assignmentStmt",stmt_type)==0){
 		temp=begin;
-		if(getChildrenNo(root->children)==1){
+		TreeNode singleOrRecId = stmtNode->children;
+		if(getChildrenNo(singleOrRecId)==1){	//only TK_ID present
+			//iterate for all the seq elements
 			while(temp!=NULL){
-				if(root->children->children->tableEntry == temp->tableEntry){
+				if(singleOrRecId->children->tableEntry == temp->tableEntry){//if entry matched,then return,since it is being assigned values
 					return 1;	
 				}
 				temp = temp->next;
 			}
 			return 0;			
 		}
-		else{
+		else{	//it has TK_ID as well as TK_FIELDID
 			while(temp!=NULL){
-				if(root->children->children->tableEntry == temp->tableEntry){
-					char* fieldid=childList->children->next->token_info->lexeme;
+				if(singleOrRecId->children->tableEntry == temp->tableEntry){
+					TreeNode fieldid_node = singleOrRecId->children->next;
+					char* fieldid=fieldid_node->token_info->lexeme;
 					if(strcmp(fieldid,temp->fieldid)==0){
 						return 1;
 					}					
@@ -360,62 +414,70 @@ int checkSequence(Seq begin,TreeNode root)
 	}
 	
 	if(strcmp("iterativeStmt",stmt_type)==0){
-		TreeNode childList = root->children->next;
-		while(childList!=NULL){
-			TreeNode t = childList;
-			if(checkSequence(begin,t)==1){
+		TreeNode new_stmt = stmtNode->children->next;	//get stmt node
+		while(new_stmt!=NULL){
+			if(checkVarChanges(begin,new_stmt)==1)	//recurse again with original list
 				return 1;
-			}
-			childList = childList->next;
+			new_stmt = new_stmt->next;
 		}
 		return 0;		
 	}
 
 	if(strcmp("conditionalStmt",stmt_type)==0){
-		TreeNode childList=root->children->next;
-		while(childList->next)
+		TreeNode new_stmt=stmtNode->children->next;
+		//iterate all the IF nodes
+		while(new_stmt->next)
 		{
-			if(checkSequence(begin,childList)==1)
+			if(checkVarChanges(begin,new_stmt)==1)
 				return 1;
 
-			childList=childList->next;
+			new_stmt = new_stmt->next;
 		}
-		childList=childList->children;
-		while(childList)
+		TreeNode elsePart = new_stmt;
+		new_stmt = elsePart->children;
+		//iterate all the else nodes
+		while(new_stmt)
 		{
-			if(checkSequence(begin,childList)==1)
+			if(checkVarChanges(begin,new_stmt)==1)
 				return 1;
+			new_stmt = new_stmt->next;
 		}
 		return 0;
 	}
 
 	if(strcmp("funCallStmt",stmt_type)==0){
-		while(childList)
+		TreeNode outputPars = stmtNode->children;
+		TreeNode output_id = outputPars->children;
+		//iterate all the output_ids since their values change
+		while(output_id)
 		{
 			temp=begin;
 			while(temp)
 			{
-				if(childList->tableEntry==temp->tableEntry)
+				if(output_id->tableEntry==temp->tableEntry)	//it has only TK_ID entry
 					return 1;
 				temp=temp->next;
 			}
-			childList=childList->next;	
+			output_id=output_id->next;	
 		}
 		return 0;
 	}
 
 	if(strcmp("ioStmt",stmt_type)==0){
-		if(strcmp(tokens[root->index],"TK_READ")==0)
+		TreeNode rw_node = stmtNode->children;
+		TreeNode singleOrRecId = stmtNode->children->next;
+		if(strcmp(tokens[rw_node->index],"TK_READ")==0)//if it is reading value into the variable
 		{
 			temp=begin;
 			while(temp)
 			{
-				if(temp->tableEntry==root->children->next->children->tableEntry)
+				if(temp->tableEntry==singleOrRecId->children->tableEntry)	//if TK_ID matches
 				{
-					int childNo=getChildrenNo(root->children->next);
-					if(childNo==1)
+					int childNo=getChildrenNo(singleOrRecId);
+					if(childNo==1)//TKID only present
 						return 1;
-					if(childNo==2 && strcmp(root->children->next->children->next->token_info->lexeme,temp->fieldid)==0)
+								//TK_FIELD id also present
+					if(childNo==2 && strcmp(singleOrRecId->children->next->token_info->lexeme,temp->fieldid)==0)
 						return 1;
 				}
 				temp=temp->next;
@@ -427,13 +489,16 @@ int checkSequence(Seq begin,TreeNode root)
 
 	return 0;
 }
-int whileSemanticCheck(TreeNode node){
-	Seq list=getSequence(node->children);
-	TreeNode temp=node->children->next;
-	while(temp)
+int whileSemanticCheck(TreeNode node){	//takes as input the iterative stmt node
+	TreeNode bool_node = node->children;	//bool_node = relational_op / logical_op / TK_NOT
+	Seq list=getWhileVars(bool_node);		//get sequence of all the elements in while loop
+	TreeNode stmt=node->children->next;		//get the stmt 
+	//check the sequence over all stmt one by one
+	while(stmt)	
 	{
-		if(checkSequence(list,temp)==1)return 0;
-		temp=temp->next;
+		if(checkVarChanges(list,stmt)==1)//if any one variable is changed,then return
+			return 0;
+		stmt=stmt->next;
 	}
 	return -1;
 }

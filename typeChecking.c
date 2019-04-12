@@ -276,12 +276,7 @@ int checkType(TreeNode head, recTable table1)
 					return -1;
 			
 
-			case 47://"TK_LT"
-			case 48://"TK_LE"
-			case 49://"TK_EQ"
-			case 50://"TK_GT"
-			case 51://"TK_GE"
-			case 52://"TK_NE"
+			case 47 ... 52://"TK_LT , LE,EQ,GT,GE,NE
 					firstType = checkType(head->children,table1);
 					secondType = checkType(head->children->next,table1);
 

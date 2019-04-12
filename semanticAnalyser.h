@@ -17,8 +17,8 @@ int funcStmtsCheck(TreeNode funcNode,idTable globalT,funcTable funcT);
 int funcStmtCheck(TreeNode funcNode,TreeNode stmtNode,funcTable funcT,Func funEntry,int *alloc,TreeNode output_par);
 bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT);
 int whileSemanticCheck(TreeNode node);
-int checkSequence(Seq begin,TreeNode root);
-Seq getSequence(TreeNode root);
+int checkVarChanges(Seq begin,TreeNode stmtNode);
+Seq getWhileVars(TreeNode root);
 bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *alloc);
 
 #endif

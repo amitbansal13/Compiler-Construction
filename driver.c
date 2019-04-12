@@ -94,26 +94,28 @@ int main(int argc,char *argv[])
 		ParseTree ptree=parseInputSourceCode(testcaseFile,pTable,&parseError);
 		if(choice ==2){
 			if(parseError==false)
-				printParseTree(ptree,outfile,1);
+				printParseTree(ptree,1);
 			else{
 				printf("Parsing Unsuccessful\nExiting\n");
 			}
 			continue;
 		}
-		int ptree_nodes = printParseTree(ptree,outfile,0);
+		int ptree_nodes = printParseTree(ptree,0);
 		createAST(ptree->root);
-		int ast_nodes = printParseTree(ptree,outfile,0);
-		printf("\n\n AST created successfully\n\n");
+		int ast_nodes = printParseTree(ptree,0);
+	//	printf("\n\n AST created successfully\n\n");
 				
 		if (choice==3)
 		{
 			printf("\n\n\nprinting AST in Inorder Traversal*********\n\n\n");
-			printParseTree(ptree,outfile,1);
+			printParseTree(ptree,1);
 			continue;
 		}
 		if (choice==4)
 		{
 			//To be modified to show size of memory allocated
+			int size = sizeof(struct treenode);
+			printf ("Parse tree Number of nodes = %d\tAllocated Memory = %d Bytes\nAST Number of nodes = %d\tAllocated Memory = %d Bytes\n",ptree_nodes,ptree_nodes*size,ast_nodes,ast_nodes*size);
 			float compressionRatio = ((float)(ptree_nodes-ast_nodes)/(float)ptree_nodes)*100;
 			printf("CompressionRatio=%f\n",compressionRatio);
 			continue;

@@ -601,6 +601,7 @@ TreeNode createtreeNode(int tNt,int index,int rule_no){
 	n->tNt=tNt;
 	n->token_info=NULL;
 	n->parent=NULL;
+	n->tableEntry=NULL;
 	n->rule_no=rule_no;
     n->addr=n->syn=n->inh=n;
 	return n;
@@ -685,7 +686,7 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 		s = pop(s);			//also pop the stack
 
 		if(top_tree==Dollar && lookAhead == NULL){	//if top of stack is dollar and input consumed
-			printf("Parsed Successfully\n");
+			//printf("Parsed Successfully\n");
 			break;
 		}
 
@@ -785,17 +786,17 @@ ParseTree parseInputSourceCode(char *testFile,PT *pTable,bool *parseError){
 	return tree;
 }
 
-int printParseTree(ParseTree ptree,char *outfile,int option){
+int printParseTree(ParseTree ptree,int option){
 	if(ptree==NULL){
 		printf("Tree not initialized\n");	
 		return 0;
 	}
-	int no_nodes = printInOrder(ptree->root,outfile,option);
-	//printf("ParseTree Printed in file %s\n",outfile);
+	int no_nodes = printInOrder(ptree->root,option);
+	//printf("ParseTree Printed in file %s\n");
 	return no_nodes;
 }
 
-int printInOrder(TreeNode node,char *outfile,int option){
+int printInOrder(TreeNode node,int option){
 	//printf("Printing node %d\n",node->rule_no);
 	int no_nodes= 0;
 	if(node==NULL){
@@ -808,25 +809,25 @@ int printInOrder(TreeNode node,char *outfile,int option){
 	if(temp_node!=NULL){	//if it has children
 			
 		//printing left child
-		no_nodes+= printInOrder(temp_node,outfile,option);
+		no_nodes+= printInOrder(temp_node,option);
 		
 		//printing node;
 		
-		printNode(node,outfile,option);
+		printNode(node,option);
 		//printing right childs in order
 		temp_node=temp_node->next;
 
 		while(temp_node!=NULL){
-			no_nodes+=printInOrder(temp_node,outfile,option);
+			no_nodes+=printInOrder(temp_node,option);
 			temp_node=temp_node->next;
 		}
 	}		
 	else
-		printNode(node,outfile,option);
+		printNode(node,option);
 	return no_nodes+1;
 }
 
-void printNode(TreeNode node,char *outfile,int option){    //file already opened
+void printNode(TreeNode node,int option){    //file already opened
 	//printf("print node called\n");
 
  //   FILE *f = fopen(outfile,"a");

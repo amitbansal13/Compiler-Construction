@@ -786,24 +786,24 @@ int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global
 
 
 //return -1 if error  else 0
-int typeExtractor(TreeNode root,funcTable func, recTable rec, idTable global){
+int typeExtractor(TreeNode program,funcTable func, recTable rec, idTable global){
 
 	int err = 0;
-	TreeNode childList = root->children;//points to the first function node
+	TreeNode functionNode = program->children;//points to the first function node
 	TreeNode temp = NULL;
 	//traverse all the functions defined in program except the main function
-	while(childList->next){
-		char *funID=childList->children->token_info->lexeme;//function id
+	while(functionNode->next){
+		char *funID=functionNode->children->token_info->lexeme;//function id
 		idTable local = getLocalTable(func, funID);
-		if(typeExtractHelper(childList, local, rec, global)==-1){
+		if(typeExtractHelper(functionNode, local, rec, global)==-1){
 			err=-1;
 		}
-		childList = childList->next;
+		functionNode = functionNode->next;
 	}
 	
 	//traversing the main function
 	idTable local = getLocalTable(func, "_main");
-	if(typeExtractHelper(childList, local, rec, global)==-1)
+	if(typeExtractHelper(functionNode, local, rec, global)==-1)
 		err =-1;
 	
 	return err;	

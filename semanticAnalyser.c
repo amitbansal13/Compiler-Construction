@@ -44,7 +44,7 @@ int funSemanticCheck(TreeNode root,idTable globalT,funcTable funcT){
 				id = lookupID(funIdTable,id_node->token_info->lexeme);//look into local table
 			
 			if(id==NULL)
-				printf("line %d : return variable %s not initialized \n",id_node->token_info->lineNo, id_node->token_info->lexeme);
+				printf("line %d : return variable %s not declared \n",id_node->token_info->lineNo, id_node->token_info->lexeme);
 			
 			//id type does not matches expected
 			else if(id->type!=funEntry->outputType[i])
@@ -291,13 +291,22 @@ bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *allo
 		out_id=NULL;	//to skip the next while loop since if output_pars number dont match,dont compare the values
 
 	while(out_id!=NULL){
-        if(out_id->tableEntry==NULL || out_id->tableEntry->type!=ftcalled->outputType[i])
+        if(out_id->tableEntry==NULL){
+			out_id=out_id->next;i++;	//error already reported
+			continue;
+		}
+		
+		else if(out_id->tableEntry->type!=ftcalled->outputType[i])
          {
-			if(ftcalled->inputType[i]<=1)
-	             printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",out_id->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme,ftcalled->outputType[i]);
+			printf("Line %d : Output parameter type mismatch\n",out_id->token_info->lineNo);
+			/*
+			if(ftcalled->outputType[i]<=1)
+	             printf("line %d : The type <%s> of variable <%s> returned does not match with the type <record> of the formal output parameter \n",out_id->token_info->lineNo,ftcalled->outputType[i]==1?"real":"int",funcCalled->token_info->lexeme);
 			else
-   		          printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%d> of the formal output parameter \n",out_id->token_info->lineNo,"record",funcCalled->token_info->lexeme,ftcalled->outputType[i]);
+   		          printf("line %d : The type <%s> of variable <%s> returned does not match with the type <%s> of the formal output parameter \n",out_id->token_info->lineNo,"record",funcCalled->token_info->lexeme,ftcalled->outputType[i]==1?"real":"int");
+			*/
              err=-1;
+			break;
          }
 
          else if(alloc!=NULL)	//if type matches,we allocated
@@ -319,13 +328,21 @@ bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *allo
 	TreeNode in_id=inPars->children;
 	i=0;
 	while(in_id!=NULL){
-        if(in_id->tableEntry==NULL || in_id->tableEntry->type!=ftcalled->inputType[i])
+        if(in_id->tableEntry==NULL){
+			in_id = in_id->next;i++;
+			continue;
+		}
+		else if(in_id->tableEntry->type!=ftcalled->inputType[i])
          {
+			printf("Line %d : Input parameter type mismatch\n",out_id->token_info->lineNo);
+			/*
 			if(ftcalled->inputType[i]<=1)
-             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type\n",in_id->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme);
+             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the type <record> of the formal input parameter\n",in_id->token_info->lineNo,ftcalled->inputType[i]==1?"real":"int",funcCalled->token_info->lexeme);
 			else
-             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type\n",in_id->token_info->lineNo,"record",funcCalled->token_info->lexeme);
+             printf("Line %d : type <%s> of input parameter in function <%s> doesnt match the returned type <%s> of the formal input parameter\n",in_id->token_info->lineNo,"record",funcCalled->token_info->lexeme,ftcalled->inputType[i]==1?"real":"int");
+			*/
              err=-1;
+			break;
          }
 		in_id=in_id->next;i++;
 	}

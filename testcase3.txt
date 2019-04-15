@@ -1,5 +1,5 @@
 _swapints
-input parameter list [int b2b, int b2c]   
+input parameter list [int b2b, int b2c] 
 output parameter list[int c2b, int c2c]; 
 	c2b<---b2c;
 	c2c<---b2b;
@@ -29,4 +29,5 @@ _main
 	[b2, c2]<--- call _swaprecs with parameters [b2,d5b]; 
 	write(b2);
 	write(c2);
+	return;
 end

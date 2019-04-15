@@ -52,7 +52,7 @@ int main(int argc,char *argv[])
 	}
 
 	printf("Status:-\n");
-	printf("LEVEL 3: Symbol table/ AST/ Semantic Rules/TypeChecking modules work.\n"); 
+	printf("LEVEL 4: Symbol table/ AST/ Semantic Rules/TypeChecking modules work.\n"); 
 
 	while(1){
 		parseError = false;

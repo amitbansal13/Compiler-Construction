@@ -1,3 +1,9 @@
+/* GROUP Number = 20
+Name-Amit Bansal ID Number- 2016A7PS0140P
+Name- Vedant Patwary ID Number-2016A7PS0031P
+Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
+Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
+
 #include "symbolTableDef.h"
 
 /*char *nonterminals[]={
@@ -123,7 +129,7 @@ int checkType(TreeNode head, recTable table1)
 				if(firstType == -2 || secondType == -2) return -2;
 				else if(secondType != firstType)
 				{
-					printf("line no: %d type of left variable <%s> not equal to type of right expression\n",head->children->children->token_info->lineNo, head->children->children->token_info->lexeme);
+					printf("Line no: %d Type of left variable <%s> not equal to type of right expression\n",head->children->children->token_info->lineNo, head->children->children->token_info->lexeme);
 					return -2;
 				}
 				else return secondType;

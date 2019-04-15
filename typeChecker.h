@@ -4,10 +4,11 @@
 
 
 #include "symbolTableDef.h"
+#include "symbolTable.h"
 #include "HashTable.h"
 
 int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global);
 int typeExtractor(TreeNode program,funcTable func, recTable rec, idTable identifier);
-int checkType(TreeNode head, recTable table1)
+int checkType(TreeNode head, recTable table1);
 
 #endif

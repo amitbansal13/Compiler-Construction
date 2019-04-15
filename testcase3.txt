@@ -29,5 +29,4 @@ _main
 	[b2, c2]<--- call _swaprecs with parameters [b2,d5b]; 
 	write(b2);
 	write(c2);
-	return;
 end

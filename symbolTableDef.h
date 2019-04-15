@@ -7,48 +7,81 @@ Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 #ifndef SYMBOLTABLEDEF_H
 #define SYMBOLTABLEDEF_H
 
-
-#include "symbolTable.h"
-#include "parser.h"
-
-/////////////////// IDENTIFIER TABLE
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 
 
-int hash(char arr[],int a,int tableSize);
-idTable createID(int tableSize);
-ID newID( char* name, int offset, int type, int width, char *tname);
-idTable insertID(idTable t,char* name, int offset, int type, int width, char *tname);
-ID lookupID(idTable t,char arr[]);
-void printGlobalTable(idTable t,recTable r);
+typedef struct id* ID;
 
-//////////////////FUNCTION TABLE
-
-
-funcTable createFunc(int tableSize);
-Func newFunc( char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width);
-funcTable insertFunc(funcTable t,char* name, int offset,int noInput, int noOutput, int* inputType, int* outputType,idTable localtable,int width);
-Func lookupFunc(funcTable t,char arr[]);
-void printFuncTable(funcTable t,recTable rec);
-
-///////////////// Record Table
+struct id
+{
+	char* name;//name of var
+	int offset;
+	int type; //num=0 or real_num=1
+	int width;
+	ID next;
+	char *tname;	//type name
+};
 
 
-recTable createRec(int tableSize);
-Rec newRec(char* name, int type, int width, int noField, int* fieldtype, char** fieldid);
-recTable insertRec(recTable t,char* name, int type, int width, int noField, int* fieldtype, char** fieldid);
-Rec lookupRec(recTable t,char arr[]);
-void printRecTable(recTable t);
+typedef struct idtable* idTable;
+
+struct idtable {
+	int tableSize;
+	int a;
+	ID* table;
+};
+
+typedef struct func* Func;
+
+struct func
+{
+	char* name;
+	int offset;
+	int noInput;//number of input pars
+	int noOutput;//number of output pars
+	int width;// no idea...
+	int *inputType, *outputType;//num=0,rnum=1 types of par
+	idTable localTable;
+	Func next;
+};
 
 
-TreeNode getStmt(TreeNode temp, int lim);
-int getType(TreeNode t,recTable table);
-int getChildrenNo(TreeNode node);
-int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseTree pTree);
+typedef struct functable* funcTable;
 
-int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global);
-int typeExtractor(TreeNode program,funcTable func, recTable rec, idTable identifier);
+struct functable
+{
+	int tableSize;
+	int a;
+	Func* table;
+};
 
-int checkType(TreeNode head,recTable r);
-char* printType(recTable t,char *idname);//return a string containing the type of idname 
+
+
+typedef struct rec* Rec;
+
+struct rec
+{
+	char* name;
+	int typeIndex;
+	int width;
+	int noField;
+	int* fieldtype;
+	char** fieldid;
+	Rec next;
+};
+
+typedef struct rectable* recTable;
+
+struct rectable
+{
+	int tableSize;
+	int a;
+	Rec* table;
+};
 
 #endif
+
+
+

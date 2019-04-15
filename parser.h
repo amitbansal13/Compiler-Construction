@@ -4,8 +4,8 @@ Name- Vedant Patwary ID Number-2016A7PS0031P
 Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
 Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
-//#ifndef PARSER_H
-//#define PARSER_H
+#ifndef PARSER_H
+#define PARSER_H
 #include "parserDef.h"
 #include<stdbool.h>
 
@@ -41,4 +41,4 @@ void printNode(TreeNode node);
 
 
 
-//#endif
+#endif

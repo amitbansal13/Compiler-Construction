@@ -49,8 +49,8 @@ int funSemanticCheck(TreeNode root,idTable globalT,funcTable funcT){
 			if(id==NULL)
 				id = lookupID(funIdTable,id_node->token_info->lexeme);//look into local table
 			
-			if(id==NULL)
-				printf("Line %d: Return variable <%s> not declared \n",id_node->token_info->lineNo, id_node->token_info->lexeme);
+			//if(id==NULL)
+			//	printf("Line %d: Return variable <%s> not declared \n",id_node->token_info->lineNo, id_node->token_info->lexeme);
 			
 			//id type does not matches expected
 			else if(id->type!=funEntry->outputType[i])
@@ -119,9 +119,11 @@ int funcStmtsCheck(TreeNode funcNode,idTable globalT,funcTable funcT){
 	if(output_par!=NULL){		//checking if memory allocated for output_par of this function(in stmts memory allocated or not)
 		for(int i=0;i<no_out/2;i++){
 			if(out_alloc[i]==0){
-				char *lexeme = tokens[getStmt(output_par,2*i+1)->index];
+				char *lexeme = getStmt(output_par,2*i+1)->token_info->lexeme;
 				int lineNo = getStmt(output_par,2*i+1)->token_info->lineNo;
-				printf("Line %d: <%s> Output parameter not assigned any value before returning it in function <%s>\n",lineNo,lexeme, nonterminals[funcNode->index] );
+				if(funcNode->next)
+				printf("Line %d: <%s> Output parameter not assigned any value before returning it in function <%s>\n",lineNo,lexeme, funcNode->children->token_info->lexeme );
+				    
                 err=-1;
 			}
 		}
@@ -271,8 +273,8 @@ bool checkFuncDeclared(TreeNode funcNode,TreeNode stmtNode,funcTable funcT){
 			return false;
          }
 
-         if(temp_func==funcNode){    //recursive call
-              printf("Line %d: A function <%s>  cannot be recursively\n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
+         if(strcmp(ftcalled->name,funcNode->children->token_info->lexeme)==0){    //recursive call
+              printf("Line %d: Function <%s> cannot be called recursively\n",funcCalled->token_info->lineNo,funcCalled->token_info->lexeme);
 				return false;
          }
 

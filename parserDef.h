@@ -4,14 +4,14 @@ Name- Vedant Patwary ID Number-2016A7PS0031P
 Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
 Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef PARSERDEF_H
+#define PARSERDEF_H
 #define terminalsSize 55 //Number of Terminals including epsilon
 #define nonTerminalsSize 47//actual no of terminals in our code
 
 #include "lexer.h"
 #include<stdbool.h>
-#include "symbolTable.h"
+#include "symbolTableDef.h"
 extern char *tokens[];
 extern char *nonterminals[];
 extern Table terminals;

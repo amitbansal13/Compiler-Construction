@@ -305,7 +305,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 
 
 
-	//populating typedefinition
+	//populating typerecords of other functions
 	while(childList->next!=NULL)
 	{
 
@@ -319,7 +319,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			tindex++;
 			width = 0;
 			TreeNode tempChild = typeChild;
-			idname = strdup(tempChild->children->token_info->lexeme);
+			idname = strdup(tempChild->children->token_info->lexeme);//name of recordid
 			
 			typeOfField = malloc(sizeof(int)*count);
 			idField = malloc(sizeof(char*)*count);
@@ -331,6 +331,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			{
 
 				if(index >= 2){
+					//start comparing the field ids to check if there is any redunant declarations
 					TreeNode iter2 = tempChild->children->next;
 					while(iter2!=iter1){
 
@@ -343,17 +344,18 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 						iter2 = iter2->next;
 					}	
 				}
-				
+				//count is the size of idField and typeoOfField
 				if(index-1 < count)
 				{
-					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);
+					idField[index-1]= strdup(iter1->children->next->token_info->lexeme);//fieldid of <fieldDefinition>
 					typeOfField[index-1]=strcmp(tokens[iter1->children->index],"TK_INT")==0?0:1;
 
 					if(typeOfField[index-1]==0)
-						width += WIDTH_OF_INT;
+						width += WIDTH_OF_INT;//increment width of record by WIDTH_OF_INT
 					else
 						width += WIDTH_OF_REAL;	
 				}
+				//index-1==count, i.e. more number of field ids present->increment the size of idField and typeField
 				else {
 					count+=10;
 					idField = realloc(idField,sizeof(char*)*count);
@@ -371,12 +373,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				iter1 = iter1->next;
 				index++;
 			}
-			
+			//insert a record into the record table with the field ids obtained
 			if(lookupRec(rec, idname)==NULL)
 				insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); 
 			else
 			{
-				printf("Line %u: Same record defined before\n",tempChild->children->token_info->lineNo);
+				printf("Line %u: Record <%s> defined before\n",tempChild->children->token_info->lineNo, idname);
 				err=-1;
 			}
 
@@ -404,7 +406,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 		
 		int index = 1;
 		while(iter1!=NULL){
-			//required??
+			
 			if(index >= 2){
 				TreeNode iter2 = tempChild->children->next;
 				while(iter2!=iter1){
@@ -451,7 +453,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); //noField
 		else
 		{
-			printf("Line %u: Same record defined before\n",tempChild->children->token_info->lineNo);
+			printf("Line %u: Record <%s> defined before\n",tempChild->children->token_info->lineNo, idname);
 			err=-1;
 		}
 
@@ -481,12 +483,9 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					return -1;
 				}
 				int width=getWidth(declaration->children,rec);
-				// if(type<=1)
+				
 				insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-				// else{
-				// 	char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
-				// 	insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
-				// }
+				
 				gOffset+=width;
 			}
 			else{
@@ -536,23 +535,25 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 		if(lookupFunc(func,funid)==NULL)
 		{
 			int offsetBegin = 0;
-			int NoInpPar = getChildrenNo(tempfunc->children->next)/2; //childrenNo is the  number of children of that node
+			int NoInpPar = getChildrenNo(tempfunc->children->next)/2; //number of TK_ID are half of total children(excluding <dataType>)
 			int NoOutPar = getChildrenNo(tempfunc->children->next->next)/2;
 			int* inPar = (int*) malloc(sizeof(int)*NoInpPar); //inout parameter types
 			int* outPar = (int*) malloc(sizeof(int)*NoOutPar); //output parameter types
 			idTable idLocal = createID(41);
 
 			//root inpar list and insert ids into symbol table
-			TreeNode inTraverse = tempfunc->children->next->children;
-			for(int ip = 0; ip<2*NoInpPar;ip+=2)
+			TreeNode inTraverse = tempfunc->children->next->children;//points to first children of in parameter list
+			int ip=0;
+			//traverse the complete list. 2*NoInPar => include the dataType nodes as well
+			while(ip<2*NoInpPar)
 			{
-
 				inPar[ip/2] = getType(inTraverse,rec);
 				if(inPar[ip/2]==-1)
 				{
 					printf("Line %u: No such type for <%s> \n",inTraverse->token_info->lineNo,inTraverse->token_info->lexeme);
 					err=-1;
 				}
+				//check global table if the variable is already declared
 				else if(lookupID(identifier, inTraverse->next->token_info->lexeme)!=NULL)
 				{
 					printf("Line %u: Variable <%s> is already declared globally\n",inTraverse->next->token_info->lineNo,inTraverse->next->token_info->lexeme);
@@ -565,18 +566,20 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 				else
 				{
-					printf("Line %u: Identical input parameter already defined \n",inTraverse->next->token_info->lineNo);
+					printf("Line %u: Input parameter <%s> already defined \n",inTraverse->next->token_info->lineNo, inTraverse->next->token_info->lexeme);
 					err = -1;
 				}
 
 				inTraverse = inTraverse->next->next;
+				ip+=2;
 			}
 
 			//root output param list and add to symbol table[if not added]
-			TreeNode outTraverse = tempfunc->children->next->next->children;
-			for(int ip = 0; ip<2*NoOutPar;ip+=2)
+			TreeNode outTraverse = tempfunc->children->next->next->children;//points to first children of outpar list
+			ip = 0;
+			while(ip<2*NoOutPar)
 			{
-
+				
 				outPar[ip/2] = getType(outTraverse,rec);
 				if(outPar[ip/2]==-1)
 				{
@@ -591,11 +594,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 				else
 				{
-					printf("Line %u: Identical input parameter already defined \n",outTraverse->next->token_info->lineNo);
+					printf("Line %u: Output parameter <%s> already defined \n",outTraverse->next->token_info->lineNo, outTraverse->next->token_info->lexeme);
 					err = -1;
 				}
 
 				outTraverse = outTraverse->next->next;
+				ip+=2;
 			}
 
 			//STMT DECLARATION
@@ -604,11 +608,12 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			
 			while(declare!=NULL)
 			{
-
+				//traverse till we don't get local variables
 				if(getChildrenNo(declare)==3){
 					declare=declare->next;
 					continue; 
 				}
+				//check if the local variable already has been globally declared
 				if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 				{
 						printf("Line %u: Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
@@ -619,7 +624,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				idTable tabTemp = idLocal;
 				if(lookupID(tabTemp, declare->children->next->token_info->lexeme)==NULL)
 				{
-					int dtype =  getType(declare->children,rec);
+					int dtype =  getType(declare->children,rec);//declare->children is <dataType>
 					if(dtype==-1)
 					{
 						printf("Line %u: No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
@@ -627,9 +632,10 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					}
 					else
 					{
+						//get the size of the datatype of the variable and insert into id table
 						int size = getWidth(declare->children,rec);
 						insertID(tabTemp,declare->children->next->token_info->lexeme,offsetBegin, dtype, size, declare->children->token_info->lexeme);
-						offsetBegin+=size;
+						offsetBegin+=size;//update the offset by the size of the variables
 					}
 							
 				}
@@ -640,6 +646,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					}
 				declare = declare->next;
 			}
+				//insert the function into the function table alongwith its local table 
 				insertFunc(func,tempfunc->children->token_info->lexeme,0, NoInpPar, NoOutPar, inPar, outPar,idLocal,offsetBegin); 
 		}
 		else{

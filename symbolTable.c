@@ -515,12 +515,9 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				return -1;
 			}
 			int width=getWidth(declaration->children,rec);
-			// if(type<=1)
+			
 			insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,declaration->children->token_info->lexeme);
-				// else{
-				// 	char* recordType=getRecordType(rec,declaration->children->token_info->lexeme);
-				// 	insertID(identifier,declaration->children->next->token_info->lexeme,gOffset,type,width,recordType);
-				// }
+				
 		}
 		else{
 			printf("Line %d: Multipe declaration for global variable <%s> \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
@@ -581,20 +578,15 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			{
 
 				outPar[ip/2] = getType(outTraverse,rec);
-				if(inPar[ip/2]==-1)
+				if(outPar[ip/2]==-1)
 				{
-					printf("Line %u: No such type for %s \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
+					printf("Line %u: No such type for <%s> \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
 					err=-1;
 				}
 				else if(lookupID(idLocal, outTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(outTraverse,rec);
-					// if(outPar[ip/2]<=1)//if it is of int or real type
 					insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size, outTraverse->token_info->lexeme);
-					// else{
-					// 	char *recordType=getRecordType(rec,outTraverse->token_info->lexeme);
-					// 	insertID(idLocal,outTraverse->next->token_info->lexeme, offsetBegin, outPar[ip/2], size,recordType);	
-					// }
 					offsetBegin+=size;
 				}
 				else

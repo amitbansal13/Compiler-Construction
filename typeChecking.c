@@ -1,9 +1,14 @@
+/* GROUP Number = 20
+Name-Amit Bansal ID Number- 2016A7PS0140P
+Name- Vedant Patwary ID Number-2016A7PS0031P
+Name- Abhimanyu Singh Shekhawat ID Number- 2016A7PS0112P
+Name- Abhilash Neog     ID Number - 2016A7PS0004P*/
 #include "symbolTableDef.h"
 
 
 int checkType(TreeNode head, recTable table1)
 {
-	int firstType, secondType;
+	int firstType, secondType;//stores the type of operands
 	int error = 0;
 	TreeNode childList = head->children;
 	if(head->tNt == 1)
@@ -69,32 +74,37 @@ int checkType(TreeNode head, recTable table1)
 		}
 		else if(head->index >= 36 && head->index <= 37)//TK_PLUS or TK_MINUS
 		{
-			firstType = checkType(head->children,table1);
-			if(firstType==-2)
+			firstType = checkType(head->children,table1);//get the type of first operand
+			if(firstType==-2)//check if it is an error type
 				return -2;
 
-			secondType = checkType(head->children->next,table1);
+			secondType = checkType(head->children->next,table1);//get the type of first operand
 			if(secondType==-2)
 				return -2;
 
 			if(firstType!=secondType)
 			{
-				printf("Line %u: Type Mismatch. Different operand types \n",head->token_info->lineNo);
-				/*switch(firstType){
-					case 0: printf("<int> and ");
-							
-					case 1: printf("<real> and ");
-							
-					default: printf("<%s> and ", head->children->token_info->lexeme);
-							 
+				printf("Line %d: Type Mismatch. Different operand types: ",head->token_info->lineNo);
+				printf("%s:", head->children->children->token_info->lexeme);
+				if(firstType==0){
+					printf("<int> and ");
 				}
-				switch(secondType){
-					case 0: printf("<int>\n");
-							
-					case 1: printf("<real>\n");
-							
-					default: printf("<%s>\n", head->children->next->token_info->lexeme);
-				}*/
+				else if(firstType==1){
+					printf("<real> and ");
+				}
+				else{
+					printf("<%s> and ", head->children->children->tableEntry->tname);
+				}
+				printf("%s:", head->children->next->children->token_info->lexeme);
+				if(secondType==0){
+					printf("<int>\n");
+				}
+				else if(secondType==1){
+					printf("<real>\n");
+				}
+				else{
+					printf("<%s>\n", head->children->next->children->tableEntry->tname);
+				}
 				return -2;
 			}	
 
@@ -125,26 +135,32 @@ int checkType(TreeNode head, recTable table1)
 				return -2;
 			}
 			
-			if(firstType!=secondType)
-			{
-				printf("Line %u: Type Mismatch. Different operand ",head->token_info->lineNo);
-				/*switch(firstType){
-					case 0: printf("<int> and ");
-					case 1: printf("<real> and ");
-							
-				}
-				switch(secondType){
-					case 0: printf("<int>\n");
-							
-					case 1: printf("<real>\n");
-				}*/
-				return -2;
-			}
 			if(firstType > 1 && secondType > 1)
 			{
 				printf("Line %u: Multiplication not allowed on record types\n",head->token_info->lineNo);
 				return-2;
-			}	
+			}
+
+			if(firstType!=secondType)
+			{
+				printf("Line %u: Type Mismatch. Different operand types: ",head->token_info->lineNo);
+				printf("%s:", head->children->children->token_info->lexeme);
+				if(firstType==0){
+					printf("<int> and ");
+				}
+				else if(firstType==1){
+					printf("<real> and ");
+				}
+				printf("%s:", head->children->next->children->token_info->lexeme);
+				if(secondType==0){
+					printf("<int>\n");
+				}
+				else if(secondType==1){
+					printf("<real>\n");
+				}
+				return -2;
+			}
+				
 			
 			return firstType;
 		}
@@ -173,18 +189,21 @@ int checkType(TreeNode head, recTable table1)
 
 			if(firstType != secondType)
 			{
-				printf("Line %u: Type Mismatch. Different Operand types \n",head->token_info->lineNo);
-				/*switch(firstType){
-					case 0: printf("<int> and ");
-							break;
-					default: printf("<real> and ");
-							 break;
+				printf("Line %u: Type Mismatch. Different Operand types: ",head->token_info->lineNo);
+				printf("%s:", head->children->children->token_info->lexeme);
+				if(firstType==0){
+					printf("<int> and ");
 				}
-				switch(secondType){
-					case 0: printf("<int>\n");
-							break;
-					default: printf("<real>\n");
-				}*/	
+				else if(firstType==1){
+					printf("<real> and ");
+				}
+				printf("%s:", head->children->next->children->token_info->lexeme);
+				if(secondType==0){
+					printf("<int>\n");
+				}
+				else if(secondType==1){
+					printf("<real>\n");
+				}
 				return -2;
 			}
 
@@ -234,19 +253,21 @@ int checkType(TreeNode head, recTable table1)
 			}
 			if(firstType != secondType)
 			{
-				printf("Line %u: Type Mismatch. Different Operand types \n", head->token_info->lineNo);
-				/*switch(firstType){
-					case 0: printf("<int> and ");
-							break;
-					default: printf("<real> and ");
-							 break;
+				printf("Line %u: Type Mismatch. Different operand types: ",head->token_info->lineNo);
+				printf("%s:", head->children->children->token_info->lexeme);
+				if(firstType==0){
+					printf("<int> and ");
 				}
-				switch(secondType){
-					case 0: printf("<int>\n");
-							break;
-					default: printf("<real>\n");
-							break;
-				}*/	
+				else if(firstType==1){
+					printf("<real> and ");
+				}
+				printf("%s:", head->children->next->children->token_info->lexeme);
+				if(secondType==0){
+					printf("<int>\n");
+				}
+				else if(secondType==1){
+					printf("<real>\n");
+				}
 				return -2;
 			}
 			return -1;	

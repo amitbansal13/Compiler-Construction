@@ -40,6 +40,7 @@ _main
 	% The variable d4 stores the marks of one student
 
 	type int : b5;
+	type real : b6;
 	type int : d5cb34567;
 	type real : b5;
 	type record #marks : b5c6;
@@ -58,6 +59,7 @@ _main
 	endwhile
 	b5c6 <--- b5c6*b5c6;
 	d4 <--- d4+b5c6;
+	b5 <--- b5/b6;
 	d4 <--- b5c6 * d5cb34567;
 	write(d4.maths);
 	write(d4.physics);

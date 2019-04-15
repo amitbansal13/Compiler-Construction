@@ -336,7 +336,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 
 						if(strcmp(iter1->children->next->token_info->lexeme,iter2->children->next->token_info->lexeme)==0)
 						{
-							printf("Repetition of field name in line No %u \n",iter1->children->next->token_info->lineNo);
+							printf("Line %u: Repetition of field names\n",iter1->children->next->token_info->lineNo);
 							err=-1;
 						}
 
@@ -376,7 +376,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); 
 			else
 			{
-				printf("Error. Line %u :  Same record defined before\n",tempChild->children->token_info->lineNo);
+				printf("Line %u: Same record defined before\n",tempChild->children->token_info->lineNo);
 				err=-1;
 			}
 
@@ -411,7 +411,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 
 					if(strcmp(iter1->children->next->token_info->lexeme,iter2->children->next->token_info->lexeme)==0)
 					{
-						printf("Repetition of field name in line No %u \n",iter1->children->next->token_info->lineNo);
+						printf("Line %u: Repetition of field names \n",iter1->children->next->token_info->lineNo);
 						err=-1;
 					}
 
@@ -451,7 +451,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			insertRec(rec, idname, tindex, width , index-1, typeOfField,idField); //noField
 		else
 		{
-			printf("Error. Line %u : Same record defined before\n",tempChild->children->token_info->lineNo);
+			printf("Line %u: Same record defined before\n",tempChild->children->token_info->lineNo);
 			err=-1;
 		}
 
@@ -477,7 +477,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				int type=getType(declaration->children,rec);
 				if(type==-1)
 				{
-					printf("Line = %d -> type not found for global variable: %s  \n", declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme);
+					printf("Line %d: Type not found for global variable <%s>  \n", declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme);
 					return -1;
 				}
 				int width=getWidth(declaration->children,rec);
@@ -490,7 +490,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				gOffset+=width;
 			}
 			else{
-				printf("Line = %d -> multipe declaration for global variable %s \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
+				printf("Line %d: Multipe declaration for global variable <%s> \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
 			}
 			declaration=declaration->next;
 		}
@@ -511,7 +511,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			int type=getType(declaration->children,rec);
 			if(type==-1)
 			{
-				printf("Line = %d -> type not found for global variable: %s  \n", declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme);
+				printf("Line %d: Type not found for global variable <%s>  \n", declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme);
 				return -1;
 			}
 			int width=getWidth(declaration->children,rec);
@@ -523,7 +523,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				// }
 		}
 		else{
-			printf("Line = %d -> multipe declaration for global variable %s \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
+			printf("Line %d: Multipe declaration for global variable <%s> \n",declaration->children->next->token_info->lineNo, declaration->children->next->token_info->lexeme );
 		}
 		declaration=declaration->next;
 	}
@@ -553,31 +553,22 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				inPar[ip/2] = getType(inTraverse,rec);
 				if(inPar[ip/2]==-1)
 				{
-					printf("Error. Line %u : - No such type for %s \n",inTraverse->token_info->lineNo,inTraverse->token_info->lexeme);
+					printf("Line %u: No such type for <%s> \n",inTraverse->token_info->lineNo,inTraverse->token_info->lexeme);
 					err=-1;
 				}
 				else if(lookupID(identifier, inTraverse->next->token_info->lexeme)!=NULL)
 				{
-					printf("Re-Declaration Error. Line %u :  Variable <%s> is already declared globally\n",inTraverse->next->token_info->lineNo,inTraverse->next->token_info->lexeme);
+					printf("Line %u: Variable <%s> is already declared globally\n",inTraverse->next->token_info->lineNo,inTraverse->next->token_info->lexeme);
 				}
 				else if(lookupID(idLocal, inTraverse->next->token_info->lexeme)==NULL)
 				{
 					int size = getWidth(inTraverse,rec);
-					// if(inPar[ip/2]<=1)//if it is of int or real type
-					// {
 					insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size, inTraverse->token_info->lexeme);
-					// }
-					// else{
-
-					// 	char *recordType=getRecordType(rec,inTraverse->token_info->lexeme);
-					// 	insertID(idLocal,inTraverse->next->token_info->lexeme, offsetBegin, inPar[ip/2], size,recordType);
-
-					// }
 					offsetBegin+=size;
 				}
 				else
 				{
-					printf("Re-definition error. Line %u : Identical input parameter already defined \n",inTraverse->next->token_info->lineNo);
+					printf("Line %u: Identical input parameter already defined \n",inTraverse->next->token_info->lineNo);
 					err = -1;
 				}
 
@@ -592,7 +583,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				outPar[ip/2] = getType(outTraverse,rec);
 				if(inPar[ip/2]==-1)
 				{
-					printf("Error. Line %u : - No such type for %s \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
+					printf("Line %u: No such type for %s \n",outTraverse->token_info->lineNo,outTraverse->token_info->lexeme);
 					err=-1;
 				}
 				else if(lookupID(idLocal, outTraverse->next->token_info->lexeme)==NULL)
@@ -608,7 +599,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 				else
 				{
-					printf("Re-definition error. Line %u : Identical input parameter already defined \n",outTraverse->next->token_info->lineNo);
+					printf("Line %u: Identical input parameter already defined \n",outTraverse->next->token_info->lineNo);
 					err = -1;
 				}
 
@@ -628,7 +619,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 				if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 				{
-						printf("Error. Line %u : Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
+						printf("Line %u: Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
 						err=-1;
 						declare=declare->next;
 						continue;
@@ -639,7 +630,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 					int dtype =  getType(declare->children,rec);
 					if(dtype==-1)
 					{
-						printf("Error. Line %u : No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
+						printf("Line %u: No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
 						err=-1;
 					}
 					else
@@ -652,7 +643,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				}
 					else
 					{
-						printf("Re-declaration Error. Line %u : Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
+						printf("Line %u: Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
 						err=-1;
 					}
 				declare = declare->next;
@@ -660,7 +651,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				insertFunc(func,tempfunc->children->token_info->lexeme,0, NoInpPar, NoOutPar, inPar, outPar,idLocal,offsetBegin); 
 		}
 		else{
-			printf("Error. Line %u : Overloaded functions not allowed. <%s> already defined\n", childList->children->token_info->lineNo,childList->children->token_info->lexeme);
+			printf("Line %u: Overloaded functions not allowed. <%s> already defined\n", childList->children->token_info->lineNo,childList->children->token_info->lexeme);
 			err=-1;
 		}
 		childList = childList->next;
@@ -681,7 +672,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			}
 			if(lookupID(identifier,declare->children->next->token_info->lexeme)!=NULL)
 			{
-					printf("Error. Line %u : Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
+					printf("Line %u: Variable <%s> declared globally cannot have a local declaration \n", declare->children->next->token_info->lineNo,declare->children->next->token_info->lexeme);
 					err=-1;
 					declare=declare->next;
 					continue;
@@ -692,7 +683,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 				int dtype =  getType(declare->children,rec);
 				if(dtype==-1)
 				{
-					printf("Error. Line %u : No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
+					printf("Line %u: No such type for <%s> \n",declare->children->token_info->lineNo ,declare->children->token_info->lexeme);
 					err=-1;
 				}
 				else
@@ -705,7 +696,7 @@ int symbolTablePopulate(funcTable func, recTable rec, idTable identifier, ParseT
 			}
 				else
 				{
-					printf("Re-declaration Error. Line %u : Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
+					printf("Line %u: Variable <%s> already declared \n",declare->children->next->token_info->lineNo, declare->children->next->token_info->lexeme);
 					err=-1;
 				}
 			declare = declare->next;
@@ -738,7 +729,7 @@ int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global
 				temp=lookupID(global,node->children->token_info->lexeme);
 			if (temp==NULL)
 			{
-				printf("Record type %s not defined\n",node->children->token_info->lexeme);
+				printf("Line %u: Record type <%s> not defined\n",node->children->token_info->lineNo,node->children->token_info->lexeme);
 				return -1;
 			}
 			Rec r = lookupRec(rec,temp->tname);
@@ -758,7 +749,7 @@ int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global
 			}
 			if(flag==1)
 			{
-				printf("Field %s not present in the record %s\n",fieldid, temp->tname);
+				printf("Line %u: Field <%s> not present in the record <%s>\n",node->children->next->token_info->lineNo,fieldid, temp->tname);
 				return -1;
 			}
 			node->children->tableEntry=temp;//associate ID with every TK_FIELDID node to be used for checking types and declarations
@@ -774,7 +765,7 @@ int typeExtractHelper(TreeNode node, idTable local, recTable rec, idTable global
 		if(temp==NULL)temp=lookupID(global,idname);
 		if(temp==NULL)
 		{
-			printf("Line %d : identifier <%s> not declared\n",node->token_info->lineNo,idname);
+			printf("Line %u: Identifier <%s> not declared\n",node->token_info->lineNo,idname);
 			return -1;
 		}
 		node->tableEntry=temp;//associate ID with every TK_ID node to be used for checking types and declarations

@@ -91,27 +91,27 @@ int checkType(TreeNode head, recTable table1)
 
 			if(firstType!=secondType)
 			{
-				printf("Line %d: Type Mismatch. Different operand types: ",head->token_info->lineNo);
-				printf("%s:", head->children->children->token_info->lexeme);
-				if(firstType==0){
-					printf("<int> and ");
-				}
-				else if(firstType==1){
-					printf("<real> and ");
-				}
-				else{
-					printf("<%s> and ", head->children->children->tableEntry->tname);
-				}
-				printf("%s:", head->children->next->children->token_info->lexeme);
-				if(secondType==0){
-					printf("<int>\n");
-				}
-				else if(secondType==1){
-					printf("<real>\n");
-				}
-				else{
-					printf("<%s>\n", head->children->next->children->tableEntry->tname);
-				}
+				printf("Line %d: Type Mismatch. Different operand types: \n",head->token_info->lineNo);
+				// printf("%s:", head->children->children->token_info->lexeme);
+				// if(firstType==0){
+				// 	printf("<int> and ");
+				// }
+				// else if(firstType==1){
+				// 	printf("<real> and ");
+				// }
+				// else{
+				// 	printf("<%s> and ", head->children->children->tableEntry->tname);
+				// }
+				// printf("%s:", head->children->next->children->token_info->lexeme);
+				// if(secondType==0){
+				// 	printf("<int>\n");
+				// }
+				// else if(secondType==1){
+				// 	printf("<real>\n");
+				// }
+				// else{
+				// 	printf("<%s>\n", head->children->next->children->tableEntry->tname);
+				// }
 				return -2;
 			}	
 			//if either of them is a boolean expression
@@ -152,21 +152,21 @@ int checkType(TreeNode head, recTable table1)
 
 			if(firstType!=secondType)
 			{
-				printf("Line %u: Type Mismatch. Different operand types: ",head->token_info->lineNo);
-				printf("%s:", head->children->children->token_info->lexeme);
-				if(firstType==0){
-					printf("<int> and ");
-				}
-				else if(firstType==1){
-					printf("<real> and ");
-				}
-				printf("%s:", head->children->next->children->token_info->lexeme);
-				if(secondType==0){
-					printf("<int>\n");
-				}
-				else if(secondType==1){
-					printf("<real>\n");
-				}
+				printf("Line %u: Type Mismatch. Different operand types: \n",head->token_info->lineNo);
+				// printf("%s:", head->children->children->token_info->lexeme);
+				// if(firstType==0){
+				// 	printf("<int> and ");
+				// }
+				// else if(firstType==1){
+				// 	printf("<real> and ");
+				// }
+				// printf("%s:", head->children->next->children->token_info->lexeme);
+				// if(secondType==0){
+				// 	printf("<int>\n");
+				// }
+				// else if(secondType==1){
+				// 	printf("<real>\n");
+				// }
 				return -2;
 			}
 				
@@ -200,21 +200,21 @@ int checkType(TreeNode head, recTable table1)
 
 			if(firstType != secondType)
 			{
-				printf("Line %u: Type Mismatch. Different Operand types: ",head->token_info->lineNo);
-				printf("%s:", head->children->children->token_info->lexeme);
-				if(firstType==0){
-					printf("<int> and ");
-				}
-				else if(firstType==1){
-					printf("<real> and ");
-				}
-				printf("%s:", head->children->next->children->token_info->lexeme);
-				if(secondType==0){
-					printf("<int>\n");
-				}
-				else if(secondType==1){
-					printf("<real>\n");
-				}
+				printf("Line %u: Type Mismatch. Different Operand types: \n",head->token_info->lineNo);
+				// printf("%s:", head->children->children->token_info->lexeme);
+				// if(firstType==0){
+				// 	printf("<int> and ");
+				// }
+				// else if(firstType==1){
+				// 	printf("<real> and ");
+				// }
+				// printf("%s:", head->children->next->children->token_info->lexeme);
+				// if(secondType==0){
+				// 	printf("<int>\n");
+				// }
+				// else if(secondType==1){
+				// 	printf("<real>\n");
+				// }
 				return -2;
 			}
 
@@ -264,21 +264,21 @@ int checkType(TreeNode head, recTable table1)
 			}
 			if(firstType != secondType)
 			{
-				printf("Line %u: Type Mismatch. Different operand types: ",head->token_info->lineNo);
-				printf("%s:", head->children->children->token_info->lexeme);
-				if(firstType==0){
-					printf("<int> and ");
-				}
-				else if(firstType==1){
-					printf("<real> and ");
-				}
-				printf("%s:", head->children->next->children->token_info->lexeme);
-				if(secondType==0){
-					printf("<int>\n");
-				}
-				else if(secondType==1){
-					printf("<real>\n");
-				}
+				printf("Line %u: Type Mismatch. Different operand types: \n",head->token_info->lineNo);
+				// printf("%s:", head->children->children->token_info->lexeme);
+				// if(firstType==0){
+				// 	printf("<int> and ");
+				// }
+				// else if(firstType==1){
+				// 	printf("<real> and ");
+				// }
+				// printf("%s:", head->children->next->children->token_info->lexeme);
+				// if(secondType==0){
+				// 	printf("<int>\n");
+				// }
+				// else if(secondType==1){
+				// 	printf("<real>\n");
+				// }
 				return -2;
 			}
 			return -1;	

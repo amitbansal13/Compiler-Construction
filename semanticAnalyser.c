@@ -336,7 +336,7 @@ bool checkIOParams(TreeNode funcCalled,TreeNode stmtNode,Func ftcalled,int *allo
 		}
 		else if(in_id->tableEntry->type!=ftcalled->inputType[i])
          {
-			printf("Line %d: Input parameter type mismatch\n",out_id->token_info->lineNo);
+			printf("Line %d: Input parameter type mismatch\n",in_id->token_info->lineNo);
              err=-1;
 			break;
          }
